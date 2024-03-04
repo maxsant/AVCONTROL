@@ -27,24 +27,86 @@ class Category extends Connect
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     /* TODO obtener categoria por ID */
-    public function getCategoryById()
+    public function getCategoryById($id)
     {
-        
+        $conectar = parent::connection();
+
+        $sql = '
+            SELECT 
+                *
+            FROM
+                categories
+            WHERE
+                is_active = 1 AND id=?
+        ';
+
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1,$id);
+        $query->execute();
+
+        return $query->fetch(PDO::FETCH_ASSOC);  
     }
     /* TODO eliminar categoria por ID */
-    public function deleteCategoryById()
+    public function deleteCategoryById($id)
     {
-        
+        $conectar = parent::connection();
+
+        $sql = '
+            UPDATE
+                categories
+            SET
+                is_active = 0
+            WHERE
+                id=?
+        ';
+
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1,$id);
+        $query->execute();
+
+        return $query->fetch(PDO::FETCH_ASSOC);   
     }
     /* TODO insertar categoria */
-    public function insertCategory()
+    public function insertCategory($branch_id, $name)
     {
-        
+        $conectar = parent::connection();
+
+        $sql = '
+            INSERT INTO
+                categories (name, branch_id, created)
+            VALUES
+                (?, ?, now())
+        ';
+
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1,$name);
+        $query->bindValue(2,$branch_id);
+        $query->execute();
+
+        return $query->fetch(PDO::FETCH_ASSOC);   
     }
     /* TODO actualizar categoria por ID */
-    public function updateCategoryById()
+    public function updateCategoryById($id, $branch_id, $name)
     {
-        
+        $conectar = parent::connection();
+
+        $sql = '
+            UPDATE
+                categories
+            SET
+                name = ?,
+                branch_id = ?
+            WHERE
+                id=?
+        ';
+
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1,$name);
+        $query->bindValue(2,$branch_id);
+        $query->bindValue(3,$id);
+        $query->execute();
+
+        return $query->fetch(PDO::FETCH_ASSOC);     
     }
 }
 ?>
