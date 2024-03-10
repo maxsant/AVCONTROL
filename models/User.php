@@ -1,6 +1,11 @@
 <?php
 class User extends Connect
 {
+    /* TODO Iniciar Session */
+    public function login()
+    {
+        
+    }
     /* TODO obtener usuario por ID */
     public function getUserById($id)
     {
@@ -39,7 +44,7 @@ class User extends Connect
         $query->bindValue(1,$id);
         $query->execute();
 
-        return $query->fetch(PDO::FETCH_ASSOC);   
+        return $query->fetch(PDO::FETCH_ASSOC);
     }
     /* TODO insertar usuario */
     public function insertCategory($name, $lastname, $identification, $phone, $email, $password_hash, $role_id, $identification_type_id)
@@ -99,7 +104,7 @@ class User extends Connect
         $query->bindValue(9,$id);
         $query->execute();
 
-        return $query->fetch(PDO::FETCH_ASSOC);     
+        return $query->fetch(PDO::FETCH_ASSOC);
     }
 }
 ?>
