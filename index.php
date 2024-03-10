@@ -1,3 +1,15 @@
+<?php
+
+require_once('config/connection.php');
+
+if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
+    require_once('models/User.php');
+    $user = new User();
+    $user->login();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="es" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none">
 <head>
@@ -128,6 +140,5 @@
 <!--     <script src="assets/js/plugins.js"></script> -->
     <script src="assets/js/pages/password-addon.init.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script type="text/javascript" src="login.js"></script>
 </body>
 </html>

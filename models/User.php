@@ -4,7 +4,37 @@ class User extends Connect
     /* TODO Iniciar Session */
     public function login()
     {
+        $conectar = parent::connection();
         
+        if(isset($_POST['enviar'])){
+            $identification = $_POST['identification'];
+            $password       = $_POST['password_hash'];
+            
+            if(empty($identification) AND $password){
+                exit();
+            }else{
+                $sql = '
+                    SELECT
+                        *
+                    FROM
+                        users
+                    WHERE
+                        identification = ? AND password_hash = ? AND is_active = 1
+                ';
+                
+                $query = $conectar->prepare($sql);
+                $query->bindValue(1, $identification);
+                $query->bindValue(2, $password);
+                $query->execute();
+                $result = $query->fetch(PDO::FETCH_ASSOC);
+                
+                if(is_array($result) AND count($result) > 0){
+                    
+                }else{
+                    exit();
+                }
+            }
+        }
     }
     /* TODO obtener usuario por ID */
     public function getUserById($id)
