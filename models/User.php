@@ -16,11 +16,13 @@ class User extends Connect
             }else{
                 $sql = '
                     SELECT
-                        *
+                        u.*,
+                        r.name as nameRol
                     FROM
-                        users
+                        users u
+                    INNER JOIN roles r ON u.role_id = r.id
                     WHERE
-                        identification = ? AND password_hash = ? AND is_active = 1
+                        u.identification = ? AND u.password_hash = ? AND u.is_active = 1
                 ';
                 
                 $query = $conectar->prepare($sql);
@@ -34,6 +36,7 @@ class User extends Connect
                     $_SESSION['name']      = $result['name'];
                     $_SESSION['lastname']  = $result['lastname'];
                     $_SESSION['email']     = $result['email'];
+                    $_SESSION['role']      = $result['nameRol'];
                     header("Location:".Connect::route().'/views/home/index.php');
                     exit;
                 }else{
