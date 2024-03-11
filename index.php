@@ -80,7 +80,29 @@ if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
 
                                         <div class="mt-4">
                                             <form action="" method="post" id="login_form">
-
+												<?php
+												if(isset($_GET['msg'])){
+												    switch($_GET['msg']){
+												        case "1":
+												        ?>
+												        <div class="alert alert-warning alert-icon alert-close" role="alert">
+												        	<button type="button" class="close" data-dismiss="alert" aria-label="CLose">X</button>
+												        	<i class="font-icon font-icon-warning"></i>
+												        	Identificacion y/o clave estan vacios
+												        </div>
+												        <?php
+												        break;
+                                                        case "2":
+                                                        ?>
+                                                        <div class="alert alert-warning alert-icon alert-close" role="alert">
+                                                     	     <button type="button" class="close" data-dismiss="alert" aria-label="Close">X</button>
+                                                     	     <i class="font-icon font-icon-warning"></i>
+												        	 Identificacion y/o clave estan incorrectos
+                                                        </div>
+                                                        <?php
+												    }
+												}
+												?>
                                                 <div class="mb-3">
                                                     <label for="identification" class="form-label">Identificacion</label>
                                                     <input type="text" class="form-control" name="identification" id="identification" placeholder="Ingrese Identificacion">

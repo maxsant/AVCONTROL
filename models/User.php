@@ -10,8 +10,9 @@ class User extends Connect
             $identification = $_POST['identification'];
             $password       = $_POST['password_hash'];
             
-            if(empty($identification) AND $password){
-                exit();
+            if(empty($identification) AND empty($password)){
+                header("location:".Connect::route().'/index.php?msg=1');
+                exit;
             }else{
                 $sql = '
                     SELECT
@@ -29,9 +30,10 @@ class User extends Connect
                 $result = $query->fetch(PDO::FETCH_ASSOC);
                 
                 if(is_array($result) AND count($result) > 0){
-                    
+                    var_dump("Usuario encontrado"); exit;
                 }else{
-                    exit();
+                    header("location:".Connect::route().'/index.php?msg=2');
+                    exit;
                 }
             }
         }
