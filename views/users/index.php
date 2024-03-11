@@ -48,7 +48,6 @@ require_once('../../config/connection.php');
                                     <table id="table_data" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th></th>
                                                 <th>Correo</th>
                                                 <th>Nombre</th>
                                                 <th>Apellido</th>
@@ -76,7 +75,7 @@ require_once('../../config/connection.php');
     </div>
     <?php require_once("mantenimiento.php"); ?>
     <?php require_once("../html/js.php"); ?>
-    <script type="text/javascript" src="mntusuario.js"></script>
+    <script type="text/javascript" src="user.js"></script>
 </body>
 
 </html>

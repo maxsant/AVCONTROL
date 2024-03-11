@@ -66,6 +66,27 @@ class User extends Connect
 
         return $query->fetch(PDO::FETCH_ASSOC);  
     }
+    /* TODO obtener usuario por ID */
+    public function getUsers()
+    {
+        $conectar = parent::connection();
+        
+        $sql = '
+            SELECT
+                u.*,
+                r.name as nameRol
+            FROM
+                users u
+            INNER JOIN roles as r ON u.role_id = r.id
+            WHERE
+                u.is_active = 1
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->execute();
+        
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
     /* TODO eliminar usurio por ID */
     public function deleteUserById($id)
     {
