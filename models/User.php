@@ -30,7 +30,12 @@ class User extends Connect
                 $result = $query->fetch(PDO::FETCH_ASSOC);
                 
                 if(is_array($result) AND count($result) > 0){
-                    var_dump("Usuario encontrado"); exit;
+                    $_SESSION['id']        = $result['id'];
+                    $_SESSION['name']      = $result['name'];
+                    $_SESSION['lastname']  = $result['lastname'];
+                    $_SESSION['email']     = $result['email'];
+                    header("Location:".Connect::route().'/views/home/index.php');
+                    exit;
                 }else{
                     header("location:".Connect::route().'/index.php?msg=2');
                     exit;

@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 class Connect
 {
     protected $dbh;
