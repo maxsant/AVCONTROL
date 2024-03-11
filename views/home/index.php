@@ -40,6 +40,9 @@ if(!empty($_SESSION['id'])){
 					</div>
 				</div>
 			</div>
+			<?php
+            require_once("../html/footer.php");
+            ?>
 		</div>
 	</div>
 
