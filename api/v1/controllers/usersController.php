@@ -17,7 +17,8 @@ class usersController
                         "phone"=> $user['phone'],
                         "email"=>$user['email'],
                         "created"=> $user['created'],
-                        "modified"=> $user['modified']
+                        "modified"=> $user['modified'],
+                        "is_active"=> $user['is_active']
                     ]
                 ];
             }else{
@@ -44,7 +45,8 @@ class usersController
                     "phone"=> $value['phone'],
                     "email"=>$value['email'],
                     "created"=> $value['created'],
-                    "modified"=> $value['modified']
+                    "modified"=> $value['modified'],
+                    "is_active"=> $value['is_active']
                 ];
                 $arrayData['users'][] = $userDetails;
             }
@@ -79,6 +81,42 @@ class usersController
             $json = [
                 "status" => 400,
                 "message" => "No se creo correctamente el usuario"
+            ];
+        }
+        echo json_encode($json, true);
+        return;
+    }
+    public function delete($id)
+    {
+        $user = userModel::delete("users", $id);
+        
+        if($user){
+            $json = [
+                "status" => 200,
+                "message" => "Se elimino correctamente el usuario con iD: ".$id
+            ];
+        }else{
+            $json = [
+                "status" => 400,
+                "message" => "No se elimino correctamente el usuario"
+            ];
+        }
+        echo json_encode($json, true);
+        return;
+    }
+    public function update($id, $data)
+    {
+        $user = userModel::update("users", $id, $data);
+        
+        if($user){
+            $json = [
+                "status" => 200,
+                "message" => "Se actualizo correctamente el usuario con iD: ".$id
+            ];
+        }else{
+            $json = [
+                "status" => 400,
+                "message" => "No se actualizo correctamente el usuario"
             ];
         }
         echo json_encode($json, true);
