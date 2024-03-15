@@ -12,9 +12,21 @@ class userModel extends Connect
 
         $stmt=$connect2->prepare($sql);
         $stmt->execute();
-        $stmt->close();
         
         return $stmt->fetchAll();
+    }
+    static public function user($id,$table)
+    {
+        $connect=new Connect();
+        $connect2=$connect->connection();
+        $connect->set_names();
+        $sql="SELECT * FROM $table WHERE id=?";
+        
+        $stmt=$connect2->prepare($sql);
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+        
+        return $stmt->fetch();
     }
 }
 ?>

@@ -2,29 +2,55 @@
 
 class usersController 
 {
-    public function view()
+    public function view($id = null)
     {
-        $users=userModel::index("users");
-        $arrayData=[
-            "status" => 200, 
-            "message" => 'lista de usuarios'.count($users),
-            "users" => []
-        ];
-        
-        foreach ($users as $value){
-            $userDetails=[
-                "name"=> $value['name'],
-                "lastname"=> $value['lastname'],
-                "identification"=> $value['identification'],
-                "phone"=> $value['phone'],
-                "email"=>$value['email'],
-                "created"=> $value['created'],
-                "modified"=> $value['modified']
+        if(!empty($id)){
+            $user = userModel::user($id, "users");
+            if(!empty($user)){
+                $arrayData=[
+                    "status" => 200,
+                    "message" => 'Este es el usuario con el ID: '.$user['id'],
+                    "value" => [
+                        "name"=> $user['name'],
+                        "lastname"=> $user['lastname'],
+                        "identification"=> $user['identification'],
+                        "phone"=> $user['phone'],
+                        "email"=>$user['email'],
+                        "created"=> $user['created'],
+                        "modified"=> $user['modified']
+                    ]
+                ];
+            }else{
+                $arrayData=[
+                    "status" => 400,
+                    "message" => 'No se encontro un usuario'
+                ];
+            }
+            echo json_encode($arrayData,true);
+            return;
+        }else{
+            $users=userModel::index("users");
+            $arrayData=[
+                "status" => 200, 
+                "message" => 'lista de usuarios '.count($users),
+                "users" => []
             ];
-            $arrayData['users'][] = $userDetails;
+            
+            foreach ($users as $value){
+                $userDetails=[
+                    "name"=> $value['name'],
+                    "lastname"=> $value['lastname'],
+                    "identification"=> $value['identification'],
+                    "phone"=> $value['phone'],
+                    "email"=>$value['email'],
+                    "created"=> $value['created'],
+                    "modified"=> $value['modified']
+                ];
+                $arrayData['users'][] = $userDetails;
+            }
+            echo json_encode($arrayData,true);
+            return;
         }
-        echo json_encode($arrayData,true);
-        return;
     }
 }
 ?>
