@@ -52,5 +52,37 @@ class usersController
             return;
         }
     }
+    public function create($data)
+    {
+        $password_hash = password_hash($data['password'], PASSWORD_DEFAULT);
+        
+        $arrayData = [
+            "name" => $data['name'],
+            "lastname" => $data['lastname'],
+            "identification" => $data['identification'],
+            "phone" => $data['phone'],
+            "email" => $data['email'],
+            "password_hash" => $password_hash,
+            "identification_type_id" => $data['identification_type_id'],
+            "role_id" => $data['role_id'],
+            "created" => $data['created']
+        ];
+        
+        $create = userModel::create("users", $arrayData);
+        
+        if($create){
+            $json = [
+                "status" => 200,
+                "message" => "Se creo correctamente el usuario"
+            ];
+        }else{
+            $json = [
+                "status" => 400,
+                "message" => "No se creo correctamente el usuario"
+            ];
+        }
+        echo json_encode($json, true);
+        return;
+    }
 }
 ?>

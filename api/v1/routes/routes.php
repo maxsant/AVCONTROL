@@ -11,11 +11,33 @@ if (count(array_filter($routesArray)) ==3){
     return;
 }else{
     if (count(array_filter($routesArray)) == 5 ){
-        if(!is_numeric(array_filter($routesArray)[5]) AND array_filter($routesArray)[5] == 'index'){
-            if (array_filter($routesArray)[4] == 'users'){
-                if (isset($_SERVER['REQUEST_METHOD']) AND $_SERVER['REQUEST_METHOD']=='GET'){
-                    $users=new usersController();
-                    $users->view();
+        if(!is_numeric(array_filter($routesArray)[5])){
+            if(array_filter($routesArray)[5] == 'index'){
+                if (array_filter($routesArray)[4] == 'users'){
+                    if (isset($_SERVER['REQUEST_METHOD']) AND $_SERVER['REQUEST_METHOD']=='GET'){
+                        $users=new usersController();
+                        $users->view();
+                    }
+                }
+            }else if(array_filter($routesArray)[5] == 'create'){
+                if (array_filter($routesArray)[4] == 'users'){
+                    if (isset($_SERVER['REQUEST_METHOD']) AND $_SERVER['REQUEST_METHOD']=='POST'){
+                        //Leer datos de jSON
+                        $json_data = file_get_contents("php://input");
+                        //Decodificado JSON
+                        $data = json_decode($json_data, true);
+                        if(empty($data)){
+                            $json = [
+                                "status" => 400,
+                                "message" => "Error de formato JSON"
+                            ];
+                            
+                            echo json_encode($json, true);
+                            return;
+                        }
+                        $users=new usersController();
+                        $users->create($data);
+                    }
                 }
             }
         }else if(is_numeric(array_filter($routesArray)[5])){
