@@ -1,4 +1,43 @@
+function init()
+{
+	$("#mantenimiento_form").on("submit", function(e){
+		console.log("entro");
+		guardaryeditar(e);
+	})
+}
+
+function guardaryeditar(e)
+{
+	e.preventDefault();
+	var formData = new FormData($("#mantenimiento_form")[0]);
+	$.ajax({
+		url: "../../controllers/UserController.php?op=createAndUpdate",
+		type: "POST",
+		data: formData,
+		contentType: false,
+		processData: false, // Ortografía corregida
+		success: function(data){
+			$('#table_data').DataTable().ajax.reload();
+			$('#modalmantenimiento').modal('hide');
+			
+			swal.fire({
+				title: 'Usuario',
+				text: 'Registro confirmado',
+				icon: 'success'
+			});
+		}
+	});
+}
+
 $(document).ready(function(){
+
+	$.post("../../controllers/RoleController.php?op=combo", function(data){
+		$('#role_id').html(data);
+	});
+	
+	$.post("../../controllers/IdentificationController.php?op=combo", function(data){
+		$('#identification_type_id').html(data);
+	});
 
     $('#table_data').DataTable({
         "aProcessing": true,
@@ -44,3 +83,12 @@ $(document).ready(function(){
         },
     });
 });
+
+$(document).on("click", "#btnnuevo", function(){
+	$('#id').val('');
+    $('#lbltitulo').html('Nuevo Registro');
+    $("#mantenimiento_form")[0].reset();
+    $('#modalmantenimiento').modal('show');
+})
+
+init();

@@ -100,6 +100,15 @@ if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
 												        	 Identificacion y/o clave estan incorrectos
                                                         </div>
                                                         <?php
+                                                        break;
+                                                        case "3":
+                                                            ?>
+                                                        <div class="alert alert-warning alert-icon alert-close" role="alert">
+                                                     	     <button type="button" class="close" data-dismiss="alert" aria-label="Close">X</button>
+                                                     	     <i class="font-icon font-icon-warning"></i>
+												        	 La clave de seguridad es incorrecta
+                                                        </div>
+                                                        <?php
 												    }
 												}
 												?>

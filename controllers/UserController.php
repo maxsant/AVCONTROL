@@ -35,6 +35,13 @@ switch($_GET['op'])
         ];
         echo json_encode($results);
         break;
+    case "createAndUpdate":
+        if(empty($_POST['id'])){
+            $user->insertUser($_POST['name'], $_POST['lastname'], $_POST['identification'], $_POST['phone'], $_POST['email'], $_POST['password_hash'], $_POST['role_id'], $_POST['identification_type_id']);
+        }else{
+            $user->updateUserById($_POST['id'], $_POST['name'], $_POST['lastname'], $_POST['identification'], $_POST['phone'], $_POST['email'], $_POST['password_hash'], $_POST['role_id'], $_POST['identification_type_id']);
+        }
+        break;
 }
 
 ?>

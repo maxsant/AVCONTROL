@@ -2,8 +2,8 @@
 
 require_once('../../config/connection.php');
 
+if($_SESSION['id']){
 ?>
-
 <!doctype html>
 <html lang="es" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none">
 <head>
@@ -77,5 +77,10 @@ require_once('../../config/connection.php');
     <?php require_once("../html/js.php"); ?>
     <script type="text/javascript" src="user.js"></script>
 </body>
-
 </html>
+<?php
+}else{
+    header("Location:".Connect::route().'/index.php');
+    exit;
+}
+?>
