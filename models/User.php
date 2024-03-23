@@ -158,7 +158,7 @@ class User extends Connect
                     email = ?,
                     password_hash = ?,
                     role_id = ?,
-                    identification_type_id = ?,
+                    identification_type_id = ?
                 WHERE
                     id=?
             ';
@@ -185,7 +185,7 @@ class User extends Connect
                     phone = ?,
                     email = ?,
                     role_id = ?,
-                    identification_type_id = ?,
+                    identification_type_id = ?
                 WHERE
                     id=?
             ';

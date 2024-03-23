@@ -55,7 +55,7 @@
                         <div class="col-md-12">
                             <div>
                                 <label for="valueInput" class="form-label">Clave</label>
-                                <input type="text" class="form-control" id="password_hash" name="password_hash" required/>
+                                <input type="text" class="form-control" id="password_hash" name="password_hash"/>
                             </div>
                         </div>
                     </div>

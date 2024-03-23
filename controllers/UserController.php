@@ -42,6 +42,13 @@ switch($_GET['op'])
             $user->updateUserById($_POST['id'], $_POST['name'], $_POST['lastname'], $_POST['identification'], $_POST['phone'], $_POST['email'], $_POST['password_hash'], $_POST['role_id'], $_POST['identification_type_id']);
         }
         break;
+    case "viewUser":
+        $datos = $user->getUserById($_POST['id']);
+        echo json_encode($datos);
+        break;
+    case "delete":
+        $datos = $user->deleteUserById($_POST['id']);
+        break;
 }
 
 ?>
