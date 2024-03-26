@@ -50,6 +50,11 @@
                             <i class="ri-honour-line"></i> <span data-key="t-widgets">Identificaciones</span>
                         </a>
                     </li>
+         			<li class="nav-item">
+                        <a class="nav-link menu-link" href="../roles/">
+                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Roles</span>
+                        </a>
+                    </li>
                 <li class="menu-title"><span data-key="t-menu">Compra</span></li>
                 <li class="menu-title"><span data-key="t-menu">Venta</span></li>
             </ul>
