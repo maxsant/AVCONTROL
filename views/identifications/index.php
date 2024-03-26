@@ -7,7 +7,7 @@ if($_SESSION['id']){
 <!doctype html>
 <html lang="es" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none">
 <head>
-    <title>Usuarios</title>
+    <title>Identificaciones</title>
     <?php
     require_once("../html/head.php");
     ?>
@@ -27,12 +27,12 @@ if($_SESSION['id']){
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Usuarios</h4>
+                                <h4 class="mb-sm-0">Identificaciones</h4>
                                 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="javascript: void(0);">Mantenimiento</a></li>
-                                        <li class="breadcrumb-item active">Usuario</li>
+                                        <li class="breadcrumb-item active">Identificacion</li>
                                     </ol>
                                 </div>
 
@@ -48,13 +48,10 @@ if($_SESSION['id']){
                                     <table id="table_data" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Correo</th>
                                                 <th>Nombre</th>
-                                                <th>Apellido</th>
-                                                <th>DNI</th>
-                                                <th>Telefono</th>
-                                                <th>Rol</th>
-                                                <th>FechaCreacion</th>
+                                                <th>Descripcion</th>
+                                                <th>Creado</th>
+                                                <th>Estado</th>
                                                 <th></th>
                                                 <th></th>
                                             </tr>
@@ -75,7 +72,7 @@ if($_SESSION['id']){
     </div>
     <?php require_once("mantenimiento.php"); ?>
     <?php require_once("../html/js.php"); ?>
-    <script type="text/javascript" src="user.js"></script>
+    <script type="text/javascript" src="identification.js"></script>
 </body>
 </html>
 <?php

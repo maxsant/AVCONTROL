@@ -35,14 +35,19 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                 	<li class="nav-item">
-                        <a class="nav-link menu-link" href="../home/index.php">
+                        <a class="nav-link menu-link" href="../home/">
                             <i class="ri-honour-line"></i> <span data-key="t-widgets">Dashboard</span>
                         </a>
                     </li>
                 <li class="menu-title"><span data-key="t-menu">Mantenimiento</span></li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="../users/index.php">
+                        <a class="nav-link menu-link" href="../users/">
                             <i class="ri-honour-line"></i> <span data-key="t-widgets">Usuarios</span>
+                        </a>
+                    </li>
+         			<li class="nav-item">
+                        <a class="nav-link menu-link" href="../identifications/">
+                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Identificaciones</span>
                         </a>
                     </li>
                 <li class="menu-title"><span data-key="t-menu">Compra</span></li>

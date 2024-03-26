@@ -13,29 +13,24 @@ function guardaryeditar(e)
 	var camposVacios = false;
 	
 	formData.forEach(function(value, key) {
-		var idFieldValue = formData.get('id');
-	    var isEditing    = idFieldValue !== null && idFieldValue !== undefined && idFieldValue !== '';
-	
-	    if (!isEditing){
-	        if(key == 'password_hash'){
-	            if(value === ""){
-	                camposVacios = true;
-	                return false;
-	            }
+		if(key !== 'id'){
+	        if(value === ""){
+	            camposVacios = true;
+	            return false;
 	        }
-	    }
+        }
 	});
     
     if(camposVacios){
         swal.fire({
-			title: 'Usuario',
-			text: 'La clave no puede estar vacia',
+			title: 'Identificacion',
+			text: 'Campos no pueden estar vacios',
 			icon: 'error'
 		});
         return false;
     }
 	$.ajax({
-		url: "../../controllers/UserController.php?op=createAndUpdate",
+		url: "../../controllers/IdentificationController.php?op=createAndUpdate",
 		type: "POST",
 		data: formData,
 		contentType: false,
@@ -45,7 +40,7 @@ function guardaryeditar(e)
 			$('#modalmantenimiento').modal('hide');
 			
 			swal.fire({
-				title: 'Usuario',
+				title: 'Identificacion',
 				text: 'Registro confirmado',
 				icon: 'success'
 			});
@@ -54,14 +49,6 @@ function guardaryeditar(e)
 }
 
 $(document).ready(function(){
-
-	$.post("../../controllers/RoleController.php?op=combo", function(data){
-		$('#role_id').html(data);
-	});
-	
-	$.post("../../controllers/IdentificationController.php?op=combo", function(data){
-		$('#identification_type_id').html(data);
-	});
 
     $('#table_data').DataTable({
         "aProcessing": true,
@@ -73,7 +60,7 @@ $(document).ready(function(){
             'csvHtml5',
         ],
         "ajax":{
-            url:"../../controllers/UserController.php?op=listUser",
+            url:"../../controllers/IdentificationController.php?op=listIdentification",
             type:"post"
         },
         "bDestroy": true,
@@ -112,16 +99,11 @@ function editar(id)
 {
 	$('#id').val('');
 	$("#mantenimiento_form")[0].reset();
-	$.post("../../controllers/UserController.php?op=viewUser", {id: id}, function(data){
+	$.post("../../controllers/IdentificationController.php?op=viewIdentification", {id: id}, function(data){
 		data = JSON.parse(data);
 		$("#id").val(data.id);
 		$("#name").val(data.name);
-		$("#lastname").val(data.lastname);
-		$("#identification").val(data.identification);
-		$("#phone").val(data.phone);
-		$("#email").val(data.email);
-		$("#role_id").val(data.role_id).trigger('change');
-		$("#identification_type_id").val(data.identification_type_id).trigger('change');
+		$("#description").val(data.description);
 	});
 	$('#lbltitulo').html('Editar Registro');
     $('#modalmantenimiento').modal('show');
@@ -138,14 +120,14 @@ function eliminar(id)
         cancelButtonText: "No",
     }).then((result)=>{
         if (result.value){
-            $.post("../../controllers/UserController.php?op=delete",{id : id},function(data){
+            $.post("../../controllers/IdentificationController.php?op=delete",{id : id},function(data){
                 console.log(data);
             });
 
             $('#table_data').DataTable().ajax.reload();
 
             swal.fire({
-                title:'Usuario',
+                title:'Identificacion',
                 text: 'Registro Eliminado',
                 icon: 'success'
             });
