@@ -47,6 +47,19 @@ switch($_GET['op'])
     case "delete":
         $datos = $chicken->deleteChickenById($_POST['id']);
         break;
+        /* TODO lIstar combobox */
+    case "combo":
+        $datos = $chicken->getChickens();
+        
+        if(is_array($datos) == true AND count($datos) > 0){
+            $html = '';
+            $html.= "<option selected>Seleccionar</option>";
+            foreach($datos as $row){
+                $html.= "<option value='".$row['id']."'>".$row['breed']."</option>";
+            }
+            echo $html;
+        }
+        break;
 }
 
 ?>

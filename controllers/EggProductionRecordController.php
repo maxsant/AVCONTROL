@@ -47,6 +47,19 @@ switch($_GET['op'])
     case "delete":
         $datos = $eggProductionRecord->deleteEggProductionRecordById($_POST['id']);
         break;
+        /* TODO lIstar combobox */
+    case "combo":
+        $datos = $eggProductionRecord->getEggProductionRecords();
+        
+        if(is_array($datos) == true AND count($datos) > 0){
+            $html = '';
+            $html.= "<option selected>Seleccionar</option>";
+            foreach($datos as $row){
+                $html.= "<option value='".$row['id']."'>Fecha: ".$row['production_date']." | Produccion: ".$row['production_quantity']."</option>";
+            }
+            echo $html;
+        }
+        break;
 }
 
 ?>
