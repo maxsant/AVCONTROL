@@ -75,6 +75,16 @@
                             <i class="ri-honour-line"></i> <span data-key="t-widgets">Granjas</span>
                         </a>
                     </li>
+         			         			<li class="nav-item">
+                        <a class="nav-link menu-link" href="../productTypes/">
+                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Tipo Productos</span>
+                        </a>
+                    </li>
+         			<li class="nav-item">
+                        <a class="nav-link menu-link" href="../products/">
+                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Productos</span>
+                        </a>
+                    </li>
                 <li class="menu-title"><span data-key="t-menu">Compra</span></li>
                 <li class="menu-title"><span data-key="t-menu">Venta</span></li>
             </ul>
