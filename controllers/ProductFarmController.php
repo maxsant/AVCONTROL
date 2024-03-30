@@ -1,31 +1,37 @@
 <?php
 
 require_once('../config/connection.php');
+require_once('../models/ProductFarms.php');
 require_once('../models/Products.php');
+require_once('../models/Farms.php');
 require_once('../models/ProductTypes.php');
 
+$productFarm = new ProductFarms();
 $product = new Products();
+$farm = new Farms();
 $productType = new ProductTypes();
 
 switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            $product->insertProducts($_POST['expiration_date'], $_POST['stock'], $_POST['product_type_id']);
+            $productFarm->insertProductFarm($_POST['product_id'], $_POST['farm_id']);
         }else{
-            $product->updateProductById($_POST['id'], $_POST['expiration_date'], $_POST['stock'], $_POST['product_type_id']);
+            $productFarm->updateProductFarmById($_POST['id'], $_POST['product_id'], $_POST['farm_id']);
         }
         break;
-    case "listProduct":
-        $datos = $product->getProducts();
+    case "listProductFarm":
+        $datos = $productFarm->getProductFarms();
         $data  = [];
         foreach($datos as $row){
             
-            $productTypeData = $productType->getProductTypeById($row['product_type_id']);
+            $productData = $product->getProductById($row['product_id']);
+            $farmData    = $farm->getFarmById($row['farm_id']);
+            $productTypeData = $productType->getProductTypeById($productData['product_type_id']);
             
             $sub_array   = [];
-            $sub_array[] = $row['expiration_date'];
-            $sub_array[] = $row['stock'];
+            $sub_array[] = $farmData['name'];
+            $sub_array[] = $productData['expiration_date'];
             $sub_array[] = $productTypeData['name'];
             $sub_array[] = $row['created'];
             $sub_array[] = '<span class="">Activo</span>';
@@ -45,26 +51,25 @@ switch($_GET['op'])
         ];
         echo json_encode($results);
         break;
-    case "viewProduct":
-        $datos = $product->getProductById($_POST['id']);
-        echo json_encode($datos);
-        break;
-    case "delete":
-        $datos = $product->deleteProductById($_POST['id']);
-        break;
-        /* TODO lIstar combobox */
+    /* TODO lIstar combobox */
     case "combo":
-        $datos = $product->getProducts();
+        $datos = $productFarm->getProductFarms();
         
         if(is_array($datos) == true AND count($datos) > 0){
             $html = '';
             $html.= "<option selected>Seleccionar</option>";
             foreach($datos as $row){
-                $productTypeData = $productType->getProductTypeById($row['product_type_id']);
-                $html.= "<option value='".$row['id']."'>Fecha Expiracion: ".$row['expiration_date']." | Stock: ".$row['stock']." | Nombre: ".$productTypeData['name']."</option>";
+                $html.= "<option value='".$row['id']."'>".$row['farm_id']." ".$row['product_id']."</option>";
             }
             echo $html;
         }
+        break;
+    case "viewProductFarm":
+        $datos = $productFarm->getProductFarmById($_POST['id']);
+        echo json_encode($datos);
+        break;
+    case "delete":
+        $datos = $productFarm->deleteProductFarmById($_POST['id']);
         break;
 }
 
