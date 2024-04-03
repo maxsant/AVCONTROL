@@ -37,6 +37,7 @@ class User extends Connect
                         $_SESSION['lastname']  = $result['lastname'];
                         $_SESSION['email']     = $result['email'];
                         $_SESSION['role']      = $result['nameRol'];
+                        $_SESSION['role_id']   = $result['role_id'];
                         header("Location:".Connect::route().'/views/home/index.php');
                         exit;
                     }else{
@@ -45,6 +46,49 @@ class User extends Connect
                     }
                 }else{
                     header("location:".Connect::route().'/index.php?msg=3');
+                    exit;
+                }
+            }
+        }
+    }
+    /* TODO Registrar Usuario por WEB */
+    public function registerUser()
+    {
+        $conectar = parent::connection();
+        
+        if(isset($_POST['register'])){
+            if(empty($_POST['name']) OR empty($_POST['lastname']) OR empty($_POST['password_hash']) OR empty($_POST['identification']) OR empty($_POST['identification_type_id']) OR empty($_POST['email']) OR empty($_POST['phone'])){
+                header("Location:".Connect::route().'/views/register/index.php?msg=1');
+                exit;
+            }else{
+                $name               = $_POST['name'];
+                $lastname           = $_POST['lastname'];
+                $password           = $_POST['password_hash'];
+                $identification     = $_POST['identification'];
+                $identificationType = $_POST['identification_type_id'];
+                $phone              = $_POST['phone'];
+                $email              = $_POST['email'];
+                
+                $password_hash      = password_hash($password, PASSWORD_DEFAULT);
+                
+                $sql = '
+                    INSERT INTO
+                        users (name, lastname, password_hash, identification, identification_type_id, phone, email, role_id, created)
+                    VALUES
+                        (?, ?, ?, ?, ?, ?, ?, 2, now())
+                ';
+                
+                $query = $conectar->prepare($sql);
+                $query->bindValue(1, $name);
+                $query->bindValue(2, $lastname);
+                $query->bindValue(3, $password_hash);
+                $query->bindValue(4, $identification);
+                $query->bindValue(5, $identificationType);
+                $query->bindValue(6, $phone);
+                $query->bindValue(7, $email);
+                
+                if($query->execute()){
+                    header("Location:".Connect::route().'/views/register/index.php?msg=2');
                     exit;
                 }
             }

@@ -19,7 +19,7 @@ if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
 	<title>AVCONTROL</title>
 	
 	<!-- import CSS -->
-	<link rel="shortcut icon" href="../../assets/images/favicon.ico">
+	<link rel="shortcut icon" href="assets/images/favicon.ico">
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" >
 	<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" >
@@ -136,6 +136,10 @@ if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
                                                 <div class="mt-4">
                                                     <input type="hidden" name="enviar" value="si">
                                                     <button class="btn btn-success w-100" type="submit">Acceder</button>
+                                                </div>
+                                                
+                                                <div class="mt-4">
+                                                    <a href="views/register/" id="btnregister">Registrarse</a>
                                                 </div>
                                             </form>
                                         </div>

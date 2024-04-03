@@ -1,0 +1,16 @@
+{
+    "name": "laura/includes",
+    "autoload": {
+        "psr-4": {
+            "Laura\\Includes\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Max"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}

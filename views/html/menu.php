@@ -39,6 +39,7 @@
                             <i class="ri-honour-line"></i> <span data-key="t-widgets">Dashboard</span>
                         </a>
                     </li>
+         		<?php if($_SESSION['role_id'] == 1){ ?>
                 <li class="menu-title"><span data-key="t-menu">Mantenimiento</span></li>
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="../users/">
@@ -95,6 +96,14 @@
                             <i class="ri-honour-line"></i> <span data-key="t-widgets">Metodos Pago</span>
                         </a>
                     </li>
+         		<?php }else if($_SESSION['role_id'] == 2){ ?>
+         		     <li class="menu-title"><span data-key="t-menu">Servicios</span></li>
+         		     	<li class="nav-item">
+                        <a class="nav-link menu-link" href="#">
+                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Comprar</span>
+                        </a>
+                    </li>
+         		<?php }?>
                 <li class="menu-title"><span data-key="t-menu">Compra</span></li>
                 <li class="menu-title"><span data-key="t-menu">Venta</span></li>
             </ul>
