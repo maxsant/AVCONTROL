@@ -94,6 +94,26 @@ class User extends Connect
             }
         }
     }
+    /* TODO obtener usuario por Correo */
+    public function getUserByEmail($email)
+    {
+        $conectar = parent::connection();
+        
+        $sql = '
+            SELECT
+                *
+            FROM
+                users
+            WHERE
+                is_active = 1 AND email=?
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1,$email);
+        $query->execute();
+        
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
     /* TODO obtener usuario por ID */
     public function getUserById($id)
     {
