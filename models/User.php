@@ -1,4 +1,5 @@
 <?php
+
 class User extends Connect
 {
     /* TODO Iniciar Session */
@@ -52,47 +53,44 @@ class User extends Connect
         }
     }
     /* TODO Registrar Usuario por WEB */
-    public function registerUser()
+    public function registerUser($name, $lastname, $identification, $phone, $email, $password, $identification_type_id)
     {
         $conectar = parent::connection();
         
-        if(isset($_POST['register'])){
-            if(empty($_POST['name']) OR empty($_POST['lastname']) OR empty($_POST['password_hash']) OR empty($_POST['identification']) OR empty($_POST['identification_type_id']) OR empty($_POST['email']) OR empty($_POST['phone'])){
-                header("Location:".Connect::route().'/views/register/index.php?msg=1');
-                exit;
-            }else{
-                $name               = $_POST['name'];
-                $lastname           = $_POST['lastname'];
-                $password           = $_POST['password_hash'];
-                $identification     = $_POST['identification'];
-                $identificationType = $_POST['identification_type_id'];
-                $phone              = $_POST['phone'];
-                $email              = $_POST['email'];
-                
-                $password_hash      = password_hash($password, PASSWORD_DEFAULT);
-                
-                $sql = '
-                    INSERT INTO
-                        users (name, lastname, password_hash, identification, identification_type_id, phone, email, role_id, created)
-                    VALUES
-                        (?, ?, ?, ?, ?, ?, ?, 2, now())
-                ';
-                
-                $query = $conectar->prepare($sql);
-                $query->bindValue(1, $name);
-                $query->bindValue(2, $lastname);
-                $query->bindValue(3, $password_hash);
-                $query->bindValue(4, $identification);
-                $query->bindValue(5, $identificationType);
-                $query->bindValue(6, $phone);
-                $query->bindValue(7, $email);
-                
-                if($query->execute()){
-                    header("Location:".Connect::route().'/views/register/index.php?msg=2');
-                    exit;
-                }
+        if(empty($name) OR empty($lastname) OR empty($password) OR empty($identification) OR empty($identification_type_id) OR empty($email) OR empty($phone)){
+            $answer = [
+                'status' => false,
+                'msg' => 'Campos vacios'
+            ];
+        }else{
+            
+            $password_hash      = password_hash($password, PASSWORD_DEFAULT);
+            
+            $sql = '
+                INSERT INTO
+                    users (name, lastname, password_hash, identification, identification_type_id, phone, email, role_id, created)
+                VALUES
+                    (?, ?, ?, ?, ?, ?, ?, 2, now())
+            ';
+            
+            $query = $conectar->prepare($sql);
+            $query->bindValue(1, $name);
+            $query->bindValue(2, $lastname);
+            $query->bindValue(3, $password_hash);
+            $query->bindValue(4, $identification);
+            $query->bindValue(5, $identification_type_id);
+            $query->bindValue(6, $phone);
+            $query->bindValue(7, $email);
+            
+            if($query->execute()){
+                $answer = [
+                    'status' => true,
+                    'msg' => 'usuario creado correctamente',
+                    'email' => $email
+                ];
             }
         }
+        echo json_encode($answer, JSON_UNESCAPED_UNICODE);
     }
     /* TODO obtener usuario por Correo */
     public function getUserByEmail($email)

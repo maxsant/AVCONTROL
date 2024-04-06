@@ -15,6 +15,7 @@ class Emails extends PHPMailer
     
     public function confirmedEmail($email)
     {
+        $tbody = '';
         $user = new User();
         $userData = $user->getUserByEmail($email);
         
