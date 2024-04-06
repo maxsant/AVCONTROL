@@ -1,6 +1,3 @@
-CREATE DATABASE AVCONTROL;
-USE AVCONTROL;
-
 /* 
 Creacion entidades DB
 */
@@ -34,10 +31,14 @@ CREATE TABLE users (
     `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
     `lastname` VARCHAR(255) NOT NULL,
-	`identification` VARCHAR(20) NOT NULL,
-    `phone` VARCHAR(15),
-    `email` VARCHAR(255) NOT NULL,
+	`identification` VARCHAR(20) UNIQUE NOT NULL,
+    `phone` VARCHAR(15) UNIQUE,
+    `email` VARCHAR(255) UNIQUE NOT NULL,
+    `validate` INT(11) DEFAULT 0 NOT NULL,
+    `register_google` INT(11) DEFAULT 0 NOT NULL,
+    `email_token` VARCHAR(255) UNIQUE,
 	`password_hash` VARCHAR(255) NOT NULL,
+    `api_key` VARCHAR(255) UNIQUE,
 	`role_id` INT(11) NOT NULL,
 	`identification_type_id` INT(11) NOT NULL,
 	`created` DATETIME NOT NULL,
@@ -55,8 +56,8 @@ CREATE TABLE suppliers (
     `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
     `contact` VARCHAR(255) NOT NULL,
-    `email` VARCHAR(255),
-    `phone` VARCHAR(15),
+    `email` VARCHAR(255) UNIQUE,
+    `phone` VARCHAR(15) UNIQUE,
 	`created` DATETIME NOT NULL,
 	`modified` TIMESTAMP NOT NULL,
 	`is_active` TINYINT(11) DEFAULT 1,
@@ -270,6 +271,6 @@ VALUES
     ('Cedula de Extranjeria', 'Documento para los extranjeros', '2024-06-02');
 
 INSERT INTO
-	users (name, lastname, identification, phone, email, password_hash, role_id, identification_type_id, created)
+	users (name, lastname, identification, phone, email, validate, email_token, password_hash, api_key, role_id, identification_type_id, created)
 VALUES
-	('Admin', 'Prueba', '12345678910', '3256781821', 'adminp@gmail.com', '$2y$10$0kFnZhqxkDdLl93Jb60cfuusVJ8X8w5H7cSV2eohrn55HsVFt1KTm', 1, 1, NOW());
+	('Admin', 'Prueba', '12345678910', '3256781821', 'adminp@gmail.com', 1, 'iazicxtyjqswcdjpxetqplardvaswenxxewgqmwdveebwjuaphjlksugicskutzu', '$2y$10$0kFnZhqxkDdLl93Jb60cfuusVJ8X8w5H7cSV2eohrn55HsVFt1KTm', 'X3nNRvHfZcpKrmVogkNNAQAbc2rs2ekoT5dZyf1pPCulTKT4H4J1bmIMLSr9Hn7d', 1, 1, NOW());

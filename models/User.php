@@ -33,14 +33,19 @@ class User extends Connect
                 
                 if(password_verify($password, $result['password_hash'])){
                     if(is_array($result) AND count($result) > 0){
-                        $_SESSION['id']        = $result['id'];
-                        $_SESSION['name']      = $result['name'];
-                        $_SESSION['lastname']  = $result['lastname'];
-                        $_SESSION['email']     = $result['email'];
-                        $_SESSION['role']      = $result['nameRol'];
-                        $_SESSION['role_id']   = $result['role_id'];
-                        header("Location:".Connect::route().'/views/home/index.php');
-                        exit;
+                        if($result['validate'] == 1){
+                            $_SESSION['id']        = $result['id'];
+                            $_SESSION['name']      = $result['name'];
+                            $_SESSION['lastname']  = $result['lastname'];
+                            $_SESSION['email']     = $result['email'];
+                            $_SESSION['role']      = $result['nameRol'];
+                            $_SESSION['role_id']   = $result['role_id'];
+                            header("Location:".Connect::route().'/views/home/index.php');
+                            exit;
+                        }else{
+                            header("Location:".Connect::route().'/index.php?msg=4');
+                            exit;
+                        }
                     }else{
                         header("location:".Connect::route().'/index.php?msg=2');
                         exit;
@@ -65,12 +70,14 @@ class User extends Connect
         }else{
             
             $password_hash      = password_hash($password, PASSWORD_DEFAULT);
+            $tokenEmail         = str_replace("$", "a", crypt($email.$identification.$phone, '$2a$07$afartwetsdAD52356FEDGsfhsd$'));
+            $apiKey             = sprintf("%s-%s-%s-%s-%s", substr(md5($email), 0, 8), substr(md5($identification), 0, 4), substr(md5($name), 0, 4), substr(md5(uniqid()), 0, 4), substr(md5(uniqid()), 0, 8));
             
             $sql = '
                 INSERT INTO
-                    users (name, lastname, password_hash, identification, identification_type_id, phone, email, role_id, created)
+                    users (name, lastname, password_hash, identification, identification_type_id, phone, email, role_id, api_key, email_token, validate, created)
                 VALUES
-                    (?, ?, ?, ?, ?, ?, ?, 2, now())
+                    (?, ?, ?, ?, ?, ?, ?, 2, ?, ?, 0, now())
             ';
             
             $query = $conectar->prepare($sql);
@@ -81,6 +88,8 @@ class User extends Connect
             $query->bindValue(5, $identification_type_id);
             $query->bindValue(6, $phone);
             $query->bindValue(7, $email);
+            $query->bindValue(8, $apiKey);
+            $query->bindValue(9, $tokenEmail);
             
             if($query->execute()){
                 $answer = [
@@ -108,6 +117,50 @@ class User extends Connect
         
         $query = $conectar->prepare($sql);
         $query->bindValue(1,$email);
+        $query->execute();
+        
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
+    /*
+     *  TODO Funcion para actualizar el token del usuario
+     */
+    public function updateTokenUser($id, $email_token)
+    {
+        $conectar = parent::connection();
+        parent::set_names();
+        
+        $sql = "
+            UPDATE
+                users
+            SET
+                validate = 1,
+                email_token = ?
+            WHERE
+                id = ?
+        ";
+        $sql = $conectar->prepare($sql);
+        $sql->bindValue(1, $email_token);
+        $sql->bindValue(2, $id);
+        $sql->execute();
+        
+        return $result = $sql->fetchAll();
+    }
+    /* TODO obtener usuario por Token */
+    public function getUserByToken($email_token)
+    {
+        $conectar = parent::connection();
+        
+        $sql = '
+            SELECT
+                *
+            FROM
+                users
+            WHERE
+                is_active = 1 AND email_token =?
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1,$email_token);
         $query->execute();
         
         return $query->fetch(PDO::FETCH_ASSOC);
@@ -180,11 +233,14 @@ class User extends Connect
         
         $password = password_hash($password_hash, PASSWORD_DEFAULT);
         
+        $tokenEmail = str_replace("$", "a", crypt($email.$identification.$phone, '$2a$07$afartwetsdAD52356FEDGsfhsd$'));
+        $apiKey     = sprintf("%s-%s-%s-%s-%s", substr(md5($email), 0, 8), substr(md5($identification), 0, 4), substr(md5($name), 0, 4), substr(md5(uniqid()), 0, 4), substr(md5(uniqid()), 0, 8));
+        
         $sql = '
             INSERT INTO
-                users (name, lastname, identification, phone, email, password_hash, role_id, identification_type_id, created)
+                users (name, lastname, identification, phone, email, password_hash, role_id, identification_type_id, api_key, email_token, validate, created)
             VALUES
-                (?, ?, ?, ?, ?, ?, ?, ?, now())
+                (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, now())
         ';
 
         $query = $conectar->prepare($sql);
@@ -196,6 +252,8 @@ class User extends Connect
         $query->bindValue(6,$password);
         $query->bindValue(7,$role_id);
         $query->bindValue(8,$identification_type_id);
+        $query->bindValue(9,$apiKey);
+        $query->bindValue(10,$tokenEmail);
         $query->execute();
 
         return $query->fetch(PDO::FETCH_ASSOC);   

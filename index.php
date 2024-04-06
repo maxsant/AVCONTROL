@@ -109,6 +109,15 @@ if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
 												        	 La clave de seguridad es incorrecta
                                                         </div>
                                                         <?php
+                                                        break;
+                                                        case "4":
+                                                            ?>
+                                                        <div class="alert alert-warning alert-icon alert-close" role="alert">
+                                                     	     <button type="button" class="close" data-dismiss="alert" aria-label="Close">X</button>
+                                                     	     <i class="font-icon font-icon-warning"></i>
+												        	 El usuario no se encuentra validado. Por favor verifique su cuenta en <a href="views/site/submitted-email.php">Validar Cuenta</a>
+                                                        </div>
+                                                        <?php
 												    }
 												}
 												?>
