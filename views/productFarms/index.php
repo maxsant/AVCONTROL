@@ -49,7 +49,7 @@ if($_SESSION['id']){
                                         <thead>
                                             <tr>
                                                 <th>Granja</th>
-                                                <th>Producto</th>
+                                                <th>Fecha Expiracion</th>
                                                 <th>Nombre</th>
                                                 <th>Creado</th>
                                                 <th>Estado</th>

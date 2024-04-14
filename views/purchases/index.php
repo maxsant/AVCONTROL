@@ -56,28 +56,28 @@ if($_SESSION['id']){
                                     <div class="live-preview">
                                         <div class="row align-items-center g-3">
                                             <div class="col-lg-4">
-                                                <label for="prov_id" class="form-label">Proveedor</label>
-                                                <select id="prov_id" name="prov_id" class="form-control form-select" aria-label="Seleccione">
+                                                <label for="supplier_id" class="form-label">Proveedor</label>
+                                                <select id="supplier_id" name="prov_id" class="form-control form-select" aria-label="Seleccione">
                                                     <option value='0' selected>Seleccione</option>
 
                                                 </select>
                                             </div>
                                             <div class="col-lg-4">
-                                                <label for="prov_ruc" class="form-label">RUC</label>
-                                                <input type="text" class="form-control" id="prov_ruc" name="prov_ruc" placeholder="RUC" readonly/>
+                                                <label for="supplier_ruc" class="form-label">RUC</label>
+                                                <input type="text" class="form-control" id="supplier_ruc" name="supplier_ruc" placeholder="RUC" readonly/>
                                             </div>
                                             <div class="col-lg-4">
-                                                <label for="prov_direcc" class="form-label">Dirección</label>
-                                                <input type="text" class="form-control" id="prov_direcc" name="prov_direcc" placeholder="Dirección" readonly/>
+                                                <label for="supplier_address" class="form-label">Dirección</label>
+                                                <input type="text" class="form-control" id="supplier_address" name="supplier_address" placeholder="Dirección" readonly/>
                                             </div>
 
                                             <div class="col-lg-6">
-                                                <label for="prov_correo" class="form-label">Correo</label>
-                                                <input type="text" class="form-control" id="prov_correo" name="prov_correo" placeholder="Correo Electronico" readonly/>
+                                                <label for="supplier_email" class="form-label">Correo</label>
+                                                <input type="text" class="form-control" id="supplier_email" name="supplier_email" placeholder="Correo Electronico" readonly/>
                                             </div>
                                             <div class="col-lg-6">
-                                                <label for="prov_telf" class="form-label">Telefono</label>
-                                                <input type="text" class="form-control" id="prov_telf" name="prov_telf" placeholder="Telefono" readonly/>
+                                                <label for="supplier_phone" class="form-label">Telefono</label>
+                                                <input type="text" class="form-control" id="supplier_phone" name="supplier_phone" placeholder="Telefono" readonly/>
                                             </div>
                                         </div>
                                     </div>
@@ -99,39 +99,34 @@ if($_SESSION['id']){
                                         <div class="row align-items-center g-3">
 
                                             <div class="col-lg-3">
-                                                <label for="cat_id" class="form-label">Categoria</label>
-                                                <select id="cat_id" name="cat_id" class="form-control form-select" aria-label="Seleccionar">
+                                                <label for="product_type_id" class="form-label">Tipo de Producto</label>
+                                                <select id="product_type_id" name="product_type_id" class="form-control form-select" aria-label="Seleccionar">
                                                     <option selected>Seleccione</option>
 
                                                 </select>
                                             </div>
 
                                             <div class="col-lg-3">
-                                                <label for="prod_id" class="form-label">Producto</label>
-                                                <select id="prod_id" name="prod_id" class="form-control form-select" aria-label="Seleccionar">
+                                                <label for="product_id" class="form-label">Producto</label>
+                                                <select id="product_id" name="product_id" class="form-control form-select" aria-label="Seleccionar">
                                                     <option selected>Seleccione</option>
 
                                                 </select>
                                             </div>
 
                                             <div class="col-lg-1">
-                                                <label for="prod_pcompra" class="form-label">Precio</label>
-                                                <input type="number" class="form-control" id="prod_pcompra" name="prod_pcompra" placeholder="Precio" />
+                                                <label for="product_type_price" class="form-label">Precio</label>
+                                                <input type="number" class="form-control" id="product_type_price" name="product_type_price" placeholder="Precio" readonly />
                                             </div>
 
                                             <div class="col-lg-1">
-                                                <label for="prod_stock" class="form-label">Stock</label>
-                                                <input type="text" class="form-control" id="prod_stock" name="prod_stock" placeholder="Stock" readonly/>
-                                            </div>
-
-                                            <div class="col-lg-2">
-                                                <label for="und_nom" class="form-label">Und.</label>
-                                                <input type="text" class="form-control" id="und_nom" name="und_nom" placeholder="UndMedida" readonly/>
+                                                <label for="product_stock" class="form-label">Stock</label>
+                                                <input type="text" class="form-control" id="product_stock" name="product_stock" placeholder="Stock" readonly/>
                                             </div>
 
                                             <div class="col-lg-1">
-                                                <label for="detc_cant" class="form-label">Cant.</label>
-                                                <input type="number" class="form-control" id="detc_cant" name="detc_cant" placeholder="Cant."/>
+                                                <label for="stock" class="form-label">Cant.</label>
+                                                <input type="number" class="form-control" id="stock" name="stock" placeholder="Cant."/>
                                             </div>
 
                                             <div class="col-lg-1 d-grid gap-1">
@@ -159,28 +154,28 @@ if($_SESSION['id']){
                                         <div class="row align-items-center g-3">
 
                                             <div class="col-lg-4">
-                                                <label for="doc_id" class="form-label">Documento</label>
-                                                <select id="doc_id" name="doc_id" class="form-control form-select" aria-label="Seleccionar">
+                                                <label for="identification_type_id" class="form-label">Documento</label>
+                                                <select id="identification_type_id" name="identification_type_id" class="form-control form-select" aria-label="Seleccionar">
                                                     <option value="0" selected>Seleccione</option>
 
                                                 </select>
                                             </div>
 
                                             <div class="col-lg-4">
-                                                <label for="pag_id" class="form-label">Pago</label>
-                                                <select id="pag_id" name="pag_id" class="form-control form-select" aria-label="Seleccionar">
+                                                <label for="payment_id" class="form-label">Pago</label>
+                                                <select id="payment_id" name="payment_id" class="form-control form-select" aria-label="Seleccionar">
                                                     <option value="0" selected>Seleccione</option>
 
                                                 </select>
                                             </div>
 
-                                            <div class="col-lg-4">
+                                            <!-- <div class="col-lg-4">
                                                 <label for="mon_id" class="form-label">Moneda</label>
                                                 <select id="mon_id" name="mon_id" class="form-control form-select" aria-label="Seleccionar">
                                                     <option value='0' selected>Seleccione</option>
 
                                                 </select>
-                                            </div>
+                                            </div> -->
 
                                         </div>
                                     </div>

@@ -52,6 +52,19 @@ switch($_GET['op'])
     case "delete":
         $datos = $product->deleteProductById($_POST['id']);
         break;
+    case "getProductByType":
+        $datos = $product->getProductByTypeId($_POST['product_type_id']);
+        
+        if(is_array($datos) == true AND count($datos) > 0){
+            $html = '';
+            $html.= "<option selected>Seleccionar</option>";
+            foreach($datos as $row){
+                $productTypeData = $productType->getProductTypeById($row['product_type_id']);
+                $html.= "<option value='".$row['id']."'>Fecha Expiracion: ".$row['expiration_date']." | Nombre: ".$productTypeData['name']."</option>";
+            }
+            echo $html;
+        }
+        break;
         /* TODO lIstar combobox */
     case "combo":
         $datos = $product->getProducts();

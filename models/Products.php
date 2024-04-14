@@ -85,6 +85,26 @@ class Products extends Connect
         
         return $query->fetch(PDO::FETCH_ASSOC);
     }
+    /* TODO obtener productos por su tipo mediante la ID */
+    public function getProductByTypeId($id)
+    {
+        $conectar = parent::connection();
+        
+        $sql = '
+            SELECT
+                *
+            FROM
+                products
+            WHERE
+                is_active = 1 AND product_type_id = ?
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1,$id);
+        $query->execute();
+        
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
     /* TODO eliminar productos por ID */
     public function deleteProductById($id)
     {
