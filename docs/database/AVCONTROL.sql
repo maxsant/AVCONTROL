@@ -55,7 +55,8 @@ CREATE TABLE users (
 CREATE TABLE suppliers (
     `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
-    `contact` VARCHAR(255) NOT NULL,
+    `RUC` VARCHAR(50) NOT NULL,
+    `address` VARCHAR(150) NOT NULL,
     `email` VARCHAR(255) UNIQUE,
     `phone` VARCHAR(15) UNIQUE,
 	`created` DATETIME NOT NULL,
