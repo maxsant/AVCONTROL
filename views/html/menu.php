@@ -4,19 +4,19 @@
 
         <a href="index.html" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="../../assets/images/logo-sm.png" alt="" height="22">
+                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="../../assets/images/logo-dark.png" alt="" height="17">
+                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="17">
             </span>
         </a>
 
         <a href="index.html" class="logo logo-light">
             <span class="logo-sm">
-                <img src="../../assets/images/logo-sm.png" alt="" height="22">
+                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="../../assets/images/logo-light.png" alt="" height="17">
+                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="17">
             </span>
         </a>
 
@@ -97,10 +97,10 @@
                         </a>
                     </li>
          		<?php }else if($_SESSION['role_id'] == 2){ ?>
-         		     <li class="menu-title"><span data-key="t-menu">Servicios</span></li>
+         		     <li class="menu-title"><span data-key="t-menu">Compra</span></li>
          		     	<li class="nav-item">
-                        <a class="nav-link menu-link" href="#">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Comprar</span>
+                        <a class="nav-link menu-link" href="../purchases/">
+                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Nueva Compra</span>
                         </a>
                     </li>
          		<?php }?>
