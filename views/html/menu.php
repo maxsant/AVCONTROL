@@ -96,6 +96,11 @@
                             <i class="ri-honour-line"></i> <span data-key="t-widgets">Metodos Pago</span>
                         </a>
                     </li>
+         			<li class="nav-item">
+                        <a class="nav-link menu-link" href="../suppliers/">
+                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Proveedores</span>
+                        </a>
+                    </li>
          		<?php }else if($_SESSION['role_id'] == 2){ ?>
          		     <li class="menu-title"><span data-key="t-menu">Compra</span></li>
          		     	<li class="nav-item">
