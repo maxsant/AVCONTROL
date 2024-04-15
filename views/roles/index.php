@@ -54,6 +54,7 @@ if($_SESSION['id']){
                                                 <th>Estado</th>
                                                 <th></th>
                                                 <th></th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -71,6 +72,7 @@ if($_SESSION['id']){
         </div>
     </div>
     <?php require_once("mantenimiento.php"); ?>
+    <?php require_once("modalPermission.php"); ?>
     <?php require_once("../html/js.php"); ?>
     <script type="text/javascript" src="role.js"></script>
 </body>

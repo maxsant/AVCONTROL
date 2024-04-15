@@ -25,6 +25,7 @@ switch($_GET['op'])
             $sub_array[] = '<span class="">Activo</span>';
             
             // DIbujar los botones
+            $sub_array[] = '<button type="button" onCLick="permiso('.$row['id'].')" id="'.$row['id'].'" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-settings-2-line"></i></button>';
             $sub_array[] = '<button type="button" onCLick="editar('.$row['id'].')" id="'.$row['id'].'" class="btn btn-warning btn-icon waves-effect waves-light">Editar</button>';
             $sub_array[] = '<button type="button" onCLick="eliminar('.$row['id'].')" id="'.$row['id'].'" class="btn btn-danger btn-icon waves-effect waves-light">Eliminar</button>';
             $data[]      = $sub_array;

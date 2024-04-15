@@ -14,6 +14,37 @@ CREATE TABLE roles
 	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`))
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
+-- AVCONTROL.menus definition
+CREATE TABLE menus
+(
+    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(100) NOT NULL,
+    `route` VARCHAR(200),
+    `identification` VARCHAR(200),
+    `group` VARCHAR(150),
+    `created` DATETIME NOT NULL,
+    `modified` TIMESTAMP NOT NULL,
+    `is_active` TINYINT(11) DEFAULT 1,
+    `custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`))
+) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- AVCONTROL.menu_roles definition
+CREATE TABLE menu_roles
+(
+    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+    `menu_id` INT(11) NOT NULL,
+    `role_id` INT(11) NOT NULL,
+    `permission` VARCHAR(2) NOT NULL,
+    `created` DATETIME NOT NULL,
+    `modified` TIMESTAMP NOT NULL,
+    `is_active` TINYINT(11) DEFAULT 1,
+    `custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
+    FOREIGN KEY (menu_id) REFERENCES menus (id),
+    FOREIGN KEY (role_id) REFERENCES roles (id),
+    INDEX idx_menu_id (menu_id) USING BTREE,
+    INDEX idx_role_id (role_id) USING BTREE
+) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
+
 -- AVCONTROL.identifications definition
 CREATE TABLE identifications
 (

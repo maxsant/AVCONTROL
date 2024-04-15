@@ -1,3 +1,13 @@
+<?php
+
+require_once("../../config/connection.php");
+require_once("../../models/Menus.php");
+
+$menu  = new Menus();
+$menus = $menu->getMenusByRole($_SESSION['role_id']);
+
+?>
+
 <div class="app-menu navbar-menu">
 
     <div class="navbar-brand-box">
@@ -34,74 +44,30 @@
             </div>
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
-                	<li class="nav-item">
-                        <a class="nav-link menu-link" href="../home/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Dashboard</span>
-                        </a>
-                    </li>
-         		<?php if($_SESSION['role_id'] == 1){ ?>
+                <?php foreach($menus as $row){
+                    if($row['group'] == 'Dashboard' AND $row['permission'] == "Si"){
+                    ?>
+             		   	<li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["route"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row['name']; ?></span>
+                            </a>
+                        </li>
+                    <?php
+                    }
+                }?>
                 <li class="menu-title"><span data-key="t-menu">Mantenimiento</span></li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="../users/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Usuarios</span>
-                        </a>
-                    </li>
-         			<li class="nav-item">
-                        <a class="nav-link menu-link" href="../identifications/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Identificaciones</span>
-                        </a>
-                    </li>
-         			<li class="nav-item">
-                        <a class="nav-link menu-link" href="../roles/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Roles</span>
-                        </a>
-                    </li>
-         			<li class="nav-item">
-                        <a class="nav-link menu-link" href="../chickens/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Gallinas</span>
-                        </a>
-                    </li>
-         			<li class="nav-item">
-                        <a class="nav-link menu-link" href="../foods/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Alimentos</span>
-                        </a>
-                    </li>
-         			<li class="nav-item">
-                        <a class="nav-link menu-link" href="../eggProductionRecords/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Produccion Huevos</span>
-                        </a>
-                    </li>
-         			<li class="nav-item">
-                        <a class="nav-link menu-link" href="../farms/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Granjas</span>
-                        </a>
-                    </li>
-         			         			<li class="nav-item">
-                        <a class="nav-link menu-link" href="../productTypes/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Tipo Productos</span>
-                        </a>
-                    </li>
-         			<li class="nav-item">
-                        <a class="nav-link menu-link" href="../products/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Productos</span>
-                        </a>
-                    </li>
-         			<li class="nav-item">
-                        <a class="nav-link menu-link" href="../productFarms/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Producto Granja</span>
-                        </a>
-                    </li>
-         			<li class="nav-item">
-                        <a class="nav-link menu-link" href="../payments/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Metodos Pago</span>
-                        </a>
-                    </li>
-         			<li class="nav-item">
-                        <a class="nav-link menu-link" href="../suppliers/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Proveedores</span>
-                        </a>
-                    </li>
-         		<?php }else if($_SESSION['role_id'] == 2){ ?>
+                <?php foreach($menus as $row){
+                    if($row['group'] == 'Mantenimiento' AND $row['permission'] == "Si"){
+                    ?>
+             		   	<li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["route"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row['name']; ?></span>
+                            </a>
+                        </li>
+                    <?php
+                    }
+                }?>
+         		<?php if($_SESSION['role_id'] == 2){ ?>
          		     <li class="menu-title"><span data-key="t-menu">Compra</span></li>
          		     	<li class="nav-item">
                         <a class="nav-link menu-link" href="../purchases/">
@@ -109,8 +75,6 @@
                         </a>
                     </li>
          		<?php }?>
-                <li class="menu-title"><span data-key="t-menu">Compra</span></li>
-                <li class="menu-title"><span data-key="t-menu">Venta</span></li>
             </ul>
         </div>
     </div>
