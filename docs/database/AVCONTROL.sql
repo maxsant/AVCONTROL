@@ -120,13 +120,13 @@ CREATE TABLE chickens (
 	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`))
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
--- AVCONTROL.foods defitinion
-CREATE TABLE foods (
+-- AVCONTROL.deliveries defitinion
+CREATE TABLE deliveries (
     `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
     `type` VARCHAR(50) NOT NULL,
     `stock` INT(11) NOT NULL,
-    `required_quantity` INT(11) NOT NULL,
+    `price` DECIMAL(18, 2) DEFAULT NULL,
 	`created` DATETIME NOT NULL,
 	`modified` TIMESTAMP NOT NULL,
 	`is_active` TINYINT(11) DEFAULT 1,
@@ -152,7 +152,7 @@ CREATE TABLE farms (
     `location` VARCHAR(255) NOT NULL,
     `size` INT(11),
 	`chicken_id` INT(11),
-	`food_id` INT(11),
+	`delivery_id` INT(11),
     `egg_production_record_id` INT(11),
 	`created` DATETIME NOT NULL,
 	`modified` TIMESTAMP NOT NULL,
@@ -160,43 +160,55 @@ CREATE TABLE farms (
 	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
 	FOREIGN KEY (`egg_production_record_id`) REFERENCES egg_production_records (`id`),
 	FOREIGN KEY (`chicken_id`) REFERENCES chickens (`id`),
-	FOREIGN KEY (`food_id`) REFERENCES foods (`id`),
+	FOREIGN KEY (`delivery_id`) REFERENCES deliveries (`id`),
 	INDEX `idx_egg_production_record_id` (`egg_production_record_id`) USING BTREE,
 	INDEX `idx_chicken_id` (`chicken_id`) USING BTREE,
-	INDEX `idx_food_id` (`food_id`) USING BTREE
+	INDEX `idx_delivery_id` (`delivery_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- AVCONTROL.purchases definition
 CREATE TABLE purchases (
     `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
-    `invoice_number` VARCHAR(100) NOT NULL,
-    `purchase_date` DATE NOT NULL,
-    `purchase_total` DECIMAL(10, 2) NOT NULL,
-    `supplier_id` INT(11) NOT NULL,
+    `supplier_ruc` VARCHAR(50) DEFAULT NULL,
+    `supplier_address` VARCHAR(150) DEFAULT NULL,
+    `supplier_email` VARCHAR(255) DEFAULT NULL,
+	`supplier_phone` VARCHAR(15) DEFAULT NULL,
+    `subtotal` DECIMAL(18, 2) DEFAULT 0,
+    `iva` DECIMAL(18, 2) DEFAULT 0,
+    `total` DECIMAL(18, 2) DEFAULT 0,
+    `comment` VARCHAR(255) DEFAULT NULL,
+    `supplier_id` INT(11) DEFAULT NULL,
 	`payment_id` INT(11) DEFAULT NULL,
+	`status_purchase` INT(11) DEFAULT 2,
+	`user_id` INT(11) DEFAULT NULL,
 	`created` DATETIME NOT NULL,
 	`modified` TIMESTAMP NOT NULL,
 	`is_active` TINYINT(11) DEFAULT 1,
 	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
     FOREIGN KEY (`supplier_id`) REFERENCES suppliers (`id`),
 	FOREIGN KEY (`payment_id`) REFERENCES payments (`id`),
+	FOREIGN KEY (`user_id`) REFERENCES users (`id`),
 	INDEX `idx_supplier_id` (`supplier_id`) USING BTREE,
-	INDEX `idx_payment_id` (`payment_id`) USING BTREE
+	INDEX `idx_payment_id` (`payment_id`) USING BTREE,
+	INDEX `idx_user_id` (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- AVCONTROL.purchase_details definition
 CREATE TABLE purchase_details (
     `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
     `stock` INT(11) NOT NULL,
-    `unit_price` DECIMAL(10, 2),
-    `subtotal` DECIMAL(10, 2) NOT NULL,
+    `price` DECIMAL(10, 2),
+    `total` DECIMAL(10, 2) NOT NULL,
     `purchase_id` INT(11) NOT NULL,
+    `delivery_id` INT(11) NOT NULL,
 	`created` DATETIME NOT NULL,
 	`modified` TIMESTAMP NOT NULL,
 	`is_active` TINYINT(11) DEFAULT 1,
 	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
 	FOREIGN KEY (`purchase_id`) REFERENCES purchases (`id`),
-	INDEX `idx_purchase_id` (`purchase_id`) USING BTREE
+	FOREIGN KEY (`delivery_id`) REFERENCES deliveries (`id`),
+	INDEX `idx_purchase_id` (`purchase_id`) USING BTREE,
+	INDEX `idx_delivery_id` (`delivery_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- AVCONTROL.product_types definition
@@ -225,21 +237,6 @@ CREATE TABLE products (
 	FOREIGN KEY (`product_type_id`) REFERENCES product_types (`id`),
 	INDEX `idx_product_type_id` (`product_type_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
-
-CREATE TABLE purchase_products
-(
-	`id` INT(11) AUTO_INCREMENT PRIMARY KEY,
-    `product_id` INT(11) NOT NULL,
-	`purchase_id` INT(11) NOT NULL,
-	`created` DATETIME NOT NULL,
-	`modified` TIMESTAMP NOT NULL,
-	`is_active` TINYINT(11) DEFAULT 1,
-	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
-	FOREIGN KEY (`product_id`) REFERENCES products (`id`),
-	FOREIGN KEY (`purchase_id`) REFERENCES purchases (`id`),
-	INDEX `idx_product_id` (`product_id`) USING BTREE,
-	INDEX `idx_purchase_id` (`purchase_id`) USING BTREE
-);
 
 -- AVCONTROL.product_farms definition
 CREATE TABLE product_farms (
@@ -309,3 +306,35 @@ INSERT INTO
 	users (name, lastname, identification, phone, email, validate, email_token, password_hash, api_key, role_id, identification_type_id, created)
 VALUES
 	('Admin', 'Prueba', '12345678910', '3256781821', 'adminp@gmail.com', 1, 'iazicxtyjqswcdjpxetqplardvaswenxxewgqmwdveebwjuaphjlksugicskutzu', '$2y$10$0kFnZhqxkDdLl93Jb60cfuusVJ8X8w5H7cSV2eohrn55HsVFt1KTm', 'X3nNRvHfZcpKrmVogkNNAQAbc2rs2ekoT5dZyf1pPCulTKT4H4J1bmIMLSr9Hn7d', 1, 1, NOW());
+
+INSERT INTO menus (name,route,identification,`group`,created,modified,is_active,custom_fields) VALUES
+	 ('Dashboard','../home/','dashboard','Dashboard','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Usuarios','../users/','users','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Identificaciones','../identifications/','identifications','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Roles','../roles/','roles','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Gallinas','../chickens/','chickens','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Suministros','../deliveries/','deliveries','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Granjas','../farms/','farms','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Tipo Productos','../productTypes/','productTypes','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Produccion Huevos','../eggProductionRecords/','eggProductionRecords','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Productos','../products/','products','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Producto Granjas','../productFarms/','productFarms','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Proveedores','../suppliers/','suppliers','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Metodos Pago','../payments/','payments','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Nueva Compra','../purchases/','purchases','Compra','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
+
+INSERT INTO menu_roles (menu_id,role_id,permission,created,modified,is_active,custom_fields) VALUES
+	 (1,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (2,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (3,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (4,1,'Si','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (5,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (6,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (7,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (8,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (9,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (10,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (11,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (12,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (13,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (14,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);

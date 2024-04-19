@@ -3,7 +3,7 @@
 require_once('../../config/connection.php');
 
 if($_SESSION['id']){
-?>
+    ?>
 <!doctype html>
 <html lang="es" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none">
 <head>
@@ -42,7 +42,7 @@ if($_SESSION['id']){
                     </div>
 
                     <!-- TODO:Id de Compra -->
-                    <input type="hidden" name="compr_id" id="compr_id"/>
+                    <input type="hidden" name="purchase_id" id="purchase_id"/>
 
                     <!-- TODO:Datos del Proveedor -->
                     <div class="row">
@@ -91,7 +91,7 @@ if($_SESSION['id']){
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header align-items-center d-flex">
-                                    <h4 class="card-title mb-0 flex-grow-1">Agregar Producto</h4>
+                                    <h4 class="card-title mb-0 flex-grow-1">Agregar Alimento</h4>
                                 </div>
 
                                 <div class="card-body">
@@ -99,34 +99,32 @@ if($_SESSION['id']){
                                         <div class="row align-items-center g-3">
 
                                             <div class="col-lg-3">
-                                                <label for="product_type_id" class="form-label">Tipo de Producto</label>
-                                                <select id="product_type_id" name="product_type_id" class="form-control form-select" aria-label="Seleccionar">
+                                                <label for="food_id" class="form-label">Alimento</label>
+                                                <select id="food_id" name="food_id" class="form-control form-select" aria-label="Seleccionar">
                                                     <option selected>Seleccione</option>
 
                                                 </select>
                                             </div>
 
                                             <div class="col-lg-3">
-                                                <label for="product_id" class="form-label">Producto</label>
-                                                <select id="product_id" name="product_id" class="form-control form-select" aria-label="Seleccionar">
-                                                    <option selected>Seleccione</option>
-
-                                                </select>
+                                                <label for="food_type" class="form-label">Tipo Alimento</label>
+                                                <input type="text" class="form-control" id="food_type" name="food_type" placeholder="Tipo" readonly />
+                                            </div>
+                                            
+                                            <div class="col-lg-2">
+                                                <label for="purchase_detail_price" class="form-label">Precio</label>
+                                                <input type="number" class="form-control" id="purchase_detail_price" name="purchase_detail_price" placeholder="Precio" min="0" />
                                             </div>
 
                                             <div class="col-lg-1">
-                                                <label for="product_type_price" class="form-label">Precio</label>
-                                                <input type="number" class="form-control" id="product_type_price" name="product_type_price" placeholder="Precio" readonly />
+                                                <label for="food_stock" class="form-label">Stock</label>
+                                                <input type="text" class="form-control" id="food_stock" name="food_stock" placeholder="Stock" readonly/>
                                             </div>
+                                            
 
-                                            <div class="col-lg-1">
-                                                <label for="product_stock" class="form-label">Stock</label>
-                                                <input type="text" class="form-control" id="product_stock" name="product_stock" placeholder="Stock" readonly/>
-                                            </div>
-
-                                            <div class="col-lg-1">
-                                                <label for="stock" class="form-label">Cant.</label>
-                                                <input type="number" class="form-control" id="stock" name="stock" placeholder="Cant."/>
+                                            <div class="col-lg-2">
+                                                <label for="purchase_detail_stock" class="form-label">Cant.</label>
+                                                <input type="number" class="form-control" id="purchase_detail_stock" name="purchase_detail_stock" placeholder="Cant." min="0"/>
                                             </div>
 
                                             <div class="col-lg-1 d-grid gap-1">
@@ -152,14 +150,6 @@ if($_SESSION['id']){
                                 <div class="card-body">
                                     <div class="live-preview">
                                         <div class="row align-items-center g-3">
-
-                                            <div class="col-lg-4">
-                                                <label for="identification_type_id" class="form-label">Documento</label>
-                                                <select id="identification_type_id" name="identification_type_id" class="form-control form-select" aria-label="Seleccionar">
-                                                    <option value="0" selected>Seleccione</option>
-
-                                                </select>
-                                            </div>
 
                                             <div class="col-lg-4">
                                                 <label for="payment_id" class="form-label">Pago</label>
@@ -196,10 +186,8 @@ if($_SESSION['id']){
                                     <table id="table_data" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th></th>
-                                                <th>Categoria</th>
-                                                <th>Producto</th>
-                                                <th>Und</th>
+                                                <th>Alimento</th>
+                                                <th>Tipo</th>
                                                 <th>P.Compra</th>
                                                 <th>Cant</th>
                                                 <th>Total</th>
@@ -219,8 +207,8 @@ if($_SESSION['id']){
                                                 <td class="text-end" id="txtsubtotal">0</td>
                                             </tr>
                                             <tr>
-                                                <td>IGV (18%)</td>
-                                                <td class="text-end" id="txtigv">0</td>
+                                                <td>IVA (19%)</td>
+                                                <td class="text-end" id="txtiva">0</td>
                                             </tr>
                                             <tr class="border-top border-top-dashed fs-15">
                                                 <th scope="row">Total</th>
@@ -230,8 +218,8 @@ if($_SESSION['id']){
                                     </table>
 
                                     <div class="mt-4">
-                                        <label for="compr_coment" class="form-label text-muted text-uppercase fw-semibold">Comentario</label>
-                                        <textarea class="form-control alert alert-info" id="compr_coment" name="compr_coment" placeholder="Comentario" rows="4" required=""></textarea>
+                                        <label for="purchase_comment" class="form-label text-muted text-uppercase fw-semibold">Comentario</label>
+                                        <textarea class="form-control alert alert-info" id="purchase_comment" name="purchase_comment" placeholder="Comentario" rows="4" required=""></textarea>
                                     </div>
 
                                     <div class="hstack gap-2 left-content-end d-print-none mt-4">
@@ -258,6 +246,6 @@ if($_SESSION['id']){
 <?php
 }else{
     header("Location:".Connect::route().'/index.php');
-    exit;
+    exit;
 }
 ?>
