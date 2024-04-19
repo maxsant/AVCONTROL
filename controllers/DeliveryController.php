@@ -1,21 +1,21 @@
 <?php
 
 require_once('../config/connection.php');
-require_once('../models/Foods.php');
+require_once('../models/Deliveries.php');
 
-$food = new Foods();
+$delivery = new Deliveries();
 
 switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            $food->insertFood($_POST['name'], $_POST['type'], $_POST['stock'], $_POST['required_quantity']);
+            $delivery->insertDelivery($_POST['name'], $_POST['type'], $_POST['stock'], $_POST['required_quantity']);
         }else{
-            $food->updateFoodById($_POST['id'], $_POST['name'], $_POST['type'], $_POST['stock'], $_POST['required_quantity']);
+            $delivery->updateDeliveryByFood($_POST['id'], $_POST['name'], $_POST['type'], $_POST['stock'], $_POST['required_quantity']);
         }
         break;
     case "listFood":
-        $datos = $food->getFoods();
+        $datos = $delivery->getDeliveries();
         $data  = [];
         foreach($datos as $row){
             $sub_array   = [];
@@ -42,15 +42,15 @@ switch($_GET['op'])
         echo json_encode($results);
         break;
     case "viewFood":
-        $datos = $food->getFoodById($_POST['id']);
+        $datos = $delivery->getDeliveryById($_POST['id']);
         echo json_encode($datos);
         break;
     case "delete":
-        $datos = $food->deleteFoodById($_POST['id']);
+        $datos = $delivery->deleteDeliveryById($_POST['id']);
         break;
         /* TODO lIstar combobox */
     case "combo":
-        $datos = $food->getFoods();
+        $datos = $delivery->getDeliveries();
         
         if(is_array($datos) == true AND count($datos) > 0){
             $html = '';

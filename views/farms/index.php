@@ -52,7 +52,7 @@ if($_SESSION['id']){
                                                 <th>Locacion</th>
                                                 <th>Dimension</th>
                                                 <th>Gallina</th>
-                                                <th>Alimento</th>
+                                                <th>Suministro</th>
                                                 <th>Produccion</th>
                                                 <th>Creado</th>
                                                 <th>Estado</th>

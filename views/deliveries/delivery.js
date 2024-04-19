@@ -22,14 +22,14 @@ function guardaryeditar(e)
     
     if(camposVacios){
         swal.fire({
-			title: 'Alimento',
+			title: 'Suministro',
 			text: 'Campos no pueden estar vacios',
 			icon: 'error'
 		});
         return false;
     }
 	$.ajax({
-		url: "../../controllers/FoodController.php?op=createAndUpdate",
+		url: "../../controllers/DeliveryController.php?op=createAndUpdate",
 		type: "POST",
 		data: formData,
 		contentType: false,
@@ -39,7 +39,7 @@ function guardaryeditar(e)
 			$('#modalmantenimiento').modal('hide');
 			
 			swal.fire({
-				title: 'Alimento',
+				title: 'Suministro',
 				text: 'Registro confirmado',
 				icon: 'success'
 			});
@@ -59,7 +59,7 @@ $(document).ready(function(){
             'csvHtml5',
         ],
         "ajax":{
-            url:"../../controllers/FoodController.php?op=listFood",
+            url:"../../controllers/DeliveryController.php?op=listDelivery",
             type:"post"
         },
         "bDestroy": true,
@@ -98,7 +98,7 @@ function editar(id)
 {
 	$('#id').val('');
 	$("#mantenimiento_form")[0].reset();
-	$.post("../../controllers/FoodController.php?op=viewFood", {id: id}, function(data){
+	$.post("../../controllers/DeliveryController.php?op=viewDelivery", {id: id}, function(data){
 		data = JSON.parse(data);
 		$("#id").val(data.id);
 		$("#name").val(data.name);
@@ -121,14 +121,14 @@ function eliminar(id)
         cancelButtonText: "No",
     }).then((result)=>{
         if (result.value){
-            $.post("../../controllers/FoodController.php?op=delete",{id : id},function(data){
+            $.post("../../controllers/DeliveryController.php?op=delete",{id : id},function(data){
                 console.log(data);
             });
 
             $('#table_data').DataTable().ajax.reload();
 
             swal.fire({
-                title:'Alimento',
+                title:'Suministro',
                 text: 'Registro Eliminado',
                 icon: 'success'
             });

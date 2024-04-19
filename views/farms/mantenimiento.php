@@ -46,8 +46,8 @@
                     <div class="row gy-2">
                         <div class="col-md-12">
                             <div>
-                                <label for="valueInput" class="form-label">Alimento</label>
-                                <select type="text" class="form-control form-select" name="food_id" id="food_id" aria-label="Seleccionar">
+                                <label for="valueInput" class="form-label">Suministro</label>
+                                <select type="text" class="form-control form-select" name="delivery_id" id="delivery_id" aria-label="Seleccionar">
                                     <option selected>Seleccionar</option>
                                 </select>
                             </div>

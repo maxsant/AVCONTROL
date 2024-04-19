@@ -21,13 +21,13 @@ class Farms extends Connect
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     /* TODO insertar granjas */
-    public function insertFarm($name, $location, $size, $chicken_id, $food_id, $egg_production_record_id)
+    public function insertFarm($name, $location, $size, $chicken_id, $delivery_id, $egg_production_record_id)
     {
         $conectar = parent::connection();
         
         $sql = '
             INSERT INTO
-                farms (name, location, `size`, chicken_id, food_id, egg_production_record_id, created)
+                farms (name, location, `size`, chicken_id, delivery_id, egg_production_record_id, created)
             VALUES
                 (?, ?, ?, ?, ?, ?, now())
         ';
@@ -37,14 +37,14 @@ class Farms extends Connect
         $query->bindValue(2,$location);
         $query->bindValue(3,$size);
         $query->bindValue(4,$chicken_id);
-        $query->bindValue(5,$food_id);
+        $query->bindValue(5,$delivery_id);
         $query->bindValue(6,$egg_production_record_id);
         $query->execute();
         
         return $query->fetch(PDO::FETCH_ASSOC);
     }
     /* TODO actualizar granjas por ID */
-    public function updateFarmById($id, $name, $location, $size, $chicken_id, $food_id, $egg_production_record_id)
+    public function updateFarmById($id, $name, $location, $size, $chicken_id, $delivery_id, $egg_production_record_id)
     {
         $conectar = parent::connection();
         
@@ -56,7 +56,7 @@ class Farms extends Connect
                 location = ?,
                 `size` = ?,
                 chicken_id = ?,
-                food_id = ?,
+                delivery_id = ?,
                 egg_production_record_id = ?
             WHERE
                 id=?
@@ -67,7 +67,7 @@ class Farms extends Connect
         $query->bindValue(2,$location);
         $query->bindValue(3,$size);
         $query->bindValue(4,$chicken_id);
-        $query->bindValue(5,$food_id);
+        $query->bindValue(5,$delivery_id);
         $query->bindValue(6,$egg_production_record_id);
         $query->bindValue(7,$id);
         $query->execute();

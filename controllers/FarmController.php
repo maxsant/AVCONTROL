@@ -3,21 +3,21 @@
 require_once('../config/connection.php');
 require_once('../models/Farms.php');
 require_once('../models/Chickens.php');
-require_once('../models/Foods.php');
+require_once('../models/Deliveries.php');
 require_once('../models/EggProductionRecords.php');
 
 $farm = new Farms();
 $chicken = new Chickens();
-$food = new Foods();
+$delivery = new Deliveries();
 $eggProductionRecord = new EggProductionRecords();
 
 switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            $farm->insertFarm($_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id'], $_POST['food_id'], $_POST['egg_production_record_id']);
+            $farm->insertFarm($_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id'], $_POST['delivery_id'], $_POST['egg_production_record_id']);
         }else{
-            $farm->updateFarmById($_POST['id'], $_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id'], $_POST['food_id'], $_POST['egg_production_record_id']);
+            $farm->updateFarmById($_POST['id'], $_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id'], $_POST['delivery_id'], $_POST['egg_production_record_id']);
         }
         break;
     case "listFarm":
@@ -26,7 +26,7 @@ switch($_GET['op'])
         foreach($datos as $row){
             
             $chickenData = $chicken->getChickenById($row['chicken_id']);
-            $foodData = $food->getFoodById($row['food_id']);
+            $foodData = $delivery->getDeliveryById($row['delivery_id']);
             $eggProduction = $eggProductionRecord->getEggProductionRecordById($row['egg_production_record_id']);
             
             $sub_array   = [];

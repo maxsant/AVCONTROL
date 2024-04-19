@@ -1,8 +1,8 @@
 <?php
-class Foods extends Connect
+class Deliveries extends Connect
 {
-    /* TODO Traer los alimentos del sistema */
-    public function getFoods()
+    /* TODO Traer los suministros del sistema */
+    public function getDeliveries()
     {
         $conectar = parent::connection();
         
@@ -10,7 +10,7 @@ class Foods extends Connect
             SELECT
                 *
             FROM
-                foods
+                deliveries
             WHERE
                 is_active = 1
         ';
@@ -20,14 +20,14 @@ class Foods extends Connect
         
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
-    /* TODO insertar alimento */
-    public function insertFood($name, $type, $stock, $required_quantity)
+    /* TODO insertar suministro */
+    public function insertDelivery($name, $type, $stock, $required_quantity)
     {
         $conectar = parent::connection();
         
         $sql = '
             INSERT INTO
-                foods (name, type, stock, required_quantity, created)
+                deliveries (name, type, stock, required_quantity, created)
             VALUES
                 (?, ?, ?, ?, now())
         ';
@@ -41,14 +41,14 @@ class Foods extends Connect
         
         return $query->fetch(PDO::FETCH_ASSOC);
     }
-    /* TODO actualizar alimento por ID */
-    public function updateFoodById($id, $name, $type, $stock, $required_quantity)
+    /* TODO actualizar suministro por ID */
+    public function updateDeliveryByFood($id, $name, $type, $stock, $required_quantity)
     {
         $conectar = parent::connection();
         
         $sql = '
             UPDATE
-                foods
+                deliveries
             SET
                 name = ?,
                 type = ?,
@@ -68,8 +68,8 @@ class Foods extends Connect
         
         return $query->fetch(PDO::FETCH_ASSOC);
     }
-    /* TODO obtener alimento por ID */
-    public function getFoodById($id)
+    /* TODO obtener suministro por ID */
+    public function getDeliveryById($id)
     {
         $conectar = parent::connection();
         
@@ -77,7 +77,7 @@ class Foods extends Connect
             SELECT
                 *
             FROM
-                foods
+                deliveries
             WHERE
                 is_active = 1 AND id=?
         ';
@@ -88,14 +88,14 @@ class Foods extends Connect
         
         return $query->fetch(PDO::FETCH_ASSOC);
     }
-    /* TODO eliminar alimento por ID */
-    public function deleteFoodById($id)
+    /* TODO eliminar suministro por ID */
+    public function deleteDeliveryById($id)
     {
         $conectar = parent::connection();
         
         $sql = '
             UPDATE
-                foods
+                deliveries
             SET
                 is_active = 0
             WHERE
