@@ -4,18 +4,20 @@ $(document).ready(function(){
 
     $('#supplier_id').select2();
     
-    $('#product_type_id').select2();
-    
-    $('#product_id').select2();
+    $('#delivery_id').select2();
 
     $.post("../../controllers/SupplierController.php?op=combo", function(data){
         $("#supplier_id").html(data);
     });
     
-    $.post("../../controllers/ProductTypeController.php?op=combo", function(data){
-        $("#product_type_id").html(data);
+    $.post("../../controllers/DeliveryController.php?op=combo", function(data){
+        $("#delivery_id").html(data);
     });
-
+    
+    $.post("../../controllers/PaymentController.php?op=combo", function(data){
+        $("#payment_id").html(data);
+    });
+    
     $("#supplier_id").change(function(){
         $("#supplier_id").each(function(){
             supplier_id = $(this).val();
@@ -29,24 +31,13 @@ $(document).ready(function(){
         });
     });
     
-    $("#product_type_id").change(function(){
-        $("#product_type_id").each(function(){
-            product_type_id = $(this).val();
-            $.post("../../controllers/ProductTypeController.php?op=viewProductType",{id : product_type_id},function(data){
+    $("#delivery_id").change(function(){
+        $("#delivery_id").each(function(){
+            delivery_id = $(this).val();
+            $.post("../../controllers/DeliveryController.php?op=viewDelivery",{id : delivery_id},function(data){
                 data=JSON.parse(data);
-                $.post("../../controllers/ProductController.php?op=getProductByType", {product_type_id : product_type_id}, function(dataProduct){
-			        $("#product_id").html(dataProduct);
-			    });
-			    $("#product_id").change(function(){
-		        	$("#product_id").each(function(){
-		            	product_id = $(this).val();
-		            	$.post("../../controllers/ProductController.php?op=viewProduct",{id : product_id},function(data2){
-                			data2=JSON.parse(data2);
-                			$('#product_stock').val(data2.stock);
-                		})
-		         	});
-    			});
-                $('#product_type_price').val(data.price);
+                $('#delivery_type').val(data.type);
+                $('#delivery_stock').val(data.stock);
             });
         });
     });

@@ -11,7 +11,7 @@ switch($_GET['op'])
         if(empty($_POST['id'])){
             $delivery->insertDelivery($_POST['name'], $_POST['type'], $_POST['stock'], $_POST['price']);
         }else{
-            $delivery->updateDeliveryByFood($_POST['id'], $_POST['name'], $_POST['type'], $_POST['stock'], $_POST['price']);
+            $delivery->updateDeliveryById($_POST['id'], $_POST['name'], $_POST['type'], $_POST['stock'], $_POST['price']);
         }
         break;
     case "listDelivery":

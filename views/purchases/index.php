@@ -91,7 +91,7 @@ if($_SESSION['id']){
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header align-items-center d-flex">
-                                    <h4 class="card-title mb-0 flex-grow-1">Agregar Alimento</h4>
+                                    <h4 class="card-title mb-0 flex-grow-1">Agregar Suministro</h4>
                                 </div>
 
                                 <div class="card-body">
@@ -99,16 +99,16 @@ if($_SESSION['id']){
                                         <div class="row align-items-center g-3">
 
                                             <div class="col-lg-3">
-                                                <label for="food_id" class="form-label">Alimento</label>
-                                                <select id="food_id" name="food_id" class="form-control form-select" aria-label="Seleccionar">
+                                                <label for="delivery_Id" class="form-label">Suministro</label>
+                                                <select id="delivery_id" name="food_id" class="form-control form-select" aria-label="Seleccionar">
                                                     <option selected>Seleccione</option>
 
                                                 </select>
                                             </div>
 
                                             <div class="col-lg-3">
-                                                <label for="food_type" class="form-label">Tipo Alimento</label>
-                                                <input type="text" class="form-control" id="food_type" name="food_type" placeholder="Tipo" readonly />
+                                                <label for="delivery_type" class="form-label">Tipo Suministro</label>
+                                                <input type="text" class="form-control" id="delivery_type" name="delivery_type" placeholder="Tipo" readonly />
                                             </div>
                                             
                                             <div class="col-lg-2">
@@ -117,8 +117,8 @@ if($_SESSION['id']){
                                             </div>
 
                                             <div class="col-lg-1">
-                                                <label for="food_stock" class="form-label">Stock</label>
-                                                <input type="text" class="form-control" id="food_stock" name="food_stock" placeholder="Stock" readonly/>
+                                                <label for="delivery_stock" class="form-label">Stock</label>
+                                                <input type="text" class="form-control" id="delivery_stock" name="delivery_stock" placeholder="Stock" readonly/>
                                             </div>
                                             
 

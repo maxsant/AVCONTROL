@@ -37,7 +37,7 @@
                         <div class="col-md-12">
                             <div>
                                 <label for="valueInput" class="form-label">Precio</label>
-                                <input type="number" class="form-control" id="required_quantity" name="required_quantity" min="0" required/>
+                                <input type="number" class="form-control" id="price" name="price" min="0" required/>
                             </div>
                         </div>
                     </div>

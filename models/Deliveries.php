@@ -42,7 +42,7 @@ class Deliveries extends Connect
         return $query->fetch(PDO::FETCH_ASSOC);
     }
     /* TODO actualizar suministro por ID */
-    public function updateDeliveryByFood($id, $name, $type, $stock, $price)
+    public function updateDeliveryById($id, $name, $type, $stock, $price)
     {
         $conectar = parent::connection();
         
