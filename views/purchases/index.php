@@ -186,7 +186,7 @@ if($_SESSION['id']){
                                     <table id="table_data" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Alimento</th>
+                                                <th>Suministro</th>
                                                 <th>Tipo</th>
                                                 <th>P.Compra</th>
                                                 <th>Cant</th>
