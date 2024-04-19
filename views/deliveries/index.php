@@ -51,7 +51,7 @@ if($_SESSION['id']){
                                                 <th>Nombre</th>
                                                 <th>Tipo Suministro</th>
                                                 <th>Cantidad</th>
-                                                <th>Cantidad Requerida</th>
+                                                <th>Precio</th>
                                                 <th>Creado</th>
                                                 <th>Estado</th>
                                                 <th></th>

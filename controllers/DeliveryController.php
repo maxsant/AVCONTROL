@@ -9,12 +9,12 @@ switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            $delivery->insertDelivery($_POST['name'], $_POST['type'], $_POST['stock'], $_POST['required_quantity']);
+            $delivery->insertDelivery($_POST['name'], $_POST['type'], $_POST['stock'], $_POST['price']);
         }else{
-            $delivery->updateDeliveryByFood($_POST['id'], $_POST['name'], $_POST['type'], $_POST['stock'], $_POST['required_quantity']);
+            $delivery->updateDeliveryByFood($_POST['id'], $_POST['name'], $_POST['type'], $_POST['stock'], $_POST['price']);
         }
         break;
-    case "listFood":
+    case "listDelivery":
         $datos = $delivery->getDeliveries();
         $data  = [];
         foreach($datos as $row){
@@ -22,7 +22,7 @@ switch($_GET['op'])
             $sub_array[] = $row['name'];
             $sub_array[] = $row['type'];
             $sub_array[] = $row['stock'];
-            $sub_array[] = $row['required_quantity'];
+            $sub_array[] = $row['price'];
             $sub_array[] = $row['created'];
             $sub_array[] = '<span class="">Activo</span>';
             
@@ -41,7 +41,7 @@ switch($_GET['op'])
         ];
         echo json_encode($results);
         break;
-    case "viewFood":
+    case "viewDelivery":
         $datos = $delivery->getDeliveryById($_POST['id']);
         echo json_encode($datos);
         break;

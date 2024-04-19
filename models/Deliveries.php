@@ -21,13 +21,13 @@ class Deliveries extends Connect
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     /* TODO insertar suministro */
-    public function insertDelivery($name, $type, $stock, $required_quantity)
+    public function insertDelivery($name, $type, $stock, $price)
     {
         $conectar = parent::connection();
         
         $sql = '
             INSERT INTO
-                deliveries (name, type, stock, required_quantity, created)
+                deliveries (name, type, stock, price, created)
             VALUES
                 (?, ?, ?, ?, now())
         ';
@@ -36,13 +36,13 @@ class Deliveries extends Connect
         $query->bindValue(1,$name);
         $query->bindValue(2,$type);
         $query->bindValue(3,$stock);
-        $query->bindValue(4,$required_quantity);
+        $query->bindValue(4,$price);
         $query->execute();
         
         return $query->fetch(PDO::FETCH_ASSOC);
     }
     /* TODO actualizar suministro por ID */
-    public function updateDeliveryByFood($id, $name, $type, $stock, $required_quantity)
+    public function updateDeliveryByFood($id, $name, $type, $stock, $price)
     {
         $conectar = parent::connection();
         
@@ -53,7 +53,7 @@ class Deliveries extends Connect
                 name = ?,
                 type = ?,
                 stock = ?,
-                required_quantity = ?
+                price = ?
             WHERE
                 id=?
         ';
@@ -62,7 +62,7 @@ class Deliveries extends Connect
         $query->bindValue(1,$name);
         $query->bindValue(2,$type);
         $query->bindValue(3,$stock);
-        $query->bindValue(4,$required_quantity);
+        $query->bindValue(4,$price);
         $query->bindValue(5,$id);
         $query->execute();
         

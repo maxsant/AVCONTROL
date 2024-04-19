@@ -36,8 +36,8 @@
                     <div class="row gy-2">
                         <div class="col-md-12">
                             <div>
-                                <label for="valueInput" class="form-label">Cantidad Requerida</label>
-                                <input type="text" class="form-control" id="required_quantity" name="required_quantity" required/>
+                                <label for="valueInput" class="form-label">Precio</label>
+                                <input type="number" class="form-control" id="required_quantity" name="required_quantity" min="0" required/>
                             </div>
                         </div>
                     </div>
