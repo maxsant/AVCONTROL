@@ -33,7 +33,6 @@ switch($_GET["op"]){
             "iTotalDisplayRecords"=>count($data),
             "aaData"=>$data);
         echo json_encode($results);
-                break;
         break;
 }
 ?>
