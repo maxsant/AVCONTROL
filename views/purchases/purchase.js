@@ -69,12 +69,52 @@ $(document).on("click","#btnagregar",function(){
 		},function(data){
         });
         
+        $.post("../../controllers/PurchaseController.php?op=calculate",{purchase_id : purchase_id},function(data){
+			data = JSON.parse(data);
+			$('#txtsubtotal').html(data.subtotal);
+			$('#txtiva').html(data.iva);
+			$('#txttotal').html(data.total);
+		});
+        
         $('#purchase_detail_price').val('');
     	$('#purchase_detail_stock').val('');
     	
     	listar(purchase_id);
 	}
 });
+
+function eliminar(purchase_detail_id, purchase_id)
+{
+	swal.fire({
+        title:"Eliminar!",
+        text:"Desea Eliminar el Registro?",
+        icon: "error",
+        confirmButtonText : "Si",
+        showCancelButton : true,
+        cancelButtonText: "No",
+    }).then((result)=>{
+        if (result.value){
+            $.post("../../controllers/PurchaseController.php?op=deletePurchaseDetail",{purchase_detail_id : purchase_detail_id},function(data){
+                console.log(data);
+            });
+            
+            $.post("../../controllers/PurchaseController.php?op=calculate",{purchase_id : purchase_id},function(data){
+				data = JSON.parse(data);
+				$('#txtsubtotal').html(data.subtotal);
+				$('#txtiva').html(data.iva);
+				$('#txttotal').html(data.total);
+    		});
+
+            listar(purchase_id);
+
+            swal.fire({
+                title:'Compra',
+                text: 'Registro Eliminado',
+                icon: 'success'
+            });
+        }
+    });
+}
 
 function listar(purchase_id){
     $('#table_data').DataTable({
@@ -122,6 +162,58 @@ function listar(purchase_id){
         },
     });
 }
+
+$(document).on("click","#btnguardar",function(){
+    var purchase_id = $("#purchase_id").val();
+    var supplier_id = $("#supplier_id").val();
+    var supplier_ruc = $("#supplier_ruc").val();
+    var supplier_address = $("#supplier_address").val();
+    var supplier_email = $("#supplier_email").val();
+    var purchase_comment = $("#purchase_comment").val();
+    var payment_id = $("#payment_id").val();
+    
+    if($("#supplier_id").val() == '0' || $("#payment_id").val() == '0'){
+        swal.fire({
+            title:'Compra',
+            text: 'Error Campos Vacios',
+            icon: 'error'
+        });
+
+    }else{
+        $.post("../../controllers/PurchaseController.php?op=calculate",{purchase_id : purchase_id},function(data){
+            data=JSON.parse(data);
+            console.log(data);
+            if (data.total ==null){
+                /* TODO:Validacion de Detalle */
+                swal.fire({
+                    title:'Compra',
+                    text: 'Error No Existe Detalle',
+                    icon: 'error'
+                });
+            }else{
+                $.post("../../controllers/PurchaseController.php?op=updatePurchase",{
+                    purchase_id : purchase_id,
+                    supplier_id : supplier_id,
+                    supplier_ruc : supplier_ruc,
+                    supplier_address : supplier_address,
+                    supplier_email : supplier_email,
+                    payment_id : payment_id,
+                    purchase_comment : purchase_comment
+                },function(data){
+                    /* TODO:Mensaje de Sweetalert */
+                    swal.fire({
+                        title:'Compra',
+                        text: 'Compra registrada Correctamente con Nro: C-'+purchase_id,
+                        icon: 'success',
+                        /* TODO: Ruta para mostrar documento de compra */
+                        footer: "<a href='../viewPurchases/index.php?purchaseId="+purchase_id+"' target='_blank'>Desea ver el Documento?</a>"
+                    });
+
+                });
+            }
+        });
+    }
+});
 
 $(document).on("click","#btnlimpiar",function(){
     location.reload();

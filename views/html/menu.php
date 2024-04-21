@@ -14,19 +14,19 @@ $menus = $menu->getMenusByRole($_SESSION['role_id']);
 
         <a href="index.html" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="22">
+                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="70">
             </span>
             <span class="logo-lg">
-                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="17">
+                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="70">
             </span>
         </a>
 
         <a href="index.html" class="logo logo-light">
             <span class="logo-sm">
-                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="22">
+                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="70">
             </span>
             <span class="logo-lg">
-                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="17">
+                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="70">
             </span>
         </a>
 
