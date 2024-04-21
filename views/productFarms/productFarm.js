@@ -35,14 +35,23 @@ function guardaryeditar(e)
 		contentType: false,
 		processData: false, // Ortografía corregida
 		success: function(data){
-			$('#table_data').DataTable().ajax.reload();
-			$('#modalmantenimiento').modal('hide');
-			
-			swal.fire({
-				title: 'Producto Granja',
-				text: 'Registro confirmado',
-				icon: 'success'
-			});
+			data = JSON.parse(data);
+			if(data.error == true){				
+				swal.fire({
+					title: 'Producto Granja',
+					text: 'Campos no pueden estar vacios',
+					icon: 'error'
+				});
+			}else{
+				$('#table_data').DataTable().ajax.reload();
+				$('#modalmantenimiento').modal('hide');
+				
+				swal.fire({
+					title: 'Producto Granja',
+					text: 'Registro confirmado',
+					icon: 'success'
+				});
+			}
 		}
 	});
 }

@@ -55,8 +55,8 @@ class ProductFarms extends Connect
         ';
         
         $query = $conectar->prepare($sql);
-        $query->bindValue(1,$product_id);
-        $query->bindValue(2,$farm_id);
+        $query->bindValue(1,$farm_id);
+        $query->bindValue(2,$product_id);
         $query->bindValue(3,$id);
         $query->execute();
         

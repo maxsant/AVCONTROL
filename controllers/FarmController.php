@@ -15,9 +15,27 @@ switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            $farm->insertFarm($_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id'], $_POST['delivery_id'], $_POST['egg_production_record_id']);
+            if(!empty($_POST['chicken_id']) AND !empty($_POST['delivery_id']) AND !empty($_POST['egg_production_record_id'])){
+                $farm->insertFarm($_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id'], $_POST['delivery_id'], $_POST['egg_production_record_id']);
+                echo json_encode([
+                    'error' => false
+                ]);
+            }else{
+                echo json_encode([
+                    'error' => true
+                ]);
+            }
         }else{
-            $farm->updateFarmById($_POST['id'], $_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id'], $_POST['delivery_id'], $_POST['egg_production_record_id']);
+            if(!empty($_POST['chicken_id']) AND !empty($_POST['delivery_id']) AND !empty($_POST['egg_production_record_id'])){
+                $farm->updateFarmById($_POST['id'], $_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id'], $_POST['delivery_id'], $_POST['egg_production_record_id']);
+                echo json_encode([
+                    'error' => false
+                ]);
+            }else{
+                echo json_encode([
+                    'error' => true
+                ]);
+            }
         }
         break;
     case "listFarm":
@@ -67,7 +85,7 @@ switch($_GET['op'])
         
         if(is_array($datos) == true AND count($datos) > 0){
             $html = '';
-            $html.= "<option selected>Seleccionar</option>";
+            $html.= "<option value='0' selected>Seleccionar</option>";
             foreach($datos as $row){
                 $html.= "<option value='".$row['id']."'>".$row['name']."</option>";
             }

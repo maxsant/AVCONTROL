@@ -15,9 +15,27 @@ switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            $productFarm->insertProductFarm($_POST['product_id'], $_POST['farm_id']);
+            if(!empty($_POST['product_id']) AND !empty($_POST['farm_id'])){
+                $productFarm->insertProductFarm($_POST['product_id'], $_POST['farm_id']);
+                echo json_encode([
+                    'error' => false
+                ]);
+            }else{
+                echo json_encode([
+                    'error' => true
+                ]);
+            }
         }else{
-            $productFarm->updateProductFarmById($_POST['id'], $_POST['product_id'], $_POST['farm_id']);
+            if(!empty($_POST['product_id']) AND !empty($_POST['farm_id'])){
+                $productFarm->updateProductFarmById($_POST['id'], $_POST['product_id'], $_POST['farm_id']);
+                echo json_encode([
+                    'error' => false
+                ]);
+            }else{
+                echo json_encode([
+                    'error' => true
+                ]);
+            }
         }
         break;
     case "listProductFarm":
@@ -57,7 +75,7 @@ switch($_GET['op'])
         
         if(is_array($datos) == true AND count($datos) > 0){
             $html = '';
-            $html.= "<option selected>Seleccionar</option>";
+            $html.= "<option value='0' selected>Seleccionar</option>";
             foreach($datos as $row){
                 $html.= "<option value='".$row['id']."'>".$row['farm_id']." ".$row['product_id']."</option>";
             }

@@ -36,9 +36,8 @@ class Products extends Connect
         $query->bindValue(1,$expiration_date);
         $query->bindValue(2,$stock);
         $query->bindValue(3,$product_type_id);
-        $query->execute();
         
-        return $query->fetch(PDO::FETCH_ASSOC);
+        return  $query->execute();
     }
     /* TODO actualizar producto por ID */
     public function updateProductById($id, $expiration_date, $stock, $product_type_id)

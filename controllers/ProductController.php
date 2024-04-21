@@ -11,9 +11,27 @@ switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            $product->insertProducts($_POST['expiration_date'], $_POST['stock'], $_POST['product_type_id']);
+            if(!empty($_POST['product_type_id'])){
+                $product->insertProducts($_POST['expiration_date'], $_POST['stock'], $_POST['product_type_id']);
+                echo json_encode([
+                    'error' => false
+                ]);
+            }else{
+                echo json_encode([
+                    'error' => true
+                ]);
+            }
         }else{
-            $product->updateProductById($_POST['id'], $_POST['expiration_date'], $_POST['stock'], $_POST['product_type_id']);
+            if(!empty($_POST['product_type_id'])){
+                $product->updateProductById($_POST['id'], $_POST['expiration_date'], $_POST['stock'], $_POST['product_type_id']);
+                echo json_encode([
+                    'error' => false
+                ]);
+            }else{
+                echo json_encode([
+                    'error' => true
+                ]);
+            }
         }
         break;
     case "listProduct":
@@ -71,7 +89,7 @@ switch($_GET['op'])
         
         if(is_array($datos) == true AND count($datos) > 0){
             $html = '';
-            $html.= "<option selected>Seleccionar</option>";
+            $html.= "<option value='0' selected>Seleccionar</option>";
             foreach($datos as $row){
                 $productTypeData = $productType->getProductTypeById($row['product_type_id']);
                 $html.= "<option value='".$row['id']."'>Fecha Expiracion: ".$row['expiration_date']." | Stock: ".$row['stock']." | Nombre: ".$productTypeData['name']."</option>";
