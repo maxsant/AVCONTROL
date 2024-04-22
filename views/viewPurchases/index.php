@@ -159,7 +159,7 @@ if(isset($_SESSION["id"])){
                                                             <td class="text-end" id="purchase_subtotal"></td>
                                                         </tr>
                                                         <tr>
-                                                            <td>IGV (18%)</td>
+                                                            <td>IVA (19%)</td>
                                                             <td class="text-end" id="purchase_iva"></td>
                                                         </tr>
                                                         <tr class="border-top border-top-dashed fs-15">

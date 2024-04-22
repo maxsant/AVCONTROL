@@ -130,7 +130,7 @@ if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
                                                     <div class="float-end">
                                                         <a href="auth-pass-reset-cover.html" class="text-muted">Olvido su clave?</a>
                                                     </div>
-                                                    <label class="form-label" for="usu_pass">CLave Seguridad</label>
+                                                    <label class="form-label" for="usu_pass">Clave Seguridad</label>
                                                     <div class="position-relative auth-pass-inputgroup mb-3">
                                                         <input type="password_hash" class="form-control pe-5" placeholder="Ingrese Clave Seguridad" name="password_hash" id="password_hash">
                                                         <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
@@ -166,7 +166,7 @@ if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
                     <div class="col-lg-12">
                         <div class="text-center">
                             <p class="mb-0">&copy;
-                                <script>document.write(new Date().getFullYear())</script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand
+                                <script>document.write(new Date().getFullYear())</script> AVCONTROL. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand
                             </p>
                         </div>
                     </div>

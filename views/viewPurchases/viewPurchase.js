@@ -3,7 +3,7 @@ $(document).ready(function(){
 
     $.post("../../controllers/PurchaseController.php?op=viewPurchase",{purchase_id : purchase_id},function(data){
         data = JSON.parse(data);
-
+		console.log(data);
         $('#purchase_id').html(data.id);
         $('#purchase_created').html(data.purchase_created);
         $('#payment_name').html(data.payment_name);
