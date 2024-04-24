@@ -91,4 +91,14 @@ function ver(purchase_id){
             }
         },
     });
+
+	$.post('../../controllers/PurchaseController.php?op=calculate', {purchase_id : purchase_id}, function(data){
+		data = JSON.parse(data);
+		$('#txtsubtotal').html(data.subtotal);
+		$('#txtiva').html(data.iva)
+		$('#txttotal').html(data.total)
+	})
+	
+	$('#modaldetail').modal('show');
+
 }
