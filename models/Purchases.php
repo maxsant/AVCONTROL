@@ -266,5 +266,25 @@ class Purchases extends Connect{
         
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+    /* TODO Actualizar estado de la compra del sistema */
+    public function updateStatusPayment($purchase_id, $status_payment)
+    {
+        $conectar = parent::connection();
+        
+        $sql = '
+            UPDATE
+                purchases
+            SET
+                status_payment = ?
+            WHERE
+                id = ? AND status_purchase = 1
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1, $status_payment);
+        $query->bindValue(2, $purchase_id);
+        
+        return $query->execute();
+    }
 }
 ?>

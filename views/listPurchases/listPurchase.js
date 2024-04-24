@@ -1,3 +1,42 @@
+function init()
+{
+	$('#modalStatusPayment').on("submit", function(e){
+		updateStatusPayment(e);
+	});
+}
+
+function updateStatusPayment(e)
+{
+	e.preventDefault();
+	var formData = new FormData($("#modalStatusPayment_form")[0]);
+	
+	if(formData.get('status_payment') == '0'){
+		swal.fire({
+            title:'Estado',
+            text: 'Error Campo Vacio',
+            icon: 'error'
+        });
+	}else{
+		$.ajax({
+			url: "../../controllers/PurchaseController.php?op=updateStatusPayment",
+			type: "POST",
+			data: formData,
+			contentType: false,
+			processData: false,
+			success: function(data){
+				$('#table_data').DataTable().ajax.reload();
+				$('#modalStatusPayment').modal('hide');
+				
+				swal.fire({
+					title: 'Estado',
+					text: 'Registro confirmado',
+					icon: 'success'
+				});
+			}
+		})
+	}
+}
+
 $(document).ready(function(){
 
     $('#table_data').DataTable({
@@ -102,3 +141,15 @@ function ver(purchase_id){
 	$('#modaldetail').modal('show');
 
 }
+
+function editStatus(purchase_id)
+{
+	$.post("../../controllers/PurchaseController.php?op=viewPurchase", { purchase_id : purchase_id }, function(data){
+		data = JSON.parse(data);
+		$('#purchase_id').val(data.id);
+		$('#status_payment').val(data.status_payment).trigger('change');
+		$('#modalStatusPayment').modal('show');
+	});
+}
+
+init();

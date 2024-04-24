@@ -62,35 +62,38 @@ switch($_GET["op"]){
             <?php
         }
         break;
-case 'listPurchase':
-    $datos = $purchase->getPurchases();
-    $data  = [];
-    foreach($datos as $row){
-        $sub_array   = [];
-        $sub_array[] = 'C-'.$row["id"];
-        $sub_array[] = $row["supplier_ruc"];
-        $sub_array[] = $row["supplier_name"];
-        $sub_array[] = $row["payment_name"];
-        $sub_array[] = $row["purchase_subtotal"];
-        $sub_array[] = $row["purchase_iva"];
-        $sub_array[] = $row["purchase_total"];
-        $sub_array[] = $row["userName"].' '.$row['userLastname'];
-        if($row['status_payment'] == 1){
-            $sub_array[] = '<span class="badge badge-soft-success fs-11">Pagado</span>';
-        }else{
-            $sub_array[] = '<span class="badge badge-soft-danger fs-11">Pendiente</span>';
+    case 'listPurchase':
+        $datos = $purchase->getPurchases();
+        $data  = [];
+        foreach($datos as $row){
+            $sub_array   = [];
+            $sub_array[] = 'C-'.$row["id"];
+            $sub_array[] = $row["supplier_ruc"];
+            $sub_array[] = $row["supplier_name"];
+            $sub_array[] = $row["payment_name"];
+            $sub_array[] = $row["purchase_subtotal"];
+            $sub_array[] = $row["purchase_iva"];
+            $sub_array[] = $row["purchase_total"];
+            $sub_array[] = $row["userName"].' '.$row['userLastname'];
+            if($row['status_payment'] == 1){
+                $sub_array[] = '<a onClick="editStatus('.$row['id'].')"; id="'.$row['id'].'"><span class="badge badge-soft-success fs-11">Pagado</span></a>';
+            }else{
+                $sub_array[] = '<a onClick="editStatus('.$row['id'].')"; id="'.$row['id'].'"><span class="badge badge-soft-danger fs-11">Pendiente</span></a>';
+            }
+            $sub_array[] = '<a href="../viewPurchases/?purchaseId='.$row["id"].'" target="_blank" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-printer-line"></i></a>';
+            $sub_array[] = '<button type="button" onClick="ver('.$row["id"].')" id="'.$row["id"].'" class="btn btn-success btn-icon waves-effect waves-light"><i class="ri-settings-2-line"></i></button>';
+            $data[] = $sub_array;
         }
-        $sub_array[] = '<a href="../viewPurchases/?purchaseId='.$row["id"].'" target="_blank" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-printer-line"></i></a>';
-        $sub_array[] = '<button type="button" onClick="ver('.$row["id"].')" id="'.$row["id"].'" class="btn btn-success btn-icon waves-effect waves-light"><i class="ri-settings-2-line"></i></button>';
-        $data[] = $sub_array;
-    }
-    
-    $results = array(
-        "sEcho"=>1,
-        "iTotalRecords"=>count($data),
-        "iTotalDisplayRecords"=>count($data),
-        "aaData"=>$data);
-    echo json_encode($results);
-    break;
+        
+        $results = array(
+            "sEcho"=>1,
+            "iTotalRecords"=>count($data),
+            "iTotalDisplayRecords"=>count($data),
+            "aaData"=>$data);
+        echo json_encode($results);
+        break;
+    case 'updateStatusPayment':
+        $purchase->updateStatusPayment($_POST['purchase_id'], $_POST['status_payment']);
+        break;
 }
 ?>
