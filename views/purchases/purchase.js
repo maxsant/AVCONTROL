@@ -169,10 +169,12 @@ $(document).on("click","#btnguardar",function(){
     var supplier_ruc = $("#supplier_ruc").val();
     var supplier_address = $("#supplier_address").val();
     var supplier_email = $("#supplier_email").val();
+    var supplier_phone = $("#supplier_phone").val();
     var purchase_comment = $("#purchase_comment").val();
     var payment_id = $("#payment_id").val();
+    var status_payment = $("#status_payment").val();
     
-    if($("#supplier_id").val() == '0' || $("#payment_id").val() == '0'){
+    if($("#supplier_id").val() == '0' || $("#payment_id").val() == '0' || $('#status_payment').val() == '0'){
         swal.fire({
             title:'Compra',
             text: 'Error Campos Vacios',
@@ -197,8 +199,10 @@ $(document).on("click","#btnguardar",function(){
                     supplier_ruc : supplier_ruc,
                     supplier_address : supplier_address,
                     supplier_email : supplier_email,
+                    supplier_phone : supplier_phone,
                     payment_id : payment_id,
-                    purchase_comment : purchase_comment
+                    purchase_comment : purchase_comment,
+                    status_payment : status_payment
                 },function(data){
                     /* TODO:Mensaje de Sweetalert */
                     swal.fire({

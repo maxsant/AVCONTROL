@@ -160,7 +160,7 @@ class Purchases extends Connect{
         return $querySelect->fetch(PDO::FETCH_ASSOC);
     }
     /* TODO Actualizar compra del sistema */
-    public function updatePurchase($id, $supplier_id, $supplier_ruc, $supplier_address, $supplier_email, $supplier_phone, $payment_id, $comment = null)
+    public function updatePurchase($id, $supplier_id, $supplier_ruc, $supplier_address, $supplier_email, $supplier_phone, $payment_id, $comment = null, $status_payment)
     {
         $conectar = parent::connection();
         
@@ -175,7 +175,8 @@ class Purchases extends Connect{
                 supplier_phone = ?,
                 payment_id = ?,
                 status_purchase = 1,
-                comment = ?
+                comment = ?,
+                status_payment = ?
             WHERE
                 id = ?
         ';
@@ -188,7 +189,8 @@ class Purchases extends Connect{
         $query->bindValue(5, $supplier_phone);
         $query->bindValue(6, $payment_id);
         $query->bindValue(7, $comment);
-        $query->bindValue(8, $id);
+        $query->bindValue(8, $status_payment);
+        $query->bindValue(9, $id);
         
         return $query->execute();
     }

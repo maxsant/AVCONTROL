@@ -180,6 +180,7 @@ CREATE TABLE purchases (
     `supplier_id` INT(11) DEFAULT NULL,
 	`payment_id` INT(11) DEFAULT NULL,
 	`status_purchase` INT(11) DEFAULT 2,
+	`status_payment` INT(11) DEFAULT NULL,
 	`user_id` INT(11) DEFAULT NULL,
 	`created` DATETIME NOT NULL,
 	`modified` TIMESTAMP NOT NULL,
@@ -321,7 +322,8 @@ INSERT INTO menus (name,route,identification,`group`,created,modified,is_active,
 	 ('Producto Granjas','../productFarms/','productFarms','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Proveedores','../suppliers/','suppliers','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Metodos Pago','../payments/','payments','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 ('Nueva Compra','../purchases/','purchases','Compra','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
+	 ('Nueva Compra','../purchases/','purchases','Compra','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Lista Compras','../listPurchases/','listpurchases','Compra','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
 
 INSERT INTO menu_roles (menu_id,role_id,permission,created,modified,is_active,custom_fields) VALUES
 	 (1,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
@@ -337,4 +339,5 @@ INSERT INTO menu_roles (menu_id,role_id,permission,created,modified,is_active,cu
 	 (11,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 (12,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 (13,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 (14,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
+	 (14,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (15,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);

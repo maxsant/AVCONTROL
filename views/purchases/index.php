@@ -159,13 +159,14 @@ if($_SESSION['id']){
                                                 </select>
                                             </div>
 
-                                            <!-- <div class="col-lg-4">
-                                                <label for="mon_id" class="form-label">Moneda</label>
-                                                <select id="mon_id" name="mon_id" class="form-control form-select" aria-label="Seleccionar">
+                                            <div class="col-lg-4">
+                                                <label for="status_payment" class="form-label">Estado Pago</label>
+                                                <select id="status_payment" name="status_payment" class="form-control form-select" aria-label="Seleccionar">
                                                     <option value='0' selected>Seleccione</option>
-
+													<option value='1'>Pagado</option>
+													<option value='2'>Pendiente</option>
                                                 </select>
-                                            </div> -->
+                                            </div>
 
                                         </div>
                                     </div>

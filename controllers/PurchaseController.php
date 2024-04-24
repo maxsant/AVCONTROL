@@ -42,7 +42,7 @@ switch($_GET["op"]){
         echo json_encode($datos);
         break;
     case 'updatePurchase':
-        $purchase->updatePurchase($_POST['purchase_id'], $_POST['supplier_id'], $_POST['supplier_ruc'], $_POST['supplier_address'], $_POST['supplier_email'], $_POST['supplier_phone'], $_POST['payment_id'], $_POST['comment']);
+        $purchase->updatePurchase($_POST['purchase_id'], $_POST['supplier_id'], $_POST['supplier_ruc'], $_POST['supplier_address'], $_POST['supplier_email'], $_POST['supplier_phone'], $_POST['payment_id'], $_POST['purchase_comment'], $_POST['status_payment']);
         break;
     case 'viewPurchase':
         $datos = $purchase->getViewPurchase($_POST['purchase_id']);
