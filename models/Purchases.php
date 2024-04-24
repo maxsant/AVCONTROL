@@ -215,7 +215,8 @@ class Purchases extends Connect{
                 p.supplier_ruc,
                 p.supplier_address,
                 p.supplier_email,
-                p.supplier_phone
+                p.supplier_phone,
+                p.status_payment
             FROM
                 purchase_details pd
             INNER JOIN purchases p ON pd.purchase_id = p.id
@@ -231,6 +232,39 @@ class Purchases extends Connect{
         $query->execute();
         
         return $query->fetch(PDO::FETCH_ASSOC);
+    }
+    /* TODO Obtener las compras del sistema */
+    public function getPurchases()
+    {
+        $conectar = parent::connection();
+        
+        $sql = '
+            SELECT DISTINCT
+                p.id,
+                p.created as purchase_created,
+                py.name as payment_name,
+                p.iva as purchase_iva,
+                p.subtotal as purchase_subtotal,
+                p.total as purchase_total,
+                u.name as userName,
+                u.lastname as userLastname,
+                s.name as supplier_name,
+                p.supplier_ruc,
+                p.status_payment
+            FROM
+                purchase_details pd
+            INNER JOIN purchases p ON pd.purchase_id = p.id
+            INNER JOIN users u ON p.user_id = u.id
+            INNER JOIN suppliers s ON p.supplier_id = s.id
+            INNER JOIN payments py ON p.payment_id = py.id
+            WHERE
+                pd.is_active = 1 AND p.status_purchase = 1
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->execute();
+        
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 ?>

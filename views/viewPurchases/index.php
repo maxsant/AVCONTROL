@@ -81,6 +81,11 @@ if(isset($_SESSION["id"])){
                                                     <p class="text-muted mb-2 text-uppercase fw-semibold">Pago</p>
                                                     <span class="badge badge-soft-success fs-11" id="payment_name"></span>
                                                 </div>
+                                                
+                                                <div class="col-lg-3 col-6">
+                                                    <p class="text-muted mb-2 text-uppercase fw-semibold">Estado</p>
+                                                    <span class="badge badge-soft-primary fs-11" id="status_payment"></span>
+                                                </div>
 
                                                 <div class="col-lg-3 col-6">
                                                     <p class="text-muted mb-2 text-uppercase fw-semibold">Total</p>

@@ -7,6 +7,7 @@ $(document).ready(function(){
         $('#purchase_id').html(data.id);
         $('#purchase_created').html(data.purchase_created);
         $('#payment_name').html(data.payment_name);
+        $('#status_payment').html((data.status_payment) == 1 ? 'Pagado' : 'Pendiente');
         $('#txttotal').html(data.purchase_detail_total);
 
         $('#purchase_subtotal').html(data.purchase_subtotal);
@@ -22,7 +23,7 @@ $(document).ready(function(){
         $('#supplier_ruc').html("<b>RUC: </b>"+data.supplier_ruc);
         $('#supplier_address').html("<b>Dirección: </b>"+data.supplier_address);
         $('#supplier_email').html("<b>Correo: </b>"+data.supplier_email);
-        $('#supplier_phone').html("<b>Correo: </b>"+data.supplier_phone);
+        $('#supplier_phone').html("<b>Celular: </b>"+data.supplier_phone);
     });
     
     $.post("../../controllers/PurchaseController.php?op=listFormatDetail",{purchase_id : purchase_id},function(data){
