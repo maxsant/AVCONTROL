@@ -102,5 +102,27 @@ class Roles extends Connect
         
         return $query->fetch(PDO::FETCH_ASSOC);
     }
+    /* TODO Permtiir acceso a un suuario por su rol y menu permitido */
+    public function getAccessByRol($role_id, $menu)
+    {
+        $conectar = parent::connection();
+        
+        $sql = '
+            SELECT
+                *
+            FROM
+                menus m
+            INNER JOIN menu_roles mr ON m.id = mr.menu_id
+            WHERE
+                mr.role_id = ? AND m.identification = ? AND mr.permission = "Si"
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1,$role_id);
+        $query->bindValue(2,$menu);
+        $query->execute();
+        
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
 }
 ?>

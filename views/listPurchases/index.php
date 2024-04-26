@@ -1,10 +1,14 @@
 <?php
 require_once("../../config/connection.php");
-    
-if(isset($_SESSION["id"])){
+require_once('../../models/Roles.php');
+
+$role = new Roles();
+
+$data = $role->getAccessByRol($_SESSION['role_id'], 'users');
+
+if($_SESSION['id']){
+    if(is_array($data) AND count($data) > 0){
 ?>
-
-
 <!doctype html>
 <html lang="es" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none">
 <head>
@@ -81,6 +85,10 @@ if(isset($_SESSION["id"])){
 
 </html>
 <?php
+    }else{
+        header("Location:".Connect::route().'/views/html/logout.php');
+        exit;
+    }
 }else{
     header("Location:".Connect::route()."/index.php");
 }
