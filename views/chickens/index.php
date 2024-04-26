@@ -49,7 +49,10 @@ if($_SESSION['id']){
                                         <thead>
                                             <tr>
                                                 <th>Raza</th>
-                                                <th>Fecha de nacimiento</th>
+                                                <th>Fecha Produccion</th>
+                                                <th>Produccion</th>
+                                                <th>Estado Produccion</th>
+                                                <th>Fecha Nacimiento</th>
                                                 <th>Condicion</th>
                                                 <th>Creado</th>
                                                 <th>Estado</th>

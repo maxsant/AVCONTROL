@@ -21,27 +21,30 @@ class Chickens extends Connect
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     /* TODO insertar gallina */
-    public function insertChicken($breed, $birthdate, $condition)
+    public function insertChicken($breed, $production_date, $production_quantity, $egg_status, $birthdate, $condition)
     {
         $conectar = parent::connection();
         
         $sql = '
             INSERT INTO
-                chickens (breed, birthdate, `condition`, created)
+                chickens (breed, production_date, production_quantity, egg_status, birthdate, `condition`, created)
             VALUES
-                (?, ?, ?, now())
+                (?, ?, ?, ?, ?, ?, now())
         ';
         
         $query = $conectar->prepare($sql);
         $query->bindValue(1,$breed);
-        $query->bindValue(2,$birthdate);
-        $query->bindValue(3,$condition);
+        $query->bindValue(2,$production_date);
+        $query->bindValue(3,$production_quantity);
+        $query->bindValue(4,$egg_status);
+        $query->bindValue(5,$birthdate);
+        $query->bindValue(6,$condition);
         $query->execute();
         
         return $query->fetch(PDO::FETCH_ASSOC);
     }
     /* TODO actualizar gallina por ID */
-    public function updateChickenById($id, $breed, $birthdate, $condition)
+    public function updateChickenById($id, $breed, $production_date, $production_quantity, $egg_status, $birthdate, $condition)
     {
         $conectar = parent::connection();
         
@@ -50,6 +53,9 @@ class Chickens extends Connect
                 chickens
             SET
                 breed = ?,
+                production_date = ?,
+                production_quantity = ?,
+                egg_status = ?,
                 birthdate = ?,
                 `condition` = ?
             WHERE
@@ -58,9 +64,12 @@ class Chickens extends Connect
         
         $query = $conectar->prepare($sql);
         $query->bindValue(1,$breed);
-        $query->bindValue(2,$birthdate);
-        $query->bindValue(3,$condition);
-        $query->bindValue(4,$id);
+        $query->bindValue(2,$production_date);
+        $query->bindValue(3,$production_quantity);
+        $query->bindValue(4,$egg_status);
+        $query->bindValue(5,$birthdate);
+        $query->bindValue(6,$condition);
+        $query->bindValue(7,$id);
         $query->execute();
         
         return $query->fetch(PDO::FETCH_ASSOC);

@@ -12,8 +12,32 @@
                     <div class="row gy-2">
                         <div class="col-md-12">
                             <div>
-                                <label for="valueInput" class="form-label">Nombre</label>
+                                <label for="valueInput" class="form-label">Raza</label>
                                 <input type="text" class="form-control" id="breed" name="breed" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="valueInput" class="form-label">Fecha de Produccion</label>
+                                <input type="date" class="form-control" id="production_date" name="production_date" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="valueInput" class="form-label">Cantidad de Produccion</label>
+                                <input type="text" class="form-control" id="production_quantity" name="production_quantity" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="valueInput" class="form-label">Estado Huevos</label>
+                                <input type="text" class="form-control" id="egg_status" name="egg_status" required/>
                             </div>
                         </div>
                     </div>

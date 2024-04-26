@@ -9,9 +9,9 @@ switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            $chicken->insertChicken($_POST['breed'], $_POST['birthdate'], $_POST['condition']);
+            $chicken->insertChicken($_POST['breed'], $_POST['production_date'], $_POST['production_quantity'], $_POST['egg_status'], $_POST['birthdate'], $_POST['condition']);
         }else{
-            $chicken->updateChickenById($_POST['id'], $_POST['breed'], $_POST['birthdate'], $_POST['condition']);
+            $chicken->updateChickenById($_POST['id'], $_POST['breed'], $_POST['production_date'], $_POST['production_quantity'], $_POST['egg_status'], $_POST['birthdate'], $_POST['condition']);
         }
         break;
     case "listChicken":
@@ -20,6 +20,9 @@ switch($_GET['op'])
         foreach($datos as $row){
             $sub_array   = [];
             $sub_array[] = $row['breed'];
+            $sub_array[] = $row['production_date'];
+            $sub_array[] = $row['production_quantity'];
+            $sub_array[] = $row['egg_status'];
             $sub_array[] = $row['birthdate'];
             $sub_array[] = $row['condition'];
             $sub_array[] = $row['created'];
@@ -55,7 +58,7 @@ switch($_GET['op'])
             $html = '';
             $html.= "<option selected>Seleccionar</option>";
             foreach($datos as $row){
-                $html.= "<option value='".$row['id']."'>".$row['breed']."</option>";
+                $html.= "<option value='".$row['id']."'>Raza: ".$row['breed']." | Produccion: ".$row['production_quantity']."</option>";
             }
             echo $html;
         }

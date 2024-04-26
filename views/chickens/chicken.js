@@ -102,6 +102,9 @@ function editar(id)
 		data = JSON.parse(data);
 		$("#id").val(data.id);
 		$("#breed").val(data.breed);
+		$("#production_date").val(data.production_date);
+		$("#production_quantity").val(data.production_quantity);
+		$("#egg_status").val(data.egg_status);
 		$("#birthdate").val(data.birthdate);
 		$("#condition").val(data.condition);
 	});
