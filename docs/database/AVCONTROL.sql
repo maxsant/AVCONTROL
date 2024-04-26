@@ -96,24 +96,15 @@ CREATE TABLE suppliers (
 	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`))
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
--- AVCONTROL.egg_production_records definition
-CREATE TABLE egg_production_records (
-    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
-    `production_date` DATE NOT NULL,
-    `production_quantity` INT(11) NOT NULL,
-    `egg_status` VARCHAR(50) NOT NULL,
-	`created` DATETIME NOT NULL,
-	`modified` TIMESTAMP NOT NULL,
-	`is_active` TINYINT(11) DEFAULT 1,
-	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`))
-) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
-
 -- AVCONTROL.chickens definition
 CREATE TABLE chickens (
     `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
     `breed` VARCHAR(255) NOT NULL,
     `birthdate` DATE NOT NULL,
     `condition` VARCHAR(250) NOT NULL,
+	`production_date` DATE NOT NULL,
+    `production_quantity` INT(11) NOT NULL,
+    `egg_status` VARCHAR(50) NOT NULL,
 	`created` DATETIME NOT NULL,
 	`modified` TIMESTAMP NOT NULL,
 	`is_active` TINYINT(11) DEFAULT 1,
@@ -153,15 +144,12 @@ CREATE TABLE farms (
     `size` INT(11),
 	`chicken_id` INT(11),
 	`delivery_id` INT(11),
-    `egg_production_record_id` INT(11),
 	`created` DATETIME NOT NULL,
 	`modified` TIMESTAMP NOT NULL,
 	`is_active` TINYINT(11) DEFAULT 1,
 	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
-	FOREIGN KEY (`egg_production_record_id`) REFERENCES egg_production_records (`id`),
 	FOREIGN KEY (`chicken_id`) REFERENCES chickens (`id`),
 	FOREIGN KEY (`delivery_id`) REFERENCES deliveries (`id`),
-	INDEX `idx_egg_production_record_id` (`egg_production_record_id`) USING BTREE,
 	INDEX `idx_chicken_id` (`chicken_id`) USING BTREE,
 	INDEX `idx_delivery_id` (`delivery_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
@@ -212,31 +200,19 @@ CREATE TABLE purchase_details (
 	INDEX `idx_delivery_id` (`delivery_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
--- AVCONTROL.product_types definition
-CREATE TABLE product_types (
+-- AVCONTROL.products definition
+CREATE TABLE products (
     `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255) NOT NULL,
-    `description` VARCHAR(255),
-    `price` DECIMAL(10, 2) NOT NULL,
+	`description` VARCHAR(255),
+	`expiration_date` DATE DEFAULT NULL,
+    `stock` INT(11) NOT NULL,
+	`image` VARCHAR(500) DEFAULT NULL,
+	`price` DECIMAL(10, 2) NOT NULL,
 	`created` DATETIME NOT NULL,
 	`modified` TIMESTAMP NOT NULL,
 	`is_active` TINYINT(11) DEFAULT 1,
 	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`))
-) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
-
--- AVCONTROL.products definition
-CREATE TABLE products (
-    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
-	`expiration_date` DATE DEFAULT NULL,
-    `stock` INT(11) NOT NULL,
-	`image` VARCHAR(500) DEFAULT NULL,
-	`product_type_id` INT(11) DEFAULT NULL,
-	`created` DATETIME NOT NULL,
-	`modified` TIMESTAMP NOT NULL,
-	`is_active` TINYINT(11) DEFAULT 1,
-	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
-	FOREIGN KEY (`product_type_id`) REFERENCES product_types (`id`),
-	INDEX `idx_product_type_id` (`product_type_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- AVCONTROL.product_farms definition
@@ -316,8 +292,6 @@ INSERT INTO menus (name,route,identification,`group`,created,modified,is_active,
 	 ('Gallinas','../chickens/','chickens','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Suministros','../deliveries/','deliveries','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Granjas','../farms/','farms','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 ('Tipo Productos','../productTypes/','productTypes','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 ('Produccion Huevos','../eggProductionRecords/','eggProductionRecords','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Productos','../products/','products','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Producto Granjas','../productFarms/','productFarms','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Proveedores','../suppliers/','suppliers','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
@@ -338,6 +312,4 @@ INSERT INTO menu_roles (menu_id,role_id,permission,created,modified,is_active,cu
 	 (10,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 (11,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 (12,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 (13,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 (14,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 (15,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
+	 (13,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
