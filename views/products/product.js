@@ -35,33 +35,19 @@ function guardaryeditar(e)
 		contentType: false,
 		processData: false, // Ortografía corregida
 		success: function(data){
-			data = JSON.parse(data);
-			if(data.error == true){				
-				swal.fire({
-					title: 'Producto',
-					text: 'Campos no pueden estar vacios',
-					icon: 'error'
-				});
-			}else{
-				$('#table_data').DataTable().ajax.reload();
-				$('#modalmantenimiento').modal('hide');
-				
-				swal.fire({
-					title: 'Producto',
-					text: 'Registro confirmado',
-					icon: 'success'
-				});
-			}
+			$('#table_data').DataTable().ajax.reload();
+			$('#modalmantenimiento').modal('hide');
+			
+			swal.fire({
+				title: 'Producto',
+				text: 'Registro confirmado',
+				icon: 'success'
+			});
 		}
 	});
 }
 
 $(document).ready(function(){
-	
-	$.post("../../controllers/ProductTypeController.php?op=combo", function(data){
-		$('#product_type_id').html(data);
-	});
-	
     $('#table_data').DataTable({
         "aProcessing": true,
         "aServerSide": true,
@@ -114,9 +100,11 @@ function editar(id)
 	$.post("../../controllers/ProductController.php?op=viewProduct", {id: id}, function(data){
 		data = JSON.parse(data);
 		$("#id").val(data.id);
+		$("#name").val(data.name);
+		$("#description").val(data.description);
+		$("#price").val(data.price);
 		$("#expiration_date").val(data.expiration_date);
 		$("#stock").val(data.stock);
-		$("#product_type_id").val(data.product_type_id).trigger('change');
 	});
 	$('#lbltitulo').html('Editar Registro');
     $('#modalmantenimiento').modal('show');

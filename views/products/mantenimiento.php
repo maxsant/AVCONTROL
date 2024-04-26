@@ -12,6 +12,30 @@
                     <div class="row gy-2">
                         <div class="col-md-12">
                             <div>
+                                <label for="valueInput" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="name" name="name" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="valueInput" class="form-label">Descripcion</label>
+                                <input type="text" class="form-control" id="description" name="description" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="valueInput" class="form-label">Precio</label>
+                                <input type="number" class="form-control" id="price" name="price" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
                                 <label for="valueInput" class="form-label">Fecha Expiracion</label>
                                 <input type="date" class="form-control" id="expiration_date" name="expiration_date" required/>
                             </div>
@@ -22,16 +46,6 @@
                             <div>
                                 <label for="valueInput" class="form-label">Existencias</label>
                                 <input type="text" class="form-control" id="stock" name="stock" required/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row gy-2">
-                        <div class="col-md-12">
-                            <div>
-                                <label for="valueInput" class="form-label">Tipo Producto</label>
-                                <select type="text" class="form-control form-select" name="product_type_id" id="product_type_id" aria-label="Seleccionar">
-                                    <option selected>Seleccionar</option>
-                                </select>
                             </div>
                         </div>
                     </div>

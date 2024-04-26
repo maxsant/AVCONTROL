@@ -11,27 +11,9 @@ switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            if(!empty($_POST['product_type_id'])){
-                $product->insertProducts($_POST['expiration_date'], $_POST['stock'], $_POST['product_type_id']);
-                echo json_encode([
-                    'error' => false
-                ]);
-            }else{
-                echo json_encode([
-                    'error' => true
-                ]);
-            }
+            $product->insertProducts($_POST['name'], $_POST['description'], $_POST['price'], $_POST['expiration_date'], $_POST['stock']);
         }else{
-            if(!empty($_POST['product_type_id'])){
-                $product->updateProductById($_POST['id'], $_POST['expiration_date'], $_POST['stock'], $_POST['product_type_id']);
-                echo json_encode([
-                    'error' => false
-                ]);
-            }else{
-                echo json_encode([
-                    'error' => true
-                ]);
-            }
+            $product->updateProductById($_POST['id'], $_POST['name'], $_POST['description'], $_POST['price'], $_POST['expiration_date'], $_POST['stock']);
         }
         break;
     case "listProduct":
@@ -39,12 +21,11 @@ switch($_GET['op'])
         $data  = [];
         foreach($datos as $row){
             
-            $productTypeData = $productType->getProductTypeById($row['product_type_id']);
-            
             $sub_array   = [];
+            $sub_array[] = $row['name'];
+            $sub_array[] = $row['price'];
             $sub_array[] = $row['expiration_date'];
             $sub_array[] = $row['stock'];
-            $sub_array[] = $productTypeData['name'];
             $sub_array[] = $row['created'];
             $sub_array[] = '<span class="">Activo</span>';
             
@@ -70,19 +51,6 @@ switch($_GET['op'])
     case "delete":
         $datos = $product->deleteProductById($_POST['id']);
         break;
-    case "getProductByType":
-        $datos = $product->getProductByTypeId($_POST['product_type_id']);
-        
-        if(is_array($datos) == true AND count($datos) > 0){
-            $html = '';
-            $html.= "<option selected>Seleccionar</option>";
-            foreach($datos as $row){
-                $productTypeData = $productType->getProductTypeById($row['product_type_id']);
-                $html.= "<option value='".$row['id']."'>Fecha Expiracion: ".$row['expiration_date']." | Nombre: ".$productTypeData['name']."</option>";
-            }
-            echo $html;
-        }
-        break;
         /* TODO lIstar combobox */
     case "combo":
         $datos = $product->getProducts();
@@ -91,8 +59,7 @@ switch($_GET['op'])
             $html = '';
             $html.= "<option value='0' selected>Seleccionar</option>";
             foreach($datos as $row){
-                $productTypeData = $productType->getProductTypeById($row['product_type_id']);
-                $html.= "<option value='".$row['id']."'>Fecha Expiracion: ".$row['expiration_date']." | Stock: ".$row['stock']." | Nombre: ".$productTypeData['name']."</option>";
+                $html.= "<option value='".$row['id']."'>Nombre: ".$row['name']." | Stock: ".$row['stock']."</option>";
             }
             echo $html;
         }
