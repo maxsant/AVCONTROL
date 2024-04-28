@@ -130,7 +130,19 @@ class Purchases extends Connect{
                                 WHERE
                                     pd.purchase_id = ? AND pd.is_active = 1
                                 ) * 0.19,
-                p.total    =   p.subtotal + p.iva
+                p.total    =   (SELECT
+                                    SUM(pd.total) AS pdSubTotal
+                                FROM
+                                    purchase_details pd
+                                WHERE
+                                    pd.purchase_id = ? AND pd.is_active = 1
+                                ) + ((SELECT
+                                    SUM(pd.total) AS pdSubTotal
+                                FROM
+                                    purchase_details pd
+                                WHERE
+                                    pd.purchase_id = ? AND pd.is_active = 1
+                                ) * 0.19)
             WHERE
                 p.id = ?
         ';
@@ -139,6 +151,8 @@ class Purchases extends Connect{
         $query->bindValue(1, $purchase_id);
         $query->bindValue(2, $purchase_id);
         $query->bindValue(3, $purchase_id);
+        $query->bindValue(4, $purchase_id);
+        $query->bindValue(5, $purchase_id);
         $query->execute();
         
         //Realizar un SELECT para obtener los valores actualizados
