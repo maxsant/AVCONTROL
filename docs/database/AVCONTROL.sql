@@ -278,6 +278,13 @@ VALUES
     ('Cedula de Ciudadania', 'Documento nacional', '2024-06-02'),
     ('Tarjeta de Identidad', 'Documento nacional para jóvenes', '2024-06-02'),
     ('Cedula de Extranjeria', 'Documento para los extranjeros', '2024-06-02');
+	
+INSERT INTO
+	payments (name, created)
+VALUES
+    ('Efectivo', '2024-06-02'),
+    ('Tarjeta de Credito', '2024-06-02'),
+    ('Trasnferencia', '2024-06-02');
 
 INSERT INTO
 	users (name, lastname, identification, phone, email, validate, email_token, password_hash, api_key, role_id, identification_type_id, created)
@@ -295,7 +302,6 @@ INSERT INTO menus (name,route,identification,`group`,created,modified,is_active,
 	 ('Productos','../products/','products','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Producto Granjas','../productFarms/','productFarms','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Proveedores','../suppliers/','suppliers','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 ('Metodos Pago','../payments/','payments','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Nueva Compra','../purchases/','purchases','Compra','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Lista Compras','../listPurchases/','listpurchases','Compra','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
 
@@ -311,5 +317,4 @@ INSERT INTO menu_roles (menu_id,role_id,permission,created,modified,is_active,cu
 	 (9,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 (10,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 (11,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 (12,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 (13,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
+	 (12,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
