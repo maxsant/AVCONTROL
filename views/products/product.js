@@ -9,25 +9,7 @@ function guardaryeditar(e)
 {
 	e.preventDefault();
 	var formData = new FormData($("#mantenimiento_form")[0]);
-	var camposVacios = false;
 	
-	formData.forEach(function(value, key) {
-		if(key !== 'id'){
-	        if(value === ""){
-	            camposVacios = true;
-	            return false;
-	        }
-        }
-	});
-    
-    if(camposVacios){
-        swal.fire({
-			title: 'Producto',
-			text: 'Campos no pueden estar vacios',
-			icon: 'error'
-		});
-        return false;
-    }
 	$.ajax({
 		url: "../../controllers/ProductController.php?op=createAndUpdate",
 		type: "POST",
@@ -105,6 +87,7 @@ function editar(id)
 		$("#price").val(data.price);
 		$("#expiration_date").val(data.expiration_date);
 		$("#stock").val(data.stock);
+		$("#pre_image").html(data.image);
 	});
 	$('#lbltitulo').html('Editar Registro');
     $('#modalmantenimiento').modal('show');
@@ -138,9 +121,35 @@ function eliminar(id)
 
 $(document).on("click", "#btnnuevo", function(){
 	$('#id').val('');
+	$("#name").val('');
+	$("#description").val('');
+	$("#price").val('');
+	$("#expiration_date").val('');
+	$("#stock").val('');
+	$("#pre_image").html('<img src="../../assets/Product/no_imagen.png" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image"></img><input type="hidden" name="hidden_producto_imagen" value="" />');
     $('#lbltitulo').html('Nuevo Registro');
     $("#mantenimiento_form")[0].reset();
     $('#modalmantenimiento').modal('show');
+})
+
+function filePreview(input)
+{
+	if(input.files && input.files[0]){
+		var reader = new FileReader();
+		reader.onload = function(e){
+			$('#pre_image').html('<img src='+e.target.result+' class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image"></img>');
+		}
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
+$(document).on("change", "#image", function(){
+	filePreview(this);
+})
+
+$(document).on("click", "#btnremovephoto", function(){
+	$('#image').val('');
+	$('#pre_image').html('<img src="../../assets/Product/no_imagen.png" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image"></img><input type="hidden" name="hidden_producto_imagen" value="" />');
 })
 
 init();

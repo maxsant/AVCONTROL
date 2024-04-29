@@ -21,15 +21,23 @@ class Products extends Connect
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     /* TODO insertar productos */
-    public function insertProducts($name, $description, $price, $expiration_date, $stock)
+    public function insertProducts($name, $description, $price, $expiration_date, $stock, $image)
     {
         $conectar = parent::connection();
         
+        require_once ('Products.php');
+        $product = new Products();
+        $image = '';
+        
+        if($_FILES['image']['name'] != ''){
+            $image = $product->uploadFile();
+        }
+        
         $sql = '
             INSERT INTO
-                products (name, description, price, expiration_date, stock, created)
+                products (name, description, price, expiration_date, stock, image, created)
             VALUES
-                (?, ?, ?, ?, ?, now())
+                (?, ?, ?, ?, ?, ?, now())
         ';
         
         $query = $conectar->prepare($sql);
@@ -38,13 +46,24 @@ class Products extends Connect
         $query->bindValue(3,$price);
         $query->bindValue(4,$expiration_date);
         $query->bindValue(5,$stock);
+        $query->bindValue(6,$image);
         
         return  $query->execute();
     }
     /* TODO actualizar producto por ID */
-    public function updateProductById($id, $name, $description, $price, $expiration_date, $stock)
+    public function updateProductById($id, $name, $description, $price, $expiration_date, $stock, $image)
     {
         $conectar = parent::connection();
+        
+        require_once ('Products.php');
+        $product = new Products();
+        $image = '';
+        
+        if($_FILES['image']['name'] != ''){
+            $image = $product->uploadFile();
+        }else{
+            $image = $_POST['hidden_producto_imagen'];
+        }
         
         $sql = '
             UPDATE
@@ -54,7 +73,8 @@ class Products extends Connect
                 description = ?,
                 price = ?,
                 expiration_date = ?,
-                stock = ?
+                stock = ?,
+                image = ?
             WHERE
                 id=?
         ';
@@ -65,7 +85,8 @@ class Products extends Connect
         $query->bindValue(3,$price);
         $query->bindValue(4,$expiration_date);
         $query->bindValue(5,$stock);
-        $query->bindValue(6,$id);
+        $query->bindValue(6,$image);
+        $query->bindValue(7,$id);
         $query->execute();
         
         return $query->fetch(PDO::FETCH_ASSOC);
@@ -109,6 +130,17 @@ class Products extends Connect
         $query->execute();
         
         return $query->fetch(PDO::FETCH_ASSOC);
+    }
+    /* TODO Registrar imagen */
+    public function uploadFile()
+    {
+        if(isset($_FILES["image"])){
+            $extension = explode('.', $_FILES['image']['name']);
+            $newName   = rand().'.'.$extension[1];
+            $destination = '../assets/Product/'.$newName;
+            move_uploaded_file($_FILES['image']['tmp_name'], $destination);
+            return $newName;
+        }
     }
 }
 ?>

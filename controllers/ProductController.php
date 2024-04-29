@@ -11,9 +11,9 @@ switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            $product->insertProducts($_POST['name'], $_POST['description'], $_POST['price'], $_POST['expiration_date'], $_POST['stock']);
+            $product->insertProducts($_POST['name'], $_POST['description'], $_POST['price'], $_POST['expiration_date'], $_POST['stock'], $_POST['image']);
         }else{
-            $product->updateProductById($_POST['id'], $_POST['name'], $_POST['description'], $_POST['price'], $_POST['expiration_date'], $_POST['stock']);
+            $product->updateProductById($_POST['id'], $_POST['name'], $_POST['description'], $_POST['price'], $_POST['expiration_date'], $_POST['stock'], $_POST['image']);
         }
         break;
     case "listProduct":
@@ -22,6 +22,21 @@ switch($_GET['op'])
         foreach($datos as $row){
             
             $sub_array   = [];
+            if($row['image'] != ''){
+                $sub_array[] = 
+                    "<div class='d-flex align-items-center'>".
+                        "<div class='flex-shrink-0 me-2'>".
+                            "<img src='../../assets/Product/".$row['image']."' alt='' class='avatar-xs rounded-circle' />".
+                        "</div>".
+                    "</div>";
+            }else{
+                $sub_array[] =
+                "<div class='d-flex align-items-center'>".
+                    "<div class='flex-shrink-0 me-2'>".
+                        "<img src='../../assets/Product/no_imagen.png' alt='' class='avatar-xs rounded-circle' />".
+                    "</div>".
+                "</div>";
+            }
             $sub_array[] = $row['name'];
             $sub_array[] = $row['price'];
             $sub_array[] = $row['expiration_date'];
