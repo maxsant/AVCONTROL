@@ -45,12 +45,11 @@ switch($_GET['op'])
             
             $productData = $product->getProductById($row['product_id']);
             $farmData    = $farm->getFarmById($row['farm_id']);
-            $productTypeData = $productType->getProductTypeById($productData['product_type_id']);
             
             $sub_array   = [];
             $sub_array[] = $farmData['name'];
             $sub_array[] = $productData['expiration_date'];
-            $sub_array[] = $productTypeData['name'];
+            $sub_array[] = $productData['name'];
             $sub_array[] = $row['created'];
             $sub_array[] = '<span class="">Activo</span>';
             

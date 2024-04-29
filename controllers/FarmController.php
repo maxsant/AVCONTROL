@@ -4,19 +4,17 @@ require_once('../config/connection.php');
 require_once('../models/Farms.php');
 require_once('../models/Chickens.php');
 require_once('../models/Deliveries.php');
-require_once('../models/EggProductionRecords.php');
 
 $farm = new Farms();
 $chicken = new Chickens();
 $delivery = new Deliveries();
-$eggProductionRecord = new EggProductionRecords();
 
 switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            if(!empty($_POST['chicken_id']) AND !empty($_POST['delivery_id']) AND !empty($_POST['egg_production_record_id'])){
-                $farm->insertFarm($_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id'], $_POST['delivery_id'], $_POST['egg_production_record_id']);
+            if(!empty($_POST['chicken_id']) AND !empty($_POST['delivery_id'])){
+                $farm->insertFarm($_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id'], $_POST['delivery_id']);
                 echo json_encode([
                     'error' => false
                 ]);
@@ -26,8 +24,8 @@ switch($_GET['op'])
                 ]);
             }
         }else{
-            if(!empty($_POST['chicken_id']) AND !empty($_POST['delivery_id']) AND !empty($_POST['egg_production_record_id'])){
-                $farm->updateFarmById($_POST['id'], $_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id'], $_POST['delivery_id'], $_POST['egg_production_record_id']);
+            if(!empty($_POST['chicken_id']) AND !empty($_POST['delivery_id'])){
+                $farm->updateFarmById($_POST['id'], $_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id'], $_POST['delivery_id']);
                 echo json_encode([
                     'error' => false
                 ]);
@@ -45,7 +43,6 @@ switch($_GET['op'])
             
             $chickenData = $chicken->getChickenById($row['chicken_id']);
             $foodData = $delivery->getDeliveryById($row['delivery_id']);
-            $eggProduction = $eggProductionRecord->getEggProductionRecordById($row['egg_production_record_id']);
             
             $sub_array   = [];
             $sub_array[] = $row['name'];
@@ -53,7 +50,6 @@ switch($_GET['op'])
             $sub_array[] = $row['size'];
             $sub_array[] = $chickenData['breed'];
             $sub_array[] = $foodData['name'];
-            $sub_array[] = 'Fecha: '.$eggProduction['production_date'].' | Produccion: '.$eggProduction['production_quantity'];
             $sub_array[] = $row['created'];
             $sub_array[] = '<span class="">Activo</span>';
             

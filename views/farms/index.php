@@ -59,7 +59,6 @@ if($_SESSION['id']){
                                                 <th>Dimension</th>
                                                 <th>Gallina</th>
                                                 <th>Suministro</th>
-                                                <th>Produccion</th>
                                                 <th>Creado</th>
                                                 <th>Estado</th>
                                                 <th></th>
