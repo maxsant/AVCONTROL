@@ -323,5 +323,33 @@ class User extends Connect
         }
         return $query->fetch(PDO::FETCH_ASSOC);
     }
+    /* TODO Actualizar perfil */
+    public function updatePerfilById($id, $password, $name, $lastname, $phone)
+    {
+        $conectar = parent::connection();
+        
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        
+        $sql = '
+            UPDATE
+                users
+            SET
+                password_hash = ?,
+                name = ?,
+                lastname = ?,
+                phone = ?
+            WHERE
+                id = ?
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1,$password_hash);
+        $query->bindValue(2,$name);
+        $query->bindValue(3,$lastname);
+        $query->bindValue(4,$phone);
+        $query->bindValue(5,$id);
+        
+        return $query->execute();
+    }
 }
 ?>

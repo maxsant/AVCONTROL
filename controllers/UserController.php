@@ -52,6 +52,9 @@ switch($_GET['op'])
     case "registerUser":
         $user->registerUser($_POST['name'], $_POST['lastname'], $_POST['identification'], $_POST['phone'], $_POST['email'], $_POST['password_hash'], $_POST['identification_type_id']);
         break;
+    case "updatePerfil":
+        $user->updatePerfilById($_POST['id'], $_POST['password_hash'], $_POST['name'], $_POST['lastname'], $_POST['phone']);
+        break;
 }
 
 ?>
