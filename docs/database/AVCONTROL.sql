@@ -70,6 +70,7 @@ CREATE TABLE users (
     `email_token` VARCHAR(255) UNIQUE,
 	`password_hash` VARCHAR(255) NOT NULL,
     `api_key` VARCHAR(255) UNIQUE,
+	`profile_image` VARCHAR(500) DEFAULT NULL,
 	`role_id` INT(11) NOT NULL,
 	`identification_type_id` INT(11) NOT NULL,
 	`created` DATETIME NOT NULL,

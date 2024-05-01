@@ -206,7 +206,46 @@ class Purchases extends Connect{
         $query->bindValue(8, $status_payment);
         $query->bindValue(9, $id);
         
-        return $query->execute();
+        $success = $query->execute();
+        
+        //Actualizar stock de suministros
+        if($success){
+            $sqlSelectStock = '
+                SELECT
+                    delivery_id,
+                    stock
+                FROM
+                    purchase_details
+                WHERE
+                    purchase_id = ?
+            ';
+            
+            $querySelectStock = $conectar->prepare($sqlSelectStock);
+            $querySelectStock->bindValue(1, $id);
+            $querySelectStock->execute();
+            
+            $flag = false;
+            
+            while($row = $querySelectStock->fetch(PDO::FETCH_ASSOC)){
+                $delivery_id = $row['delivery_id'];
+                $stock       = $row['stock'];
+                
+                $sqlUpdateStock = '
+                    UPDATE
+                        deliveries
+                    SET
+                        stock = stock + :stock
+                    WHERE
+                        id = :id
+                ';
+                
+                $queryUpdateStock = $conectar->prepare($sqlUpdateStock);
+                $queryUpdateStock->bindValue(":stock", $stock, PDO::PARAM_INT);
+                $queryUpdateStock->bindValue(":id", $delivery_id, PDO::PARAM_INT);
+                $queryUpdateStock->execute();
+            }
+        }
+        
     }
     /* TODO Obtener los detalles de la compra por medio de la compra del sistema */
     public function getViewPurchase($id)
