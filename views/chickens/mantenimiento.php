@@ -37,7 +37,12 @@
                         <div class="col-md-12">
                             <div>
                                 <label for="valueInput" class="form-label">Estado Huevos</label>
-                                <input type="text" class="form-control" id="egg_status" name="egg_status" required/>
+                                <select type="text" class="form-control form-select" name="egg_status" id="egg_status" aria-label="Seleccionar">
+                                    <option value="0" selected>Seleccionar</option>
+                                    <option value="Excelente">Excelente</option>
+                                    <option value="Bueno">Bueno</option>
+                                    <option value="Expirado">Expirado</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -52,8 +57,12 @@
                     <div class="row gy-2">
                         <div class="col-md-12">
                             <div>
-                                <label for="valueInput" class="form-label">Condicion</label>
-                                <input type="text" class="form-control" id="condition" name="condition" required/>
+                                <label for="valueInput" class="form-label">Condicion Gallina</label>
+                                <select type="text" class="form-control form-select" name="condition" id="condition" aria-label="Seleccionar">
+                                    <option value="0" selected>Seleccionar</option>
+                                    <option value="Productiva">Productiva</option>
+                                    <option value="Desvincular">Desvincular</option>
+                                </select>
                             </div>
                         </div>
                     </div>

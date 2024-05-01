@@ -104,9 +104,9 @@ function editar(id)
 		$("#breed").val(data.breed);
 		$("#production_date").val(data.production_date);
 		$("#production_quantity").val(data.production_quantity);
-		$("#egg_status").val(data.egg_status);
+		$("#egg_status").val(data.egg_status).trigger('change');
 		$("#birthdate").val(data.birthdate);
-		$("#condition").val(data.condition);
+		$("#condition").val(data.condition).trigger('change');
 	});
 	$('#lbltitulo').html('Editar Registro');
     $('#modalmantenimiento').modal('show');
