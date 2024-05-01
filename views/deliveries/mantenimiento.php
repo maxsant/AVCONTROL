@@ -20,8 +20,10 @@
                     <div class="row gy-2">
                         <div class="col-md-12">
                             <div>
-                                <label for="valueInput" class="form-label">Tipo Suministro</label>
-                                <input type="text" class="form-control" id="type" name="type" required/>
+                                <label for="valueInput" class="form-label">Tipo Suministros</label>
+                                <select type="text" class="form-control form-select" name="delivery_type_id" id="delivery_type_id" aria-label="Seleccionar">
+                                    <option selected>Seleccionar</option>
+                                </select>
                             </div>
                         </div>
                     </div>

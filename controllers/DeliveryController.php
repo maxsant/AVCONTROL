@@ -2,25 +2,30 @@
 
 require_once('../config/connection.php');
 require_once('../models/Deliveries.php');
+require_once('../models/DeliveryTypes.php');
 
 $delivery = new Deliveries();
+$deliveryType = new DeliveryTypes();
 
 switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            $delivery->insertDelivery($_POST['name'], $_POST['type'], $_POST['stock'], $_POST['price']);
+            $delivery->insertDelivery($_POST['name'], $_POST['delivery_type_id'], $_POST['stock'], $_POST['price']);
         }else{
-            $delivery->updateDeliveryById($_POST['id'], $_POST['name'], $_POST['type'], $_POST['stock'], $_POST['price']);
+            $delivery->updateDeliveryById($_POST['id'], $_POST['name'], $_POST['delivery_type_id'], $_POST['stock'], $_POST['price']);
         }
         break;
     case "listDelivery":
         $datos = $delivery->getDeliveries();
         $data  = [];
         foreach($datos as $row){
+            
+            $dataDeliveryType = $deliveryType->getDeliveryTypeById($row['delivery_type_id']);
+            
             $sub_array   = [];
             $sub_array[] = $row['name'];
-            $sub_array[] = $row['type'];
+            $sub_array[] = $dataDeliveryType['name'];
             $sub_array[] = $row['stock'];
             $sub_array[] = $row['price'];
             $sub_array[] = $row['created'];

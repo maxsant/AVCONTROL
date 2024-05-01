@@ -48,6 +48,10 @@ function guardaryeditar(e)
 }
 
 $(document).ready(function(){
+	
+	$.post("../../controllers/DeliveryTypeController.php?op=combo", function(data){
+		$('#delivery_type_id').html(data);
+	});
 
     $('#table_data').DataTable({
         "aProcessing": true,
@@ -102,9 +106,9 @@ function editar(id)
 		data = JSON.parse(data);
 		$("#id").val(data.id);
 		$("#name").val(data.name);
-		$("#type").val(data.type);
+		$("#delivery_type_id").val(data.delivery_type_id).trigger('change');
 		$("#stock").val(data.stock);
-		$("#required_quantity").val(data.required_quantity);
+		$("#price").val(data.price);
 	});
 	$('#lbltitulo').html('Editar Registro');
     $('#modalmantenimiento').modal('show');

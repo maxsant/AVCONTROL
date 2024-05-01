@@ -21,20 +21,20 @@ class Deliveries extends Connect
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     /* TODO insertar suministro */
-    public function insertDelivery($name, $type, $stock, $price)
+    public function insertDelivery($name, $delivery_type_id, $stock, $price)
     {
         $conectar = parent::connection();
         
         $sql = '
             INSERT INTO
-                deliveries (name, type, stock, price, created)
+                deliveries (name, delivery_type_id, stock, price, created)
             VALUES
                 (?, ?, ?, ?, now())
         ';
         
         $query = $conectar->prepare($sql);
         $query->bindValue(1,$name);
-        $query->bindValue(2,$type);
+        $query->bindValue(2,$delivery_type_id);
         $query->bindValue(3,$stock);
         $query->bindValue(4,$price);
         $query->execute();
@@ -42,7 +42,7 @@ class Deliveries extends Connect
         return $query->fetch(PDO::FETCH_ASSOC);
     }
     /* TODO actualizar suministro por ID */
-    public function updateDeliveryById($id, $name, $type, $stock, $price)
+    public function updateDeliveryById($id, $name, $delivery_type_id, $stock, $price)
     {
         $conectar = parent::connection();
         
@@ -51,7 +51,7 @@ class Deliveries extends Connect
                 deliveries
             SET
                 name = ?,
-                type = ?,
+                delivery_type_id = ?,
                 stock = ?,
                 price = ?
             WHERE
@@ -60,7 +60,7 @@ class Deliveries extends Connect
         
         $query = $conectar->prepare($sql);
         $query->bindValue(1,$name);
-        $query->bindValue(2,$type);
+        $query->bindValue(2,$delivery_type_id);
         $query->bindValue(3,$stock);
         $query->bindValue(4,$price);
         $query->bindValue(5,$id);

@@ -112,19 +112,6 @@ CREATE TABLE chickens (
 	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`))
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
--- AVCONTROL.deliveries defitinion
-CREATE TABLE deliveries (
-    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(255) NOT NULL,
-    `type` VARCHAR(50) NOT NULL,
-    `stock` INT(11) NOT NULL,
-    `price` DECIMAL(18, 2) DEFAULT NULL,
-	`created` DATETIME NOT NULL,
-	`modified` TIMESTAMP NOT NULL,
-	`is_active` TINYINT(11) DEFAULT 1,
-	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`))
-) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
-
 -- compra_ventadb.payments definition
 CREATE TABLE payments
 (
@@ -135,6 +122,33 @@ CREATE TABLE payments
     `is_active` TINYINT(2) NOT NULL DEFAULT 1,
 	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
 	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- compra_ventadb.delivery_types definition
+CREATE TABLE delivery_types
+(
+	`id` INT(11) AUTO_INCREMENT,
+	`name` VARCHAR(200) DEFAULT NULL,
+	`created` DATETIME NOT NULL,
+    `modified` TIMESTAMP NOT NULL,
+    `is_active` TINYINT(2) NOT NULL DEFAULT 1,
+	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- AVCONTROL.deliveries defitinion
+CREATE TABLE deliveries (
+    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(255) NOT NULL,
+    `delivery_type_id` INT(11) NOT NULL,
+    `stock` INT(11) NOT NULL,
+    `price` DECIMAL(18, 2) DEFAULT NULL,
+	`created` DATETIME NOT NULL,
+	`modified` TIMESTAMP NOT NULL,
+	`is_active` TINYINT(11) DEFAULT 1,
+	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
+	FOREIGN KEY (`delivery_type_id`) REFERENCES delivery_types (`id`),
+	INDEX `idx_delivery_type_id` (`delivery_type_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- AVCONTROL.farms definition
@@ -286,6 +300,12 @@ VALUES
     ('Efectivo', '2024-06-02'),
     ('Tarjeta de Credito', '2024-06-02'),
     ('Trasnferencia', '2024-06-02');
+	
+INSERT INTO
+	delivery_types (name, created)
+VALUES
+    ('Alimento', '2024-06-02'),
+    ('Medicina', '2024-06-02');
 
 INSERT INTO
 	users (name, lastname, identification, phone, email, validate, email_token, password_hash, api_key, role_id, identification_type_id, created)
