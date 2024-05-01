@@ -61,6 +61,11 @@ switch($_GET['op'])
         break;
     case "viewProduct":
         $datos = $product->getProductById($_POST['id']);
+        if($datos['image'] != ''){
+            $datos['image'] = '<img src="../../assets/Product/'.$datos['image'].'" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image" />';
+        }else{
+            $datos['image'] = '<img src="../../assets/Product/no_imagen.png" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image" />';
+        }
         echo json_encode($datos);
         break;
     case "delete":
