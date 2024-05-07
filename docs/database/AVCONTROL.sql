@@ -169,7 +169,7 @@ CREATE TABLE farms (
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- AVCONTROL.farm_deliveries definition
-CREATE TABLE farm_delivieries (
+CREATE TABLE farm_deliveries (
     `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
     `farm_name` VARCHAR(50) DEFAULT NULL,
     `farm_location` VARCHAR(150) DEFAULT NULL,

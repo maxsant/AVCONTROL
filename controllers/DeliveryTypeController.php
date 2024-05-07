@@ -20,6 +20,11 @@ switch($_GET['op'])
             echo $html;
         }
         break;
+    /* TODO lIstar deliveryType por ID */
+    case "viewDeliveryType":
+        $datos = $deliveryType->getDeliveryTypeById($_POST['id']);
+        echo json_encode($datos);
+        break;
 }
 
 ?>

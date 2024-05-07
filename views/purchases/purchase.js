@@ -41,7 +41,14 @@ $(document).ready(function(){
             delivery_id = $(this).val();
             $.post("../../controllers/DeliveryController.php?op=viewDelivery",{id : delivery_id},function(data){
                 data=JSON.parse(data);
-                $('#delivery_type').val(data.type);
+                if(data.delivery_type_id){
+	                $.post('../../controllers/DeliveryTypeController.php?op=viewDeliveryType', {id : data.delivery_type_id}, function(data2){
+						data2 = JSON.parse(data2);
+						$('#delivery_type').val(data2.name);
+					})
+				}else{
+					$('#delivery_type').val('');
+				}
                 $('#delivery_stock').val(data.stock);
             });
         });

@@ -43,16 +43,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row gy-2">
-                        <div class="col-md-12">
-                            <div>
-                                <label for="valueInput" class="form-label">Suministro</label>
-                                <select type="text" class="form-control form-select" name="delivery_id" id="delivery_id" aria-label="Seleccionar">
-                                    <option selected>Seleccionar</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>

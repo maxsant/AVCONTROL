@@ -13,8 +13,8 @@ switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            if(!empty($_POST['chicken_id']) AND !empty($_POST['delivery_id'])){
-                $farm->insertFarm($_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id'], $_POST['delivery_id']);
+            if(!empty($_POST['chicken_id'])){
+                $farm->insertFarm($_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id']);
                 echo json_encode([
                     'error' => false
                 ]);
@@ -24,8 +24,8 @@ switch($_GET['op'])
                 ]);
             }
         }else{
-            if(!empty($_POST['chicken_id']) AND !empty($_POST['delivery_id'])){
-                $farm->updateFarmById($_POST['id'], $_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id'], $_POST['delivery_id']);
+            if(!empty($_POST['chicken_id'])){
+                $farm->updateFarmById($_POST['id'], $_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id']);
                 echo json_encode([
                     'error' => false
                 ]);
@@ -42,14 +42,12 @@ switch($_GET['op'])
         foreach($datos as $row){
             
             $chickenData = $chicken->getChickenById($row['chicken_id']);
-            $foodData = $delivery->getDeliveryById($row['delivery_id']);
             
             $sub_array   = [];
             $sub_array[] = $row['name'];
             $sub_array[] = $row['location'];
             $sub_array[] = $row['size'];
             $sub_array[] = $chickenData['breed'];
-            $sub_array[] = $foodData['name'];
             $sub_array[] = $row['created'];
             $sub_array[] = '<span class="">Activo</span>';
             

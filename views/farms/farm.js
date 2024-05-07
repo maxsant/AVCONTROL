@@ -61,10 +61,6 @@ $(document).ready(function(){
 	$.post("../../controllers/ChickenController.php?op=combo", function(data){
 		$('#chicken_id').html(data);
 	});
-	
-	$.post("../../controllers/DeliveryController.php?op=combo", function(data){
-		$('#delivery_id').html(data);
-	});
 
     $('#table_data').DataTable({
         "aProcessing": true,
@@ -122,7 +118,6 @@ function editar(id)
 		$("#location").val(data.location);
 		$("#size").val(data.size);
 		$("#chicken_id").val(data.chicken_id).trigger('change');
-		$("#delivery_id").val(data.food_id).trigger('change');
 	});
 	$('#lbltitulo').html('Editar Registro');
     $('#modalmantenimiento').modal('show');
