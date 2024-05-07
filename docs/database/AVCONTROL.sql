@@ -158,14 +158,57 @@ CREATE TABLE farms (
     `location` VARCHAR(255) NOT NULL,
     `size` INT(11),
 	`chicken_id` INT(11),
-	`delivery_id` INT(11),
+	`stock` INT(11) DEFAULT NULL,
+	`capacity` INT(11) DEFAULT NULL,
 	`created` DATETIME NOT NULL,
 	`modified` TIMESTAMP NOT NULL,
 	`is_active` TINYINT(11) DEFAULT 1,
 	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
 	FOREIGN KEY (`chicken_id`) REFERENCES chickens (`id`),
+	INDEX `idx_chicken_id` (`chicken_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- AVCONTROL.farm_deliveries definition
+CREATE TABLE farm_delivieries (
+    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+    `farm_name` VARCHAR(50) DEFAULT NULL,
+    `farm_location` VARCHAR(150) DEFAULT NULL,
+    `subtotal` DECIMAL(50, 2) DEFAULT 0,
+    `iva` DECIMAL(50, 2) DEFAULT 0,
+    `total` DECIMAL(50, 2) DEFAULT 0,
+    `comment` VARCHAR(255) DEFAULT NULL,
+    `farm_id` INT(11) DEFAULT NULL,
+	`payment_id` INT(11) DEFAULT NULL,
+	`status_farm_delivery` INT(11) DEFAULT 2,
+	`status_payment` INT(11) DEFAULT NULL,
+	`user_id` INT(11) DEFAULT NULL,
+	`created` DATETIME NOT NULL,
+	`modified` TIMESTAMP NOT NULL,
+	`is_active` TINYINT(11) DEFAULT 1,
+	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
+    FOREIGN KEY (`farm_id`) REFERENCES farms (`id`),
+	FOREIGN KEY (`payment_id`) REFERENCES payments (`id`),
+	FOREIGN KEY (`user_id`) REFERENCES users (`id`),
+	INDEX `idx_farm_id` (`farm_id`) USING BTREE,
+	INDEX `idx_payment_id` (`payment_id`) USING BTREE,
+	INDEX `idx_user_id` (`user_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- AVCONTROL.farm_delivery_details definition
+CREATE TABLE farm_delivery_details (
+    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+    `stock` INT(11) NOT NULL,
+    `price` DECIMAL(50, 2),
+    `total` DECIMAL(50, 2) NOT NULL,
+    `farm_deliviery_id` INT(11) NOT NULL,
+    `delivery_id` INT(11) NOT NULL,
+	`created` DATETIME NOT NULL,
+	`modified` TIMESTAMP NOT NULL,
+	`is_active` TINYINT(11) DEFAULT 1,
+	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
+	FOREIGN KEY (`farm_deliviery_id`) REFERENCES farm_delivieries (`id`),
 	FOREIGN KEY (`delivery_id`) REFERENCES deliveries (`id`),
-	INDEX `idx_chicken_id` (`chicken_id`) USING BTREE,
+	INDEX `idx_farm_deliviery_id` (`farm_deliviery_id`) USING BTREE,
 	INDEX `idx_delivery_id` (`delivery_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
@@ -324,7 +367,9 @@ INSERT INTO menus (name,route,identification,`group`,created,modified,is_active,
 	 ('Producto Granjas','../productFarms/','productFarms','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Proveedores','../suppliers/','suppliers','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Nueva Compra','../purchases/','purchases','Compra','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 ('Lista Compras','../listPurchases/','listpurchases','Compra','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
+	 ('Lista Compras','../listPurchases/','listpurchases','Compra','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Nueva Compra Granja','../farmDeliveries/','farmdeliveries','Compra Granja','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Lista Compras Granja','../listFarmDelivieries/','listfarmdelivieries','Compra Granja','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
 
 INSERT INTO menu_roles (menu_id,role_id,permission,created,modified,is_active,custom_fields) VALUES
 	 (1,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
@@ -338,4 +383,6 @@ INSERT INTO menu_roles (menu_id,role_id,permission,created,modified,is_active,cu
 	 (9,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 (10,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 (11,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 (12,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
+	 (12,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (13,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (14,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);

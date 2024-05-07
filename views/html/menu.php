@@ -67,9 +67,21 @@ $menus = $menu->getMenusByRole($_SESSION['role_id']);
                     <?php
                     }
                 }?>
-                <li class="menu-title"><span data-key="t-menu">Compra</span></li>
+                <li class="menu-title"><span data-key="t-menu">Suministros</span></li>
                 <?php foreach($menus as $row){
                     if($row['group'] == 'Compra' AND $row['permission'] == "Si"){
+                    ?>
+             		   	<li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["route"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row['name']; ?></span>
+                            </a>
+                        </li>
+                    <?php
+                    }
+                }?>
+                <li class="menu-title"><span data-key="t-menu">Granjas</span></li>
+                <?php foreach($menus as $row){
+                    if($row['group'] == 'Compra Granja' AND $row['permission'] == "Si"){
                     ?>
              		   	<li class="nav-item">
                             <a class="nav-link menu-link" href="<?php echo $row["route"]; ?>">
