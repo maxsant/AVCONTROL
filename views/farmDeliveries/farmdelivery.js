@@ -73,12 +73,75 @@ $(document).on("click","#btnagregar",function(){
 			farm_delivery_detail_price : farm_delivery_detail_price,
 			farm_delivery_detail_stock : farm_delivery_detail_stock
 		},function(data){
+			data = JSON.parse(data);
+			if(data.status == false){
+				swal.fire({
+		            title:'Compra de Suministro',
+		            text: data.msg,
+		            icon: 'error'
+		        });
+			}
         });
         
-        $('#farm_delivery_detail_price').val('');
+        $.post("../../controllers/FarmDeliveriesController.php?op=calculate",{farm_delivery_id : farm_delivery_id},function(data){
+			data = JSON.parse(data);
+			$('#txtsubtotal').html(data.subtotal);
+			$('#txtiva').html(data.iva);
+			$('#txttotal').html(data.total);
+		});
+        
     	$('#farm_delivery_detail_stock').val('');
+    	
+    	listar(farm_delivery_id);
 	}
 });
+
+function listar(farm_delivery_id){
+    $('#table_data').DataTable({
+        "aProcessing": true,
+        "aServerSide": true,
+        dom: 'Bfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+        ],
+        "ajax":{
+            url:"../../controllers/FarmDeliveriesController.php?op=listDetail",
+            type:"post",
+            data:{farm_delivery_id : farm_delivery_id}
+        },
+        "bDestroy": true,
+        "responsive": true,
+        "bInfo":true,
+        "iDisplayLength": 10,
+        "order": [[ 0, "desc" ]],
+        "language": {
+            "sProcessing":     "Procesando...",
+            "sLengthMenu":     "Mostrar MENU registros",
+            "sZeroRecords":    "No se encontraron resultados",
+            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+            "sInfo":           "Mostrando registros del START al END de un total de TOTAL registros",
+            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered":   "(filtrado de un total de MAX registros)",
+            "sInfoPostFix":    "",
+            "sSearch":         "Buscar:",
+            "sUrl":            "",
+            "sInfoThousands":  ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst":    "Primero",
+                "sLast":     "Último",
+                "sNext":     "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+    });
+}
 
 $(document).on("click","#btnlimpiar",function(){
     location.reload();

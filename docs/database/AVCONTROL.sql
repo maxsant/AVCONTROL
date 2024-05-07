@@ -200,15 +200,15 @@ CREATE TABLE farm_delivery_details (
     `stock` INT(11) NOT NULL,
     `price` DECIMAL(50, 2),
     `total` DECIMAL(50, 2) NOT NULL,
-    `farm_deliviery_id` INT(11) NOT NULL,
+    `farm_delivery_id` INT(11) NOT NULL,
     `delivery_id` INT(11) NOT NULL,
 	`created` DATETIME NOT NULL,
 	`modified` TIMESTAMP NOT NULL,
 	`is_active` TINYINT(11) DEFAULT 1,
 	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
-	FOREIGN KEY (`farm_deliviery_id`) REFERENCES farm_delivieries (`id`),
+	FOREIGN KEY (`farm_delivery_id`) REFERENCES farm_deliveries (`id`),
 	FOREIGN KEY (`delivery_id`) REFERENCES deliveries (`id`),
-	INDEX `idx_farm_deliviery_id` (`farm_deliviery_id`) USING BTREE,
+	INDEX `idx_farm_delivery_id` (`farm_delivery_id`) USING BTREE,
 	INDEX `idx_delivery_id` (`delivery_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 

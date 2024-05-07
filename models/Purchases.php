@@ -68,7 +68,7 @@ class Purchases extends Connect{
             SELECT
                 d.id as deliveryId,
                 d.name as nameDelivery,
-                d.type,
+                d.delivery_type_id,
                 pd.stock,
                 pd.price,
                 pd.total,

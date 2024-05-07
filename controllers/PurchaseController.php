@@ -2,7 +2,9 @@
 
 require_once("../config/connection.php");
 require_once("../models/Purchases.php");
+require_once("../models/DeliveryTypes.php");
 
+$deliveryType = new DeliveryTypes();
 $purchase = new Purchases();
 
 switch($_GET["op"]){
@@ -17,9 +19,12 @@ switch($_GET["op"]){
         $datos = $purchase->getPurchaseDetails($_POST['purchase_id']);
         $data  = [];
         foreach($datos as $row){
+            
+            $dataType = $deliveryType->getDeliveryTypeById($row['delivery_type_id']);
+            
             $sub_array   = [];
             $sub_array[] = $row["nameDelivery"];
-            $sub_array[] = $row["type"];
+            $sub_array[] = $dataType["name"];
             $sub_array[] = $row["price"];
             $sub_array[] = $row["stock"];
             $sub_array[] = $row["total"];
