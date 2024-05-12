@@ -96,6 +96,39 @@ $(document).on("click","#btnagregar",function(){
 	}
 });
 
+function eliminar(farm_delivery_detail_id, farm_delivery_id)
+{
+	swal.fire({
+        title:"Eliminar!",
+        text:"Desea Eliminar el Registro?",
+        icon: "error",
+        confirmButtonText : "Si",
+        showCancelButton : true,
+        cancelButtonText: "No",
+    }).then((result)=>{
+        if (result.value){
+            $.post("../../controllers/FarmDeliveriesController.php?op=deleteFarmDeliveryDetail",{farm_delivery_detail_id : farm_delivery_detail_id},function(data){
+                console.log(data);
+            });
+            
+            $.post("../../controllers/FarmDeliveriesController.php?op=calculate",{farm_delivery_id : farm_delivery_id},function(data){
+				data = JSON.parse(data);
+				$('#txtsubtotal').html(data.subtotal);
+				$('#txtiva').html(data.iva);
+				$('#txttotal').html(data.total);
+    		});
+
+            listar(farm_delivery_id);
+
+            swal.fire({
+                title:'Compra Suministro',
+                text: 'Registro Eliminado',
+                icon: 'success'
+            });
+        }
+    });
+}
+
 function listar(farm_delivery_id){
     $('#table_data').DataTable({
         "aProcessing": true,
@@ -142,6 +175,56 @@ function listar(farm_delivery_id){
         },
     });
 }
+
+$(document).on("click","#btnguardar",function(){
+    var farm_delivery_id = $("#farm_delivery_id").val();
+    var farm_id = $("#farm_id").val();
+    var farm_name = $("#farm_name").val();
+    var farm_location = $("#farm_location").val();
+    var farm_delivery_comment = $("#farm_delivery_comment").val();
+    var payment_id = $("#payment_id").val();
+    var status_payment = $("#status_payment").val();
+    
+    if($("#farm_id").val() == '0' || $("#payment_id").val() == '0' || $('#status_payment').val() == '0'){
+        swal.fire({
+            title:'Compra Suministro',
+            text: 'Error Campos Vacios',
+            icon: 'error'
+        });
+
+    }else{
+        $.post("../../controllers/FarmDeliveriesController.php?op=calculate",{farm_delivery_id : farm_delivery_id},function(data){
+            data=JSON.parse(data);
+            if (data.total ==null){
+                /* TODO:Validacion de Detalle */
+                swal.fire({
+                    title:'Compra Suministro',
+                    text: 'Error No Existe Detalle',
+                    icon: 'error'
+                });
+            }else{
+                $.post("../../controllers/FarmDeliveriesController.php?op=updateFarmDelivery",{
+                    farm_delivery_id : farm_delivery_id,
+                    farm_id : farm_id,
+                    farm_name : farm_name,
+                    farm_location : farm_location,
+                    payment_id : payment_id,
+                    farm_delivery_comment : farm_delivery_comment,
+                    status_payment : status_payment
+                },function(data){
+                    /* TODO:Mensaje de Sweetalert */
+                    swal.fire({
+                        title:'Compra Suministro',
+                        text: 'Compra de suministros registrada Correctamente con Nro: C-'+farm_delivery_id,
+                        icon: 'success',
+                        /* TODO: Ruta para mostrar documento de compra */
+                        footer: "<a href='../viewFarmDeliveries/index.php?farmDeliveryId="+farm_delivery_id+"' target='_blank'>Desea ver el Documento?</a>"
+                    });
+                });
+            }
+        });
+    }
+});
 
 $(document).on("click","#btnlimpiar",function(){
     location.reload();

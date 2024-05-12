@@ -43,5 +43,11 @@ switch($_GET["op"]){
         $datos = $farmDelivery->getFarmDeliveryPurchaseCalculate($_POST['farm_delivery_id']);
         echo json_encode($datos);
         break;
+    case 'deleteFarmDeliveryDetail':
+        $farmDelivery->deleteFarmDeliveryDetail($_POST['farm_delivery_detail_id']);
+        break;
+    case 'updateFarmDelivery':
+        $farmDelivery->updateFarmDelivery($_POST['farm_delivery_id'], $_POST['farm_id'], $_POST['farm_name'], $_POST['farm_location'], $_POST['payment_id'], $_POST['farm_delivery_comment'], $_POST['status_payment']);
+        break;
 }
 ?>

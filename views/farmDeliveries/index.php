@@ -216,8 +216,8 @@ if($_SESSION['id']){
                                     </table>
 
                                     <div class="mt-4">
-                                        <label for="purchase_comment" class="form-label text-muted text-uppercase fw-semibold">Comentario</label>
-                                        <textarea class="form-control alert alert-info" id="purchase_comment" name="purchase_comment" placeholder="Comentario" rows="4" required=""></textarea>
+                                        <label for="farm_delivery_comment" class="form-label text-muted text-uppercase fw-semibold">Comentario</label>
+                                        <textarea class="form-control alert alert-info" id="farm_delivery_comment" name="farm_delivery_comment" placeholder="Comentario" rows="4" required=""></textarea>
                                     </div>
 
                                     <div class="hstack gap-2 left-content-end d-print-none mt-4">

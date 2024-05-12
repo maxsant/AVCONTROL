@@ -47,7 +47,7 @@ class FarmDeliveries extends Connect{
             FROM
                 deliveries
             WHERE
-                id = ?
+                id = ? AND is_active = 1
         ';
         
         $queryStockDelivery = $conectar->prepare($sqlStockDelivery);
@@ -65,7 +65,7 @@ class FarmDeliveries extends Connect{
             FROM
                 farm_delivery_details
             WHERE
-                farm_delivery_id = ?
+                farm_delivery_id = ? AND is_active = 1
         ';
         
         $queryStockFarmDelivery = $conectar->prepare($sqlStockFarmDelivery);
@@ -80,11 +80,11 @@ class FarmDeliveries extends Connect{
             $total = $farm_delivery_detail_price * $farm_delivery_detail_stock;
             
             $sql = '
-            INSERT INTO
-                farm_delivery_details (farm_delivery_id, delivery_id, price, stock, total, created)
-            VALUES
-                (?, ?, ?, ?, ?, now())
-        ';
+                INSERT INTO
+                    farm_delivery_details (farm_delivery_id, delivery_id, price, stock, total, created)
+                VALUES
+                    (?, ?, ?, ?, ?, now())
+            ';
             
             $query = $conectar->prepare($sql);
             $query->bindValue(1, $farm_delivery_id);
@@ -134,52 +134,72 @@ class FarmDeliveries extends Connect{
         
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
-    /* TODO Calcular los valores de la compra detalle del suministro de granja del sistema */
-    /*public function getFarmDeliveryPurchaseCalculate($farm_delivery_id)
+    /* TODO Eliminar detalle de la compra de suministro por medio de la compra del sistema */
+    public function deleteFarmDeliveryDetail($farm_delivery_detail_id)
     {
         $conectar = parent::connection();
         
         $sql = '
             UPDATE
-                purchases as p
+                farm_delivery_details
             SET
-                p.subtotal =    (SELECT
-                                    SUM(pd.total) AS pdSubTotal
-                                FROM
-                                    purchase_details pd
-                                WHERE
-                                    pd.purchase_id = ? AND pd.is_active = 1
-                                ),
-                p.iva      =   (SELECT
-                                    SUM(pd.total) AS pdSubTotal
-                                FROM
-                                    purchase_details pd
-                                WHERE
-                                    pd.purchase_id = ? AND pd.is_active = 1
-                                ) * 0.19,
-                p.total    =   (SELECT
-                                    SUM(pd.total) AS pdSubTotal
-                                FROM
-                                    purchase_details pd
-                                WHERE
-                                    pd.purchase_id = ? AND pd.is_active = 1
-                                ) + ((SELECT
-                                    SUM(pd.total) AS pdSubTotal
-                                FROM
-                                    purchase_details pd
-                                WHERE
-                                    pd.purchase_id = ? AND pd.is_active = 1
-                                ) * 0.19)
+                is_active = 0
             WHERE
-                p.id = ?
+                id = ?
         ';
         
         $query = $conectar->prepare($sql);
-        $query->bindValue(1, $purchase_id);
-        $query->bindValue(2, $purchase_id);
-        $query->bindValue(3, $purchase_id);
-        $query->bindValue(4, $purchase_id);
-        $query->bindValue(5, $purchase_id);
+        $query->bindValue(1, $farm_delivery_detail_id);
+        $query->execute();
+        
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    /* TODO Calcular los valores de la compra detalle del suministro de granja del sistema */
+    public function getFarmDeliveryPurchaseCalculate($farm_delivery_id)
+    {
+        $conectar = parent::connection();
+        
+        $sql = '
+            UPDATE
+                farm_deliveries as fd
+            SET
+                fd.subtotal =    (SELECT
+                                    SUM(fdd.total) AS fddSubTotal
+                                FROM
+                                    farm_delivery_details fdd
+                                WHERE
+                                    fdd.farm_delivery_id = ? AND fdd.is_active = 1
+                                ),
+                fd.iva      =   (SELECT
+                                    SUM(fdd.total) AS fddSubTotal
+                                FROM
+                                    farm_delivery_details fdd
+                                WHERE
+                                    fdd.farm_delivery_id = ? AND fdd.is_active = 1
+                                ) * 0.19,
+                fd.total    =   (SELECT
+                                    SUM(fdd.total) AS fddSubTotal
+                                FROM
+                                    farm_delivery_details fdd
+                                WHERE
+                                    fdd.farm_delivery_id = ? AND fdd.is_active = 1
+                                ) + ((SELECT
+                                    SUM(fdd.total) AS fddSubTotal
+                                FROM
+                                    farm_delivery_details fdd
+                                WHERE
+                                    fdd.farm_delivery_id = ? AND fdd.is_active = 1
+                                ) * 0.19)
+            WHERE
+                fd.id = ?
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1, $farm_delivery_id);
+        $query->bindValue(2, $farm_delivery_id);
+        $query->bindValue(3, $farm_delivery_id);
+        $query->bindValue(4, $farm_delivery_id);
+        $query->bindValue(5, $farm_delivery_id);
         $query->execute();
         
         //Realizar un SELECT para obtener los valores actualizados
@@ -189,16 +209,81 @@ class FarmDeliveries extends Connect{
                 total,
                 iva
             FROM
-                purchases
+                farm_deliveries
             WHERE
                 id = ? AND is_active = 1
         ';
         
         $querySelect = $conectar->prepare($sqlSelect);
-        $querySelect->bindValue(1, $purchase_id);
+        $querySelect->bindValue(1, $farm_delivery_id);
         $querySelect->execute();
         
         return $querySelect->fetch(PDO::FETCH_ASSOC);
-    }*/
+    }
+    /* TODO Actualizar compra de suministro ppor granja del sistema */
+    public function updateFarmDelivery($id, $farm_id, $farm_name, $farm_location, $payment_id, $comment = null, $status_payment)
+    {
+        $conectar = parent::connection();
+        
+        $sql = '
+            UPDATE
+                farm_deliveries
+            SET
+                farm_id = ?,
+                farm_name = ?,
+                farm_location = ?,
+                payment_id = ?,
+                status_farm_delivery = 1,
+                comment = ?,
+                status_payment = ?
+            WHERE
+                id = ?
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1, $farm_id);
+        $query->bindValue(2, $farm_name);
+        $query->bindValue(3, $farm_location);
+        $query->bindValue(4, $payment_id);
+        $query->bindValue(5, $comment);
+        $query->bindValue(6, $status_payment);
+        $query->bindValue(7, $id);
+        
+        $success = $query->execute();
+        
+        //Actualizar stock de la granja
+        if($success){
+            $sqlSelectStock = '
+                SELECT
+                    stock
+                FROM
+                    farm_delivery_details
+                WHERE
+                    farm_delivery_id = ?
+            ';
+            
+            $querySelectStock = $conectar->prepare($sqlSelectStock);
+            $querySelectStock->bindValue(1, $id);
+            $querySelectStock->execute();
+            
+            while($row = $querySelectStock->fetch(PDO::FETCH_ASSOC)){
+                $stock       = $row['stock'];
+                
+                $sqlUpdateStock = '
+                    UPDATE
+                        farms
+                    SET
+                        stock = stock + ?
+                    WHERE
+                        id = ?
+                ';
+                
+                $queryUpdateStock = $conectar->prepare($sqlUpdateStock);
+                $queryUpdateStock->bindValue(1, $stock);
+                $queryUpdateStock->bindValue(2, $farm_id);
+                $queryUpdateStock->execute();
+            }
+        }
+    }
 }
 ?>
