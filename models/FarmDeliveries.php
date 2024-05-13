@@ -40,8 +40,8 @@ class FarmDeliveries extends Connect{
     {
         $conectar = parent::connection();
         
-        // Consultar la suma del stock de todas las entregas
-        $sqlStockDelivery   = '
+        // Consultar el stock total disponible
+        $sqlStockDelivery = '
             SELECT
                 stock
             FROM
@@ -55,13 +55,10 @@ class FarmDeliveries extends Connect{
         $queryStockDelivery->execute();
         $sumStockDelivery = $queryStockDelivery->fetchColumn();
         
-        // Calcular el stock a insertar basado en el stock disponible y la cantidad ingresada por el usuario
-        $insert_stock = min($sumStockDelivery, $farm_delivery_detail_stock);
-        
-        // Consultar el stock total disponible
-        $sqlStockFarmDelivery   = '
+        // Calcular el stock total disponible
+        $sqlStockFarmDelivery = '
             SELECT
-                SUM(stock) as sumStock
+                COALESCE(SUM(stock), 0) as sumStock
             FROM
                 farm_delivery_details
             WHERE
@@ -76,7 +73,7 @@ class FarmDeliveries extends Connect{
         // Calcular el stock total disponible
         $available_stock = $sumStockDelivery - $sumStockFarmDelivery;
         
-        if($insert_stock > 0 AND $insert_stock <= $available_stock){
+        if ($farm_delivery_detail_stock > 0 && $farm_delivery_detail_stock <= $available_stock) {
             $total = $farm_delivery_detail_price * $farm_delivery_detail_stock;
             
             $sql = '
@@ -221,23 +218,23 @@ class FarmDeliveries extends Connect{
         return $querySelect->fetch(PDO::FETCH_ASSOC);
     }
     /* TODO Actualizar compra de suministro ppor granja del sistema */
-    public function updateFarmDelivery($id, $farm_id, $farm_name, $farm_location, $payment_id, $comment = null, $status_payment)
+    public function updateFarmDelivery($id, $farm_id, $farm_name, $farm_location, $payment_id, $comment = null, $status_payment, $delivery_id)
     {
         $conectar = parent::connection();
         
         $sql = '
             UPDATE
-                farm_deliveries
+                farm_deliveries as fd
             SET
-                farm_id = ?,
-                farm_name = ?,
-                farm_location = ?,
-                payment_id = ?,
-                status_farm_delivery = 1,
-                comment = ?,
-                status_payment = ?
+                fd.farm_id = ?,
+                fd.farm_name = ?,
+                fd.farm_location = ?,
+                fd.payment_id = ?,
+                fd.status_farm_delivery = 1,
+                fd.comment = ?,
+                fd.status_payment = ?
             WHERE
-                id = ?
+                fd.id = ?
         ';
         
         $query = $conectar->prepare($sql);
@@ -253,9 +250,10 @@ class FarmDeliveries extends Connect{
         
         //Actualizar stock de la granja
         if($success){
+            
             $sqlSelectStock = '
                 SELECT
-                    stock
+                    SUM(stock) AS total_stock
                 FROM
                     farm_delivery_details
                 WHERE
@@ -266,24 +264,125 @@ class FarmDeliveries extends Connect{
             $querySelectStock->bindValue(1, $id);
             $querySelectStock->execute();
             
-            while($row = $querySelectStock->fetch(PDO::FETCH_ASSOC)){
-                $stock       = $row['stock'];
-                
-                $sqlUpdateStock = '
-                    UPDATE
-                        farms
-                    SET
-                        stock = stock + ?
-                    WHERE
-                        id = ?
-                ';
-                
-                $queryUpdateStock = $conectar->prepare($sqlUpdateStock);
-                $queryUpdateStock->bindValue(1, $stock);
-                $queryUpdateStock->bindValue(2, $farm_id);
-                $queryUpdateStock->execute();
-            }
+            $totalStock = $querySelectStock->fetch(PDO::FETCH_ASSOC)['total_stock'];
+            
+            $sqlUpdateStockDelivery = '
+                UPDATE
+                    deliveries
+                SET
+                    stock = stock - ?
+                WHERE
+                    id = ?
+            ';
+            
+            $queryUpdateStockDelivery = $conectar->prepare($sqlUpdateStockDelivery);
+            $queryUpdateStockDelivery->bindValue(1, $totalStock);
+            $queryUpdateStockDelivery->bindValue(2, $delivery_id);
+            $queryUpdateStockDelivery->execute();
+            
+            $sqlUpdateStock = '
+                UPDATE
+                    farms
+                SET
+                    stock = stock + ?
+                WHERE
+                    id = ?
+            ';
+            
+            $queryUpdateStock = $conectar->prepare($sqlUpdateStock);
+            $queryUpdateStock->bindValue(1, $totalStock);
+            $queryUpdateStock->bindValue(2, $farm_id);
+            $queryUpdateStock->execute();
         }
+    }
+    /* TODO Obtener los detalles de la compra del suministro granja por medio de la compra del sistema */
+    public function getViewFarmDelivery($id)
+    {
+        $conectar = parent::connection();
+        
+        $sql = '
+            SELECT
+                fd.id,
+                fd.created as farm_delivery_created,
+                py.name as payment_name,
+                fdd.total as farm_delivery_detail_total,
+                fd.iva as farm_delivery_iva,
+                fd.subtotal as farm_delivery_subtotal,
+                fd.total as farm_delivery_total,
+                fd.comment as farm_delivery_comment,
+                u.name as userName,
+                u.lastname as userLastname,
+                fd.farm_name,
+                fd.farm_location,
+                fd.status_payment
+            FROM
+                farm_delivery_details fdd
+            INNER JOIN farm_deliveries fd ON fdd.farm_delivery_id = fd.id
+            INNER JOIN users u ON fd.user_id = u.id
+            INNER JOIN farms f ON fd.farm_id = f.id
+            INNER JOIN payments py ON fd.payment_id = py.id
+            WHERE
+                fdd.farm_delivery_id = ? AND fdd.is_active = 1 AND fd.status_farm_delivery = 1
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1, $id);
+        $query->execute();
+        
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
+    /* TODO Obtener las compras de granja del sistema */
+    public function getFarmDeliveries()
+    {
+        $conectar = parent::connection();
+        
+        $sql = '
+            SELECT DISTINCT
+                fd.id,
+                fd.created as farm_delivery_created,
+                py.name as payment_name,
+                fd.iva as farm_delivery_iva,
+                fd.subtotal as farm_delivery_subtotal,
+                fd.total as farm_delivery_total,
+                u.name as userName,
+                u.lastname as userLastname,
+                fd.farm_name,
+                fd.farm_location,
+                fd.status_payment
+            FROM
+                farm_delivery_details fdd
+            INNER JOIN farm_deliveries fd ON fdd.farm_delivery_id = fd.id
+            INNER JOIN users u ON fd.user_id = u.id
+            INNER JOIN farms f ON fd.farm_id = f.id
+            INNER JOIN payments py ON fd.payment_id = py.id
+            WHERE
+                fdd.is_active = 1 AND fd.status_farm_delivery = 1
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->execute();
+        
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    /* TODO Actualizar estado de la compra del sistema */
+    public function updateStatusPayment($farm_delivery_id, $status_payment)
+    {
+        $conectar = parent::connection();
+        
+        $sql = '
+            UPDATE
+                farm_deliveries
+            SET
+                status_payment = ?
+            WHERE
+                id = ? AND status_farm_delivery = 1
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1, $status_payment);
+        $query->bindValue(2, $farm_delivery_id);
+        
+        return $query->execute();
     }
 }
 ?>

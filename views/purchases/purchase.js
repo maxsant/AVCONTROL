@@ -218,6 +218,8 @@ $(document).on("click","#btnguardar",function(){
                         icon: 'success',
                         /* TODO: Ruta para mostrar documento de compra */
                         footer: "<a href='../viewPurchases/index.php?purchaseId="+purchase_id+"' target='_blank'>Desea ver el Documento?</a>"
+                    }).then(function() {
+                        location.reload();
                     });
 
                 });

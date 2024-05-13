@@ -13,7 +13,7 @@ if($_SESSION['id']){
 <!doctype html>
 <html lang="es" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none">
 <head>
-    <title>Ingreso de Suministro</title>
+    <title>Descargue de Inventario</title>
     <?php
     require_once("../html/head.php");
     ?>
@@ -34,12 +34,12 @@ if($_SESSION['id']){
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Ingreso de Suministro</h4>
+                                <h4 class="mb-sm-0">Descargue de Inventario</h4>
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Compra</a></li>
-                                        <li class="breadcrumb-item active">Ingreso de Suministro</li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Inventario</a></li>
+                                        <li class="breadcrumb-item active">Descargue de Inventario</li>
                                     </ol>
                                 </div>
 
@@ -98,7 +98,7 @@ if($_SESSION['id']){
                                             <div class="col-lg-3">
                                                 <label for="delivery_Id" class="form-label">Suministro</label>
                                                 <select id="delivery_id" name="food_id" class="form-control form-select" aria-label="Seleccionar">
-                                                    <option selected>Seleccione</option>
+                                                    <option value="0" selected>Seleccione</option>
 
                                                 </select>
                                             </div>

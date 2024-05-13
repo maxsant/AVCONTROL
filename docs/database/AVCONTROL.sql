@@ -368,8 +368,8 @@ INSERT INTO menus (name,route,identification,`group`,created,modified,is_active,
 	 ('Proveedores','../suppliers/','suppliers','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Nueva Compra','../purchases/','purchases','Compra','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Lista Compras','../listPurchases/','listpurchases','Compra','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 ('Nueva Compra Granja','../farmDeliveries/','farmdeliveries','Compra Granja','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 ('Lista Compras Granja','../listFarmDelivieries/','listfarmdelivieries','Compra Granja','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
+	 ('Descargue Inventario','../farmDeliveries/','farmdeliveries','Inventario','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Lista de Descargues','../listFarmDeliveries/','listfarmdeliveries','Inventario','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
 
 INSERT INTO menu_roles (menu_id,role_id,permission,created,modified,is_active,custom_fields) VALUES
 	 (1,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),

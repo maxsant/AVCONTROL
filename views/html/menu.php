@@ -81,7 +81,7 @@ $menus = $menu->getMenusByRole($_SESSION['role_id']);
                 }?>
                 <li class="menu-title"><span data-key="t-menu">Granjas</span></li>
                 <?php foreach($menus as $row){
-                    if($row['group'] == 'Compra Granja' AND $row['permission'] == "Si"){
+                    if($row['group'] == 'Inventario' AND $row['permission'] == "Si"){
                     ?>
              		   	<li class="nav-item">
                             <a class="nav-link menu-link" href="<?php echo $row["route"]; ?>">

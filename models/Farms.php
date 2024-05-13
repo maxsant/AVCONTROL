@@ -27,9 +27,9 @@ class Farms extends Connect
         
         $sql = '
             INSERT INTO
-                farms (name, location, `size`, chicken_id, created)
+                farms (name, location, `size`, chicken_id, stock, created)
             VALUES
-                (?, ?, ?, ?, now())
+                (?, ?, ?, ?, 0, now())
         ';
         
         $query = $conectar->prepare($sql);

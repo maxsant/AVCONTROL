@@ -56,10 +56,11 @@ switch($_GET["op"]){
     case 'listFormatDetail':
         $datos = $purchase->getPurchaseDetails($_POST['purchase_id']);
         foreach($datos as $row){
+            $dataType = $deliveryType->getDeliveryTypeById($row['delivery_type_id']);
             ?>
             <tr>
             	<td><?php echo $row["nameDelivery"]; ?></td>
-            	<td><?php echo $row["type"]; ?></td>
+            	<td><?php echo $dataType["name"]; ?></td>
             	<td scope="row"><?php echo $row["price"]; ?></td>
             	<td><?php echo $row["stock"]; ?></td>
             	<td class="text-end"><?php echo $row["total"]; ?></td>

@@ -10,6 +10,8 @@ $(document).ready(function(){
     $('#farm_id').select2();
     
     $('#delivery_id').select2();
+    
+    $('#payment_id').select2();
 
     $.post("../../controllers/FarmController.php?op=combo", function(data){
         $("#farm_id").html(data);
@@ -179,13 +181,14 @@ function listar(farm_delivery_id){
 $(document).on("click","#btnguardar",function(){
     var farm_delivery_id = $("#farm_delivery_id").val();
     var farm_id = $("#farm_id").val();
+    var delivery_id = $('#delivery_id').val();
     var farm_name = $("#farm_name").val();
     var farm_location = $("#farm_location").val();
     var farm_delivery_comment = $("#farm_delivery_comment").val();
     var payment_id = $("#payment_id").val();
     var status_payment = $("#status_payment").val();
     
-    if($("#farm_id").val() == '0' || $("#payment_id").val() == '0' || $('#status_payment').val() == '0'){
+    if($("#delivery_id").val() == '0' || $("#farm_id").val() == '0' || $("#payment_id").val() == '0' || $('#status_payment').val() == '0'){
         swal.fire({
             title:'Compra Suministro',
             text: 'Error Campos Vacios',
@@ -210,15 +213,18 @@ $(document).on("click","#btnguardar",function(){
                     farm_location : farm_location,
                     payment_id : payment_id,
                     farm_delivery_comment : farm_delivery_comment,
-                    status_payment : status_payment
+                    status_payment : status_payment,
+                    delivery_id : delivery_id
                 },function(data){
                     /* TODO:Mensaje de Sweetalert */
                     swal.fire({
-                        title:'Compra Suministro',
-                        text: 'Compra de suministros registrada Correctamente con Nro: C-'+farm_delivery_id,
+                        title: 'Compra Suministro',
+                        text: 'Compra de suministros registrada Correctamente con Nro: D-' + farm_delivery_id,
                         icon: 'success',
                         /* TODO: Ruta para mostrar documento de compra */
-                        footer: "<a href='../viewFarmDeliveries/index.php?farmDeliveryId="+farm_delivery_id+"' target='_blank'>Desea ver el Documento?</a>"
+                        footer: "<a href='../viewFarmDeliveries/index.php?farmDeliveryId=" + farm_delivery_id + "' target='_blank'>Desea ver el Documento?</a>"
+                    }).then(function() {
+                        location.reload();
                     });
                 });
             }
