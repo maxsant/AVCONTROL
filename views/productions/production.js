@@ -22,14 +22,14 @@ function guardaryeditar(e)
     
     if(camposVacios){
         swal.fire({
-			title: 'Gallina',
+			title: 'Produccion',
 			text: 'Campos no pueden estar vacios',
 			icon: 'error'
 		});
         return false;
     }
 	$.ajax({
-		url: "../../controllers/ChickenController.php?op=createAndUpdate",
+		url: "../../controllers/ProductionController.php?op=createAndUpdate",
 		type: "POST",
 		data: formData,
 		contentType: false,
@@ -39,7 +39,7 @@ function guardaryeditar(e)
 			$('#modalmantenimiento').modal('hide');
 			
 			swal.fire({
-				title: 'Gallina',
+				title: 'Produccion',
 				text: 'Registro confirmado',
 				icon: 'success'
 			});
@@ -59,7 +59,7 @@ $(document).ready(function(){
             'csvHtml5',
         ],
         "ajax":{
-            url:"../../controllers/ChickenController.php?op=listChicken",
+            url:"../../controllers/ProductionController.php?op=listProduction",
             type:"post"
         },
         "bDestroy": true,
@@ -98,15 +98,11 @@ function editar(id)
 {
 	$('#id').val('');
 	$("#mantenimiento_form")[0].reset();
-	$.post("../../controllers/ChickenController.php?op=viewChicken", {id: id}, function(data){
+	$.post("../../controllers/ProductionController.php?op=viewProduction", {id: id}, function(data){
 		data = JSON.parse(data);
 		$("#id").val(data.id);
-		$("#breed").val(data.breed);
-		$("#production_date").val(data.production_date);
-		$("#production_quantity").val(data.production_quantity);
-		$("#egg_status").val(data.egg_status).trigger('change');
-		$("#birthdate").val(data.birthdate);
-		$("#condition").val(data.condition).trigger('change');
+		$("#name").val(data.name);
+		$("#stock").val(data.stock);
 	});
 	$('#lbltitulo').html('Editar Registro');
     $('#modalmantenimiento').modal('show');
@@ -123,14 +119,14 @@ function eliminar(id)
         cancelButtonText: "No",
     }).then((result)=>{
         if (result.value){
-            $.post("../../controllers/ChickenController.php?op=delete",{id : id},function(data){
+            $.post("../../controllers/ProductionController.php?op=delete",{id : id},function(data){
                 console.log(data);
             });
 
             $('#table_data').DataTable().ajax.reload();
 
             swal.fire({
-                title:'Gallina',
+                title:'Produccion',
                 text: 'Registro Eliminado',
                 icon: 'success'
             });

@@ -2,38 +2,16 @@
 
 require_once('../config/connection.php');
 require_once('../models/Farms.php');
-require_once('../models/Chickens.php');
-require_once('../models/Deliveries.php');
 
 $farm = new Farms();
-$chicken = new Chickens();
-$delivery = new Deliveries();
 
 switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            if(!empty($_POST['chicken_id'])){
-                $farm->insertFarm($_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id']);
-                echo json_encode([
-                    'error' => false
-                ]);
-            }else{
-                echo json_encode([
-                    'error' => true
-                ]);
-            }
+            $farm->insertFarm($_POST['name'], $_POST['location'], $_POST['size'], $_POST['eggs_a'],  $_POST['eggs_b'],  $_POST['eggs_c'], $_POST['chicken_meet'], $_POST['third_party_products'], $_POST['chiecken_farm_capacity']);
         }else{
-            if(!empty($_POST['chicken_id'])){
-                $farm->updateFarmById($_POST['id'], $_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_id']);
-                echo json_encode([
-                    'error' => false
-                ]);
-            }else{
-                echo json_encode([
-                    'error' => true
-                ]);
-            }
+            $farm->updateFarmById($_POST['id'], $_POST['name'], $_POST['location'], $_POST['size'], $_POST['eggs_a'],  $_POST['eggs_b'],  $_POST['eggs_c'], $_POST['chicken_meet'], $_POST['third_party_products'], $_POST['chiecken_farm_capacity']);
         }
         break;
     case "listFarm":
@@ -41,13 +19,14 @@ switch($_GET['op'])
         $data  = [];
         foreach($datos as $row){
             
-            $chickenData = $chicken->getChickenById($row['chicken_id']);
-            
             $sub_array   = [];
             $sub_array[] = $row['name'];
             $sub_array[] = $row['location'];
             $sub_array[] = $row['size'];
-            $sub_array[] = $chickenData['breed'];
+            $sub_array[] = $row['eggs_a'];
+            $sub_array[] = $row['eggs_b'];
+            $sub_array[] = $row['eggs_c'];
+            $sub_array[] = $row['chiecken_farm_capacity'];
             $sub_array[] = $row['created'];
             $sub_array[] = '<span class="">Activo</span>';
             

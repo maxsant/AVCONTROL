@@ -1,8 +1,8 @@
 <?php
-class Chickens extends Connect
+class Productions extends Connect
 {
-    /* TODO Traer las gallinas del sistema */
-    public function getChickens()
+    /* TODO Traer las producciones del sistema */
+    public function getProductions()
     {
         $conectar = parent::connection();
         
@@ -10,7 +10,7 @@ class Chickens extends Connect
             SELECT
                 *
             FROM
-                chickens
+                productions
             WHERE
                 is_active = 1
         ';
@@ -20,62 +20,50 @@ class Chickens extends Connect
         
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
-    /* TODO insertar gallina */
-    public function insertChicken($breed, $production_date, $production_quantity, $egg_status, $birthdate, $condition)
+    /* TODO insertar produccion */
+    public function insertProduction($name, $stock)
     {
         $conectar = parent::connection();
         
         $sql = '
             INSERT INTO
-                chickens (breed, production_date, production_quantity, egg_status, birthdate, `condition`, created)
+                productions (name, stock, created)
             VALUES
-                (?, ?, ?, ?, ?, ?, now())
+                (?, ?, now())
         ';
         
         $query = $conectar->prepare($sql);
-        $query->bindValue(1,$breed);
-        $query->bindValue(2,$production_date);
-        $query->bindValue(3,$production_quantity);
-        $query->bindValue(4,$egg_status);
-        $query->bindValue(5,$birthdate);
-        $query->bindValue(6,$condition);
+        $query->bindValue(1,$name);
+        $query->bindValue(2,$stock);
         $query->execute();
         
         return $query->fetch(PDO::FETCH_ASSOC);
     }
-    /* TODO actualizar gallina por ID */
-    public function updateChickenById($id, $breed, $production_date, $production_quantity, $egg_status, $birthdate, $condition)
+    /* TODO actualizar produccion por ID */
+    public function updateChickenById($id, $name, $stock)
     {
         $conectar = parent::connection();
         
         $sql = '
             UPDATE
-                chickens
+                productions
             SET
-                breed = ?,
-                production_date = ?,
-                production_quantity = ?,
-                egg_status = ?,
-                birthdate = ?,
-                `condition` = ?
+                name = ?,
+                stock = ?
             WHERE
                 id=?
         ';
         
         $query = $conectar->prepare($sql);
-        $query->bindValue(1,$breed);
-        $query->bindValue(2,$production_date);
-        $query->bindValue(3,$production_quantity);
-        $query->bindValue(4,$egg_status);
-        $query->bindValue(5,$birthdate);
-        $query->bindValue(6,$condition);
-        $query->bindValue(7,$id);
+        $query->bindValue(1,$name);
+        $query->bindValue(2,$stock);
+        $query->bindValue(3,$id);
         $query->execute();
         
         return $query->fetch(PDO::FETCH_ASSOC);
     }
-    /* TODO obtener gallina por ID */
-    public function getChickenById($id)
+    /* TODO obtener produccion por ID */
+    public function getProductionById($id)
     {
         $conectar = parent::connection();
         
@@ -83,7 +71,7 @@ class Chickens extends Connect
             SELECT
                 *
             FROM
-                chickens
+                productions
             WHERE
                 is_active = 1 AND id=?
         ';
@@ -94,14 +82,14 @@ class Chickens extends Connect
         
         return $query->fetch(PDO::FETCH_ASSOC);
     }
-    /* TODO eliminar gallina por ID */
-    public function deleteChickenById($id)
+    /* TODO eliminar produccion por ID */
+    public function deleteProductionById($id)
     {
         $conectar = parent::connection();
         
         $sql = '
             UPDATE
-                chickens
+                productions
             SET
                 is_active = 0
             WHERE

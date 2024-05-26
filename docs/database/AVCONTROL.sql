@@ -97,21 +97,6 @@ CREATE TABLE suppliers (
 	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`))
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
--- AVCONTROL.chickens definition
-CREATE TABLE chickens (
-    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
-    `breed` VARCHAR(255) NOT NULL,
-    `birthdate` DATE NOT NULL,
-    `condition` VARCHAR(250) NOT NULL,
-	`production_date` DATE NOT NULL,
-    `production_quantity` INT(11) NOT NULL,
-    `egg_status` VARCHAR(50) NOT NULL,
-	`created` DATETIME NOT NULL,
-	`modified` TIMESTAMP NOT NULL,
-	`is_active` TINYINT(11) DEFAULT 1,
-	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`))
-) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
-
 -- compra_ventadb.payments definition
 CREATE TABLE payments
 (
@@ -151,21 +136,58 @@ CREATE TABLE deliveries (
 	INDEX `idx_delivery_type_id` (`delivery_type_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
+-- AVCONTROL.productions definition
+CREATE TABLE productions (
+    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+	`name` VARCHAR(150) NOT NULL,
+	`stock` INT(11) DEFAULT NULL,
+	`created` DATETIME NOT NULL,
+	`modified` TIMESTAMP NOT NULL,
+	`is_active` TINYINT(11) DEFAULT 1,
+	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`))
+) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
+
 -- AVCONTROL.farms definition
 CREATE TABLE farms (
     `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
     `location` VARCHAR(255) NOT NULL,
     `size` INT(11),
-	`chicken_id` INT(11),
+	`eggs_a` INT(11),
+	`eggs_b` INT(11),
+	`eggs_c` INT(11),
+	`chicken_meet` INT(11),
+	`third_party_products` INT(11),
+	`chiecken_farm_capacity` INT(11) DEFAULT NULL,
+	`created` DATETIME NOT NULL,
+	`modified` TIMESTAMP NOT NULL,
+	`is_active` TINYINT(11) DEFAULT 1,
+	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`))
+) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- AVCONTROL.farm_productions definition
+CREATE TABLE farm_productions (
+    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
 	`stock` INT(11) DEFAULT NULL,
-	`capacity` INT(11) DEFAULT NULL,
+	`price` DECIMAL(50, 2) DEFAULT NULL,
+    `chicken_birthdate` DATE NOT NULL,
+    `chicken_condition` VARCHAR(250) NOT NULL,
+	`chicken_weihg` DECIMAL(20, 2) NOT NULL,
+	`chicken_egg_production_date` DATE NOT NULL,
+    `chicken_egg_production_quantity` INT(11) NOT NULL,
+    `chicken_egg_status` VARCHAR(50) NOT NULL,
+	`third_party_product_name` VARCHAR(100) NOT NULL,
+	`status_product` INT(11) NOT NULL,
+	`production_id` INT(11) DEFAULT NULL,
+	`farm_id` INT(11) DEFAULT NULL,
 	`created` DATETIME NOT NULL,
 	`modified` TIMESTAMP NOT NULL,
 	`is_active` TINYINT(11) DEFAULT 1,
 	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
-	FOREIGN KEY (`chicken_id`) REFERENCES chickens (`id`),
-	INDEX `idx_chicken_id` (`chicken_id`) USING BTREE
+	FOREIGN KEY (`production_id`) REFERENCES productions (`id`),
+	FOREIGN KEY (`farm_id`) REFERENCES farms (`id`),
+	INDEX `idx_production_id` (`production_id`) USING BTREE,
+	INDEX `idx_farm_id` (`farm_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- AVCONTROL.farm_deliveries definition
@@ -360,7 +382,7 @@ INSERT INTO menus (name,route,identification,`group`,created,modified,is_active,
 	 ('Usuarios','../users/','users','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Identificaciones','../identifications/','identifications','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Roles','../roles/','roles','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 ('Gallinas','../chickens/','chickens','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Producciones','../productions/','productions','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Suministros','../deliveries/','deliveries','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Granjas','../farms/','farms','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Productos','../products/','products','Mantenimiento','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),

@@ -29,17 +29,55 @@
                         <div class="col-md-12">
                             <div>
                                 <label for="valueInput" class="form-label">Dimension (metros)</label>
-                                <input type="number" class="form-control" id="size" name="size" required/>
+                                <input type="number" class="form-control" id="size" name="size" />
                             </div>
                         </div>
                     </div>
                     <div class="row gy-2">
                         <div class="col-md-12">
                             <div>
-                                <label for="valueInput" class="form-label">Gallina</label>
-                                <select type="text" class="form-control form-select" name="chicken_id" id="chicken_id" aria-label="Seleccionar">
-                                    <option selected>Seleccionar</option>
-                                </select>
+                                <label for="valueInput" class="form-label">Huevos Clase A</label>
+                                <input type="number" class="form-control" id="eggs_a" name="eggs_a" readonly value="0" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="valueInput" class="form-label">Huevos Clase B</label>
+                                <input type="number" class="form-control" id="eggs_b" name="eggs_b" readonly value="0" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="valueInput" class="form-label">Huevos Clase C</label>
+                                <input type="number" class="form-control" id="eggs_c" name="eggs_c" readonly value="0" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="valueInput" class="form-label">Gallinas Venta</label>
+                                <input type="number" class="form-control" id="chicken_meet" name="chicken_meet" readonly value="0" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="valueInput" class="form-label">Producto Terceros</label>
+                                <input type="number" class="form-control" id="third_party_products" name="third_party_products" readonly value="0" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gy-2">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="valueInput" class="form-label">Capacidad Granja</label>
+                                <input type="number" class="form-control" id="chiecken_farm_capacity" name="chiecken_farm_capacity" />
                             </div>
                         </div>
                     </div>

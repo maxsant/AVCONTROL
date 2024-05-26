@@ -1,30 +1,26 @@
 <?php
 
 require_once('../config/connection.php');
-require_once('../models/Chickens.php');
+require_once('../models/Productions.php');
 
-$chicken = new Chickens();
+$production = new Productions();
 
 switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            $chicken->insertChicken($_POST['breed'], $_POST['production_date'], $_POST['production_quantity'], $_POST['egg_status'], $_POST['birthdate'], $_POST['condition']);
+            $production->insertProduction($_POST['name'], $_POST['stock']);
         }else{
-            $chicken->updateChickenById($_POST['id'], $_POST['breed'], $_POST['production_date'], $_POST['production_quantity'], $_POST['egg_status'], $_POST['birthdate'], $_POST['condition']);
+            $production->updateProductionById($_POST['id'], $_POST['name'], $_POST['stock']);
         }
         break;
-    case "listChicken":
-        $datos = $chicken->getChickens();
+    case "listProduction":
+        $datos = $production->getProductions();
         $data  = [];
         foreach($datos as $row){
             $sub_array   = [];
-            $sub_array[] = $row['breed'];
-            $sub_array[] = $row['production_date'];
-            $sub_array[] = $row['production_quantity'];
-            $sub_array[] = $row['egg_status'];
-            $sub_array[] = $row['birthdate'];
-            $sub_array[] = $row['condition'];
+            $sub_array[] = $row['name'];
+            $sub_array[] = $row['stock'];
             $sub_array[] = $row['created'];
             $sub_array[] = '<span class="">Activo</span>';
             
@@ -43,22 +39,22 @@ switch($_GET['op'])
         ];
         echo json_encode($results);
         break;
-    case "viewChicken":
-        $datos = $chicken->getChickenById($_POST['id']);
+    case "viewProduction":
+        $datos = $production->getProductionById($_POST['id']);
         echo json_encode($datos);
         break;
     case "delete":
-        $datos = $chicken->deleteChickenById($_POST['id']);
+        $datos = $production->deleteProductionById($_POST['id']);
         break;
         /* TODO lIstar combobox */
     case "combo":
-        $datos = $chicken->getChickens();
+        $datos = $production->getProductions();
         
         if(is_array($datos) == true AND count($datos) > 0){
             $html = '';
-            $html.= "<option selected>Seleccionar</option>";
+            $html.= "<option value='0' selected>Seleccionar</option>";
             foreach($datos as $row){
-                $html.= "<option value='".$row['id']."'>Raza: ".$row['breed']." | Produccion: ".$row['production_quantity']."</option>";
+                $html.= "<option value='".$row['id']."'>".$row['name']."</option>";
             }
             echo $html;
         }
