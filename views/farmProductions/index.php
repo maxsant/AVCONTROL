@@ -92,7 +92,7 @@ if($_SESSION['id']){
                                             <div class="col-lg-3">
                                                 <label for="chicken_egg_production_type" class="form-label">Tipo Huevos</label>
                                                 <select id="chicken_egg_production_type" name="chicken_egg_production_type" class="form-control form-select" aria-label="Seleccionar" disabled>
-                                                    <option selected>Seleccione</option>
+                                                    <option value="0" selected>Seleccione</option>
                                                 </select>
                                             </div>
                                             
@@ -104,7 +104,7 @@ if($_SESSION['id']){
 
                                             <div class="col-lg-2">
                                                 <label for="chicken_egg_production_quantity" class="form-label">Cant.</label>
-                                                <input type="number" class="form-control" id="chicken_egg_production_quantity" name="chicken_egg_production_quantity" placeholder="Cant." min="0" disabled/>
+                                                <input type="number" class="form-control" id="chicken_egg_production_quantity" name="chicken_egg_production_quantity" placeholder="Cant." min="0" readonly/>
                                             </div>
                                             
                                             <div class="col-lg-2">
@@ -144,7 +144,7 @@ if($_SESSION['id']){
                                         	<div class="col-lg-3">
                                                 <label for="third_party_type" class="form-label">Insumos</label>
                                                 <select id="third_party_type" name="third_party_type" class="form-control form-select" aria-label="Seleccionar" disabled>
-                                                    <option selected>Seleccione</option>
+                                                    <option value="0" selected>Seleccione</option>
                                                 </select>
                                             </div>
                                             
@@ -186,7 +186,7 @@ if($_SESSION['id']){
                                         	<div class="col-lg-3">
                                                 <label for="chicken_type" class="form-label">Gallina</label>
                                                 <select id="chicken_type" name="chicken_type" class="form-control form-select" aria-label="Seleccionar" disabled>
-                                                    <option selected>Seleccione</option>
+                                                    <option value="0" selected>Seleccione</option>
                                                 </select>
                                             </div>
                                             

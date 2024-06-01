@@ -21,15 +21,11 @@ switch($_GET['op'])
             $sub_array   = [];
             $sub_array[] = $row['name'];
             if($row['type'] == 1){
-                $sub_array[] = 'Huevos Clase A';
+                $sub_array[] = 'Huevos';
             }else if($row['type'] == 2){
-                $sub_array[] = 'Huevos Clase B';
-            }else if($row['type'] == 3){
-                $sub_array[] = 'Huevos Clase C';
-            }else if($row['type'] == 4){
-                $sub_array[] = 'Gallina por peso';
-            }else if($row['type'] == 5){
                 $sub_array[] = 'Insumos';
+            }else if($row['type'] == 3){
+                $sub_array[] = 'Gallina por peso';
             }
             $sub_array[] = $row['stock'];
             $sub_array[] = $row['created'];
@@ -61,6 +57,17 @@ switch($_GET['op'])
     case "combo":
         $datos = $production->getProductions();
         
+        if(is_array($datos) == true AND count($datos) > 0){
+            $html = '';
+            $html.= "<option value='0' selected>Seleccionar</option>";
+            foreach($datos as $row){
+                $html.= "<option value='".$row['id']."'>".$row['name']."</option>";
+            }
+            echo $html;
+        }
+        break;
+    case "type_production":
+        $datos = $production->getTypeProduction($_POST['type']);
         if(is_array($datos) == true AND count($datos) > 0){
             $html = '';
             $html.= "<option value='0' selected>Seleccionar</option>";

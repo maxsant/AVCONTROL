@@ -139,6 +139,7 @@ CREATE TABLE deliveries (
 -- AVCONTROL.productions definition
 CREATE TABLE productions (
     `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+	`name` VARCHAR(100) NOT NULL,
 	`stock` INT(11) DEFAULT NULL,
 	`type` INT(11) DEFAULT NULL,
 	`created` DATETIME NOT NULL,

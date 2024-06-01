@@ -105,5 +105,25 @@ class Productions extends Connect
         
         return $query->fetch(PDO::FETCH_ASSOC);
     }
+    /* TODO Traer las producciones del sistema dependiendo el tipo */
+    public function getTypeProduction($type)
+    {
+        $conectar = parent::connection();
+        
+        $sql = '
+            SELECT
+                *
+            FROM
+                productions
+            WHERE
+                is_active = 1 AND type = ?
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1, $type);
+        $query->execute();
+        
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

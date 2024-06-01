@@ -31,11 +31,9 @@
                                 <label for="valueInput" class="form-label">Tipo</label>
                                 <select type="text" class="form-control form-select" name="type" id="type" aria-label="Seleccionar">
                                     <option value="0" selected>Seleccionar</option>
-                                    <option value="1">Huevos Clase A</option>
-                                    <option value="2">Huevos Clase B</option>
-                                    <option value="3">Huevos Clase C</option>
-                                    <option value="4">Gallina por peso</option>
-                                    <option value="5">Insumos</option>
+                                    <option value="1">Huevos</option>
+                                    <option value="2">Insumos</option>
+                                    <option value="3">Gallina por peso</option>
                                 </select>
                             </div>
                         </div>
