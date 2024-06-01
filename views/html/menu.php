@@ -91,6 +91,17 @@ $menus = $menu->getMenusByRole($_SESSION['role_id']);
                     <?php
                     }
                 }?>
+                <?php foreach($menus as $row){
+                    if($row['group'] == 'Granja' AND $row['permission'] == "Si"){
+                    ?>
+             		   	<li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["route"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row['name']; ?></span>
+                            </a>
+                        </li>
+                    <?php
+                    }
+                }?>
             </ul>
         </div>
     </div>

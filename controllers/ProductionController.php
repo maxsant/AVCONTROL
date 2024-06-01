@@ -9,9 +9,9 @@ switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            $production->insertProduction($_POST['name'], $_POST['stock']);
+            $production->insertProduction($_POST['name'], $_POST['stock'], $_POST['type']);
         }else{
-            $production->updateProductionById($_POST['id'], $_POST['name'], $_POST['stock']);
+            $production->updateProductionById($_POST['id'], $_POST['name'], $_POST['stock'], $_POST['type']);
         }
         break;
     case "listProduction":
@@ -20,6 +20,17 @@ switch($_GET['op'])
         foreach($datos as $row){
             $sub_array   = [];
             $sub_array[] = $row['name'];
+            if($row['type'] == 1){
+                $sub_array[] = 'Huevos Clase A';
+            }else if($row['type'] == 2){
+                $sub_array[] = 'Huevos Clase B';
+            }else if($row['type'] == 3){
+                $sub_array[] = 'Huevos Clase C';
+            }else if($row['type'] == 4){
+                $sub_array[] = 'Gallina por peso';
+            }else if($row['type'] == 5){
+                $sub_array[] = 'Insumos';
+            }
             $sub_array[] = $row['stock'];
             $sub_array[] = $row['created'];
             $sub_array[] = '<span class="">Activo</span>';

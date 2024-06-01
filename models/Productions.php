@@ -21,26 +21,27 @@ class Productions extends Connect
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     /* TODO insertar produccion */
-    public function insertProduction($name, $stock)
+    public function insertProduction($name, $stock, $type)
     {
         $conectar = parent::connection();
         
         $sql = '
             INSERT INTO
-                productions (name, stock, created)
+                productions (name, stock, type, created)
             VALUES
-                (?, ?, now())
+                (?, ?, ?, now())
         ';
         
         $query = $conectar->prepare($sql);
         $query->bindValue(1,$name);
         $query->bindValue(2,$stock);
+        $query->bindValue(3,$type);
         $query->execute();
         
         return $query->fetch(PDO::FETCH_ASSOC);
     }
     /* TODO actualizar produccion por ID */
-    public function updateChickenById($id, $name, $stock)
+    public function updateProductionById($id, $name, $stock, $type)
     {
         $conectar = parent::connection();
         
@@ -49,7 +50,8 @@ class Productions extends Connect
                 productions
             SET
                 name = ?,
-                stock = ?
+                stock = ?,
+                type = ?
             WHERE
                 id=?
         ';
@@ -57,7 +59,8 @@ class Productions extends Connect
         $query = $conectar->prepare($sql);
         $query->bindValue(1,$name);
         $query->bindValue(2,$stock);
-        $query->bindValue(3,$id);
+        $query->bindValue(3,$type);
+        $query->bindValue(4,$id);
         $query->execute();
         
         return $query->fetch(PDO::FETCH_ASSOC);

@@ -139,8 +139,8 @@ CREATE TABLE deliveries (
 -- AVCONTROL.productions definition
 CREATE TABLE productions (
     `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
-	`name` VARCHAR(150) NOT NULL,
 	`stock` INT(11) DEFAULT NULL,
+	`type` INT(11) DEFAULT NULL,
 	`created` DATETIME NOT NULL,
 	`modified` TIMESTAMP NOT NULL,
 	`is_active` TINYINT(11) DEFAULT 1,
@@ -391,7 +391,8 @@ INSERT INTO menus (name,route,identification,`group`,created,modified,is_active,
 	 ('Nueva Compra','../purchases/','purchases','Compra','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Lista Compras','../listPurchases/','listpurchases','Compra','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Descargue Inventario','../farmDeliveries/','farmdeliveries','Inventario','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 ('Lista de Descargues','../listFarmDeliveries/','listfarmdeliveries','Inventario','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
+	 ('Lista de Descargues','../listFarmDeliveries/','listfarmdeliveries','Inventario','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Produccion por Granja','../farmProductions/','farmproductions','Granja','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
 
 INSERT INTO menu_roles (menu_id,role_id,permission,created,modified,is_active,custom_fields) VALUES
 	 (1,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
@@ -407,4 +408,5 @@ INSERT INTO menu_roles (menu_id,role_id,permission,created,modified,is_active,cu
 	 (11,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 (12,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 (13,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 (14,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
+	 (14,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (15,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);

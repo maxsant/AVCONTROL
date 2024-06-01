@@ -103,6 +103,7 @@ function editar(id)
 		$("#id").val(data.id);
 		$("#name").val(data.name);
 		$("#stock").val(data.stock);
+		$("#type").val(data.type).trigger('change');
 	});
 	$('#lbltitulo').html('Editar Registro');
     $('#modalmantenimiento').modal('show');

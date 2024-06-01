@@ -55,7 +55,8 @@ if($_SESSION['id']){
                                         <thead>
                                             <tr>
                                                 <th>Nombre</th>
-                                                <th>cantidad</th>
+                                                <th>Tipo</th>
+                                                <th>Cantidad</th>
                                                 <th>Creado</th>
                                                 <th>Estado</th>
                                                 <th></th>
