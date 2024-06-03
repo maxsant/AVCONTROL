@@ -181,14 +181,17 @@ CREATE TABLE farm_productions (
 	`status_product` INT(11) NOT NULL,
 	`production_id` INT(11) DEFAULT NULL,
 	`farm_id` INT(11) DEFAULT NULL,
+	`user_id` INT(11) DEFAULT NULL,
 	`created` DATETIME NOT NULL,
 	`modified` TIMESTAMP NOT NULL,
 	`is_active` TINYINT(11) DEFAULT 1,
 	`custom_fields` LONGTEXT CHECK (json_valid(`custom_fields`)),
 	FOREIGN KEY (`production_id`) REFERENCES productions (`id`),
 	FOREIGN KEY (`farm_id`) REFERENCES farms (`id`),
+	FOREIGN KEY (`user_id`) REFERENCES users (`id`),
 	INDEX `idx_production_id` (`production_id`) USING BTREE,
-	INDEX `idx_farm_id` (`farm_id`) USING BTREE
+	INDEX `idx_farm_id` (`farm_id`) USING BTREE,
+	INDEX `idx_user_id` (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT charset=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- AVCONTROL.farm_deliveries definition

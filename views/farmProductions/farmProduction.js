@@ -2,7 +2,27 @@ var user_id = $('#user_id').val();
 
 $(document).ready(function(){
     
+    $.post("../../controllers/FarmProductionController.php?op=registerFarmProduction", {user_id : user_id}, function(data){
+		data = JSON.parse(data);
+        $("#farm_production_id").val(data.id);
+    });
     
+    $('#farm_id').select2();
+    
+    $.post("../../controllers/FarmController.php?op=combo", function(data){
+        $("#farm_id").html(data);
+    });
+    
+    $("#farm_id").change(function(){
+        $("#farm_id").each(function(){
+            farm_id = $(this).val();
+            $.post("../../controllers/FarmController.php?op=viewFarm",{id : farm_id},function(data){
+                data=JSON.parse(data);
+                $('#farm_name').val(data.name);
+                $('#farm_location').val(data.location);
+            });
+        });
+    });
     
     $('#type_production').change(function() {
         var typeProductionValue = $(this).val();
@@ -165,4 +185,40 @@ $(document).ready(function(){
     
     $('#chicken_type').select2();
     
+});
+
+$(document).on("click","#btnegg",function(){
+    /*var chicken_egg_production_type = $('#chicken_egg_production_type').val();
+    var chicken_egg_production_price = $('#chicken_egg_production_price').val();
+    var chicken_egg_production_quantity = $('#chicken_egg_production_quantity').val();
+    var chicken_egg_production_date = $('#chicken_egg_production_date').val();
+    
+    if($("#chicken_egg_production_type").val()== ''){
+		swal.fire({
+            title:'Compra',
+            text: 'Error Campos Vacios y/o incongruentes',
+            icon: 'error'
+        });
+    }else{
+		$.post("../../controllers/PurchaseController.php?op=savePurchaseDetail",{
+			chicken_egg_production_type : chicken_egg_production_type,
+			chicken_egg_production_price : chicken_egg_production_price,
+			chicken_egg_production_quantity : chicken_egg_production_quantity,
+			chicken_egg_production_date : chicken_egg_production_date
+		},function(data){
+			
+        });
+        
+        $.post("../../controllers/PurchaseController.php?op=calculate",{id : id},function(data){
+			data = JSON.parse(data);
+			$('#txtsubtotal').html(data.subtotal);
+			$('#txtiva').html(data.iva);
+			$('#txttotal').html(data.total);
+		});
+        
+        $('#purchase_detail_price').val('');
+    	$('#purchase_detail_stock').val('');
+    	
+    	listar(purchase_id);
+	}*/
 });

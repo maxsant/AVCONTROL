@@ -48,7 +48,40 @@ if($_SESSION['id']){
                     </div>
 
                     <!-- TODO:Id de Compra -->
-                    <input type="hidden" name="production_id" id="production_id"/>
+                    <input type="hidden" name="farm_production_id" id="farm_production_id"/>
+                    
+                    <!-- TODO:Datos del Proveedor -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">Datos de la Granja</h4>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="live-preview">
+                                        <div class="row align-items-center g-3">
+                                            <div class="col-lg-4">
+                                                <label for="farm_id" class="form-label">Granja</label>
+                                                <select id="farm_id" name="farm_id" class="form-control form-select" aria-label="Seleccione">
+                                                    <option value='0' selected>Seleccione</option>
+
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <label for="farm_name" class="form-label">Nombre</label>
+                                                <input type="text" class="form-control" id="farm_name" name="farm_name" placeholder="Nombre" readonly/>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <label for="farm_location" class="form-label">Localización</label>
+                                                <input type="text" class="form-control" id="farm_location" name="farm_location" placeholder="Localizacion" readonly/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- TODO:Datos del Proveedor -->
                     <div class="row">
