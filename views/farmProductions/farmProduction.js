@@ -188,10 +188,11 @@ $(document).ready(function(){
 });
 
 $(document).on("click","#btnegg",function(){
-    /*var chicken_egg_production_type = $('#chicken_egg_production_type').val();
+    var chicken_egg_production_type = $('#chicken_egg_production_type').val();
     var chicken_egg_production_price = $('#chicken_egg_production_price').val();
     var chicken_egg_production_quantity = $('#chicken_egg_production_quantity').val();
     var chicken_egg_production_date = $('#chicken_egg_production_date').val();
+    var chicken_egg_status = $('#chicken_egg_status').val();
     
     if($("#chicken_egg_production_type").val()== ''){
 		swal.fire({
@@ -200,25 +201,24 @@ $(document).on("click","#btnegg",function(){
             icon: 'error'
         });
     }else{
-		$.post("../../controllers/PurchaseController.php?op=savePurchaseDetail",{
+		$.post("../../controllers/FarmProductionController.php?op=saveFarmProductionDetail",{
 			chicken_egg_production_type : chicken_egg_production_type,
 			chicken_egg_production_price : chicken_egg_production_price,
 			chicken_egg_production_quantity : chicken_egg_production_quantity,
-			chicken_egg_production_date : chicken_egg_production_date
+			chicken_egg_production_date : chicken_egg_production_date,
+			chicken_egg_status : chicken_egg_status
 		},function(data){
 			
         });
         
-        $.post("../../controllers/PurchaseController.php?op=calculate",{id : id},function(data){
+        $.post("../../controllers/FarmProductionController.php?op=calculate",{id : id},function(data){
 			data = JSON.parse(data);
 			$('#txtsubtotal').html(data.subtotal);
 			$('#txtiva').html(data.iva);
 			$('#txttotal').html(data.total);
 		});
         
-        $('#purchase_detail_price').val('');
-    	$('#purchase_detail_stock').val('');
-    	
-    	listar(purchase_id);
-	}*/
+        $('#chicken_egg_production_price').val('');
+    	$('#chicken_egg_production_quantity').val('');
+	}
 });

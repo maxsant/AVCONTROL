@@ -171,6 +171,7 @@ CREATE TABLE farm_productions (
     `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
 	`stock` INT(11) DEFAULT NULL,
 	`price` DECIMAL(50, 2) DEFAULT NULL,
+	`total` DECIMAL(50, 2) DEFAULT NULL,
     `chicken_birthdate` DATE NOT NULL,
     `chicken_condition` VARCHAR(250) NOT NULL,
 	`chicken_weihg` DECIMAL(20, 2) NOT NULL,

@@ -142,12 +142,12 @@ if($_SESSION['id']){
                                             
                                             <div class="col-lg-2">
                                                 <label for="chicken_egg_status" class="form-label">Estado</label>
-                                                <input type="number" class="form-control" id="chicken_egg_status" name="chicken_egg_status" placeholder="Estado" min="0" disabled/>
+                                                <input type="text" class="form-control" id="chicken_egg_status" name="chicken_egg_status" placeholder="Estado" min="0" disabled/>
                                             </div>
                                             
                                             <div class="col-lg-2">
                                                 <label for="chicken_egg_production_date" class="form-label">Fecha</label>
-                                                <input type="number" class="form-control" id="chicken_egg_production_date" name="chicken_egg_production_date" placeholder="Fecha" min="0" disabled/>
+                                                <input type="date" class="form-control" id="chicken_egg_production_date" name="chicken_egg_production_date" placeholder="Fecha" min="0" disabled/>
                                             </div>
 
                                             <div class="col-lg-1 d-grid gap-1">

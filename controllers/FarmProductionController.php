@@ -10,5 +10,8 @@ switch($_GET["op"]){
         $datos = $farmProduction->insertFarmProductionByuser($_POST['user_id']);
         echo json_encode($datos);
         break;
+    case 'saveFarmProductionDetail':
+        $farmProduction->insertFarmProductionDetailByPurchase($_POST['chicken_egg_production_type'], $_POST['chicken_egg_production_price'], $_POST['chicken_egg_production_quantity'], $_POST['chicken_egg_production_date'], $_POST['chicken_egg_status']);
+        break;
 }
 ?>

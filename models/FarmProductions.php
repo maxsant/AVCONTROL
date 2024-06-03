@@ -35,5 +35,35 @@ class FarmProductions extends Connect{
         
         return $querySelect->fetch(PDO::FETCH_ASSOC);
     }
+    /* TODO Insertar un detalle de la produccion por el usuario para la granja del sistema */
+    public function insertFarmProductionDetailByPurchase($chicken_egg_production_type, $chicken_egg_production_price, $chicken_egg_production_quantity, $chicken_egg_production_date, $chicken_egg_status)
+    {
+        $conectar = parent::connection();
+        
+        $total = $chicken_egg_production_price * $chicken_egg_production_quantity;
+        
+        $sql = '
+            INSERT INTO
+                farm_productions (chicken_egg_production_date , chicken_egg_production_quantity, status_product, price, stock, chicken_egg_status, total, created)
+            VALUES
+                (?, ?, ?, ?, ?, ?, ?, now())
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1, $chicken_egg_production_date);
+        $query->bindValue(2, $chicken_egg_production_quantity);
+        $query->bindValue(3, $chicken_egg_production_type);
+        $query->bindValue(4, $chicken_egg_production_price);
+        $query->bindValue(5, $chicken_egg_production_quantity);
+        $query->bindValue(6, $chicken_egg_status);
+        $query->bindValue(7, $total);
+        
+        if($query->execute()){
+            $answer = [
+                'status' => true
+            ];
+        }
+        echo json_encode($answer, JSON_UNESCAPED_UNICODE);
+    }
 }
 ?>
