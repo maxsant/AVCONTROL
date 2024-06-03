@@ -175,7 +175,7 @@ if($_SESSION['id']){
                                         <div class="row align-items-center g-3">
                                         
                                         	<div class="col-lg-3">
-                                                <label for="third_party_type" class="form-label">Insumos</label>
+                                                <label for="third_party_type" class="form-label">Productos Adicionales</label>
                                                 <select id="third_party_type" name="third_party_type" class="form-control form-select" aria-label="Seleccionar" disabled>
                                                     <option value="0" selected>Seleccione</option>
                                                 </select>

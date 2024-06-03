@@ -1,42 +1,7 @@
 <?php
 class FarmProductions extends Connect{
-    /* TODO Insertar una produccion para granja por el usuario del sistema */
-    public function insertFarmProductionByuser($user_id)
-    {
-        $conectar = parent::connection();
-        
-        $sql = '
-            INSERT INTO
-                farm_productions (user_id, created)
-            VALUES
-                (?, now())
-        ';
-        
-        $query = $conectar->prepare($sql);
-        $query->bindValue(1, $user_id);
-        $query->execute();
-        
-        //Obtener el ultimo registro insertado
-        $lastId = $conectar->lastInsertId();
-        
-        // Realizar consulta SELECT para obtener la compra del ultimo registro
-        $sqlSelect = '
-            SELECT
-                *
-            FROM
-                farm_productions
-            WHERE
-                id = ? AND is_active = 1
-        ';
-        
-        $querySelect = $conectar->prepare($sqlSelect);
-        $querySelect->bindValue(1, $lastId);
-        $querySelect->execute();
-        
-        return $querySelect->fetch(PDO::FETCH_ASSOC);
-    }
     /* TODO Insertar un detalle de la produccion por el usuario para la granja del sistema */
-    public function insertFarmProductionDetailByEggs($chicken_egg_production_type, $chicken_egg_production_price, $chicken_egg_production_quantity, $chicken_egg_production_date, $chicken_egg_status)
+    public function insertFarmProductionDetailByEggs($chicken_egg_production_type, $chicken_egg_production_price, $chicken_egg_production_quantity, $chicken_egg_production_date, $chicken_egg_status, $user_id, $farm_id)
     {
         $conectar = parent::connection();
         
@@ -44,9 +9,9 @@ class FarmProductions extends Connect{
         
         $sql = '
             INSERT INTO
-                farm_productions (chicken_egg_production_date , chicken_egg_production_quantity, status_product, price, stock, chicken_egg_status, total, created)
+                farm_productions (chicken_egg_production_date , chicken_egg_production_quantity, production_id, price, stock, chicken_egg_status, total, user_id, farm_id, created)
             VALUES
-                (?, ?, ?, ?, ?, ?, ?, now())
+                (?, ?, ?, ?, ?, ?, ?, ?, ?, now())
         ';
         
         $query = $conectar->prepare($sql);
@@ -57,6 +22,8 @@ class FarmProductions extends Connect{
         $query->bindValue(5, $chicken_egg_production_quantity);
         $query->bindValue(6, $chicken_egg_status);
         $query->bindValue(7, $total);
+        $query->bindValue(8, $user_id);
+        $query->bindValue(9, $farm_id);
         
         if($query->execute()){
             $answer = [
@@ -66,7 +33,7 @@ class FarmProductions extends Connect{
         echo json_encode($answer, JSON_UNESCAPED_UNICODE);
     }
     /* TODO Insertar un detalle de la produccion por el usuario para la granja del sistema */
-    public function insertFarmProductionDetailByChickens($chicken_type, $chicken_price, $chicken_stock, $chicken_birthdate, $chicken_weight, $chicken_condition)
+    public function insertFarmProductionDetailByChickens($chicken_type, $chicken_price, $chicken_stock, $chicken_birthdate, $chicken_weight, $chicken_condition, $user_id, $farm_id)
     {
         $conectar = parent::connection();
         
@@ -74,9 +41,9 @@ class FarmProductions extends Connect{
         
         $sql = '
             INSERT INTO
-                farm_productions (chicken_birthdate , chicken_condition, status_product, price, stock, chicken_weight, total, created)
+                farm_productions (chicken_birthdate , chicken_condition, production_id, price, stock, chicken_weight, total, user_id, farm_id, created)
             VALUES
-                (?, ?, ?, ?, ?, ?, ?, now())
+                (?, ?, ?, ?, ?, ?, ?, ?, ?, now())
         ';
         
         $query = $conectar->prepare($sql);
@@ -87,6 +54,37 @@ class FarmProductions extends Connect{
         $query->bindValue(5, $chicken_stock);
         $query->bindValue(6, $chicken_weight);
         $query->bindValue(7, $total);
+        $query->bindValue(8, $user_id);
+        $query->bindValue(9, $farm_id);
+        
+        if($query->execute()){
+            $answer = [
+                'status' => true
+            ];
+        }
+        echo json_encode($answer, JSON_UNESCAPED_UNICODE);
+    }
+    /* TODO Insertar un detalle de la produccion por el usuario para la granja del sistema */
+    public function insertFarmProductionDetailByThirdParties($third_party_type, $third_party_price, $third_party_stock, $user_id, $farm_id)
+    {
+        $conectar = parent::connection();
+        
+        $total = $third_party_price * $third_party_stock;
+        
+        $sql = '
+            INSERT INTO
+                farm_productions (production_id, price, stock, total, user_id, farm_id, created)
+            VALUES
+                (?, ?, ?, ?, ?, ?, now())
+        ';
+        
+        $query = $conectar->prepare($sql);
+        $query->bindValue(1, $third_party_type);
+        $query->bindValue(2, $third_party_price);
+        $query->bindValue(3, $third_party_stock);
+        $query->bindValue(4, $total);
+        $query->bindValue(5, $user_id);
+        $query->bindValue(6, $farm_id);
         
         if($query->execute()){
             $answer = [

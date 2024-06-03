@@ -178,8 +178,6 @@ CREATE TABLE farm_productions (
 	`chicken_egg_production_date` DATE NOT NULL,
     `chicken_egg_production_quantity` INT(11) NOT NULL,
     `chicken_egg_status` VARCHAR(50) NOT NULL,
-	`third_party_product_name` VARCHAR(100) NOT NULL,
-	`status_product` INT(11) NOT NULL,
 	`production_id` INT(11) DEFAULT NULL,
 	`farm_id` INT(11) DEFAULT NULL,
 	`user_id` INT(11) DEFAULT NULL,
