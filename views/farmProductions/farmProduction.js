@@ -201,7 +201,7 @@ $(document).on("click","#btnegg",function(){
             icon: 'error'
         });
     }else{
-		$.post("../../controllers/FarmProductionController.php?op=saveFarmProductionDetail",{
+		$.post("../../controllers/FarmProductionController.php?op=saveFarmProductionDetailEggs",{
 			chicken_egg_production_type : chicken_egg_production_type,
 			chicken_egg_production_price : chicken_egg_production_price,
 			chicken_egg_production_quantity : chicken_egg_production_quantity,
@@ -211,14 +211,45 @@ $(document).on("click","#btnegg",function(){
 			
         });
         
-        $.post("../../controllers/FarmProductionController.php?op=calculate",{id : id},function(data){
-			data = JSON.parse(data);
-			$('#txtsubtotal').html(data.subtotal);
-			$('#txtiva').html(data.iva);
-			$('#txttotal').html(data.total);
-		});
-        
+        $('#chicken_egg_production_type').val('0').trigger('change'); 
         $('#chicken_egg_production_price').val('');
     	$('#chicken_egg_production_quantity').val('');
+        $('#chicken_egg_status').val('');
+        $('#chicken_egg_production_date').val('');
+	}
+});
+
+$(document).on("click","#btnchicken",function(){
+    var chicken_type = $('#chicken_type').val();
+    var chicken_price = $('#chicken_price').val();
+    var chicken_stock = $('#chicken_stock').val();
+    var chicken_birthdate = $('#chicken_birthdate').val();
+    var chicken_weight = $('#chicken_weight').val();
+    var chicken_condition = $('#chicken_condition').val();
+    
+    if($("#chicken_type").val()== ''){
+		swal.fire({
+            title:'Compra',
+            text: 'Error Campos Vacios y/o incongruentes',
+            icon: 'error'
+        });
+    }else{
+		$.post("../../controllers/FarmProductionController.php?op=saveFarmProductionDetailChickens",{
+			chicken_type : chicken_type,
+			chicken_price : chicken_price,
+			chicken_stock : chicken_stock,
+			chicken_birthdate : chicken_birthdate,
+			chicken_weight : chicken_weight,
+			chicken_condition : chicken_condition
+		},function(data){
+			
+        });
+        
+        $('#chicken_type').val('0').trigger('change'); 
+        $('#chicken_price').val('');
+        $('#chicken_stock').val('');
+        $('#chicken_birthdate').val('');
+        $('#chicken_weihg').val('');
+        $('#chicken_condition').val('');
 	}
 });

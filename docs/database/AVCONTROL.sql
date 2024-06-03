@@ -174,7 +174,7 @@ CREATE TABLE farm_productions (
 	`total` DECIMAL(50, 2) DEFAULT NULL,
     `chicken_birthdate` DATE NOT NULL,
     `chicken_condition` VARCHAR(250) NOT NULL,
-	`chicken_weihg` DECIMAL(20, 2) NOT NULL,
+	`chicken_weight` DECIMAL(20, 2) NOT NULL,
 	`chicken_egg_production_date` DATE NOT NULL,
     `chicken_egg_production_quantity` INT(11) NOT NULL,
     `chicken_egg_status` VARCHAR(50) NOT NULL,

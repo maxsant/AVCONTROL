@@ -236,22 +236,22 @@ if($_SESSION['id']){
                                             
                                             <div class="col-lg-2">
                                                 <label for="chicken_birthdate" class="form-label">Fecha Nacimiento</label>
-                                                <input type="number" class="form-control" id="chicken_birthdate" name="chicken_birthdate" placeholder="Nacimiento" min="0" disabled/>
+                                                <input type="date" class="form-control" id="chicken_birthdate" name="chicken_birthdate" placeholder="Nacimiento" min="0" disabled/>
                                             </div>
                                             
                                             <div class="col-lg-2">
-                                                <label for="chicken_weihg" class="form-label">Peso</label>
-                                                <input type="number" class="form-control" id="chicken_weihg" name="chicken_weihg" placeholder="Peso" min="0" disabled/>
+                                                <label for="chicken_weight" class="form-label">Peso</label>
+                                                <input type="number" class="form-control" id="chicken_weight" name="chicken_weight" placeholder="Peso" min="0" disabled/>
                                             </div>
                                             
                                             <div class="col-lg-2">
                                                 <label for="chicken_condition" class="form-label">Condicion</label>
-                                                <input type="number" class="form-control" id="chicken_condition" name="chicken_condition" placeholder="Condicion" min="0" disabled/>
+                                                <input type="text" class="form-control" id="chicken_condition" name="chicken_condition" placeholder="Condicion" min="0" disabled/>
                                             </div>
 
                                             <div class="col-lg-1 d-grid gap-1">
                                                 <label for="comp_cant" class="form-label">&nbsp;</label>
-                                                <button type="button" id="btnagregar" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-add-box-line"></i></button>
+                                                <button type="button" id="btnchicken" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-add-box-line"></i></button>
                                             </div>
 
                                         </div>
