@@ -141,6 +141,11 @@ if($_SESSION['id']){
                                             </div>
                                             
                                             <div class="col-lg-2">
+                                                <label for="chicken_egg_production_stock" class="form-label">Stock</label>
+                                                <input type="number" class="form-control" id="chicken_egg_production_stock" name="chicken_egg_production_stock" placeholder="Cant." min="0" disabled/>
+                                            </div>
+                                            
+                                            <div class="col-lg-2">
                                                 <label for="chicken_egg_status" class="form-label">Estado</label>
                                                 <input type="text" class="form-control" id="chicken_egg_status" name="chicken_egg_status" placeholder="Estado" min="0" disabled/>
                                             </div>
@@ -274,7 +279,6 @@ if($_SESSION['id']){
                                         <thead>
                                             <tr>
                                                 <th>Produccion</th>
-                                                <th>Tipo</th>
                                                 <th>P.Venta</th>
                                                 <th>Cant</th>
                                                 <th>Total</th>

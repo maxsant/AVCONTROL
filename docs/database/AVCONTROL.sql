@@ -181,6 +181,7 @@ CREATE TABLE farm_productions (
 	`production_id` INT(11) DEFAULT NULL,
 	`farm_id` INT(11) DEFAULT NULL,
 	`user_id` INT(11) DEFAULT NULL,
+	`status_production` INT(11) DEFAULT 2,
 	`created` DATETIME NOT NULL,
 	`modified` TIMESTAMP NOT NULL,
 	`is_active` TINYINT(11) DEFAULT 1,

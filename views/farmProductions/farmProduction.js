@@ -31,6 +31,7 @@ $(document).ready(function(){
             $('#chicken_egg_production_price').prop('disabled', false).show();
             $('#chicken_egg_status').prop('disabled', false).show();
             $('#chicken_egg_production_date').prop('disabled', false).show();
+            $('#chicken_egg_production_stock').prop('disabled', false).show();
             // Ocultar otros campos
             $('#third_party_type').prop('disabled', true).show();
             $('#third_party_price').prop('disabled', true).show();
@@ -73,9 +74,11 @@ $(document).ready(function(){
             $('#chicken_egg_production_price').prop('disabled', true).show();
             $('#chicken_egg_status').prop('disabled', true).show();
             $('#chicken_egg_production_date').prop('disabled', true).show();
+            $('#chicken_egg_production_stock').prop('disabled', true).show();
             $('#chicken_egg_production_type').val('0').trigger('change');
             $('#chicken_egg_production_price').val('');
             $('#chicken_egg_production_quantity').val('');
+            $('#chicken_egg_production_stock').val('');
             $('#chicken_egg_status').val('');
             $('#chicken_egg_production_date').val('');
             
@@ -115,10 +118,12 @@ $(document).ready(function(){
             $('#chicken_egg_production_type').prop('disabled', true).show();
             $('#chicken_egg_production_price').prop('disabled', true).show();
             $('#chicken_egg_status').prop('disabled', true).show();
+            $('#chicken_egg_production_stock').prop('disabled', true).show();
             $('#chicken_egg_production_date').prop('disabled', true).show();
             $('#chicken_egg_production_type').val('0').trigger('change');
             $('#chicken_egg_production_price').val('');
             $('#chicken_egg_production_quantity').val('');
+            $('#chicken_egg_production_stock').val('');
             $('#chicken_egg_status').val('');
             $('#chicken_egg_production_date').val('');
             
@@ -156,11 +161,13 @@ $(document).ready(function(){
             $('#chicken_egg_production_price').prop('disabled', true).show();
             $('#chicken_egg_production_quantity').prop('disabled', true).show();
             $('#chicken_egg_status').prop('disabled', true).show();
+            $('#chicken_egg_production_stock').prop('disabled', true).show();
             $('#chicken_egg_production_date').prop('disabled', true).show();
             $('#chicken_egg_production_type').val('0').trigger('change');
             $('#chicken_egg_production_price').val('');
             $('#chicken_egg_production_quantity').val('');
             $('#chicken_egg_status').val('');
+            $('#chicken_egg_production_stock').val('');
             $('#chicken_egg_production_date').val('');
             
             $('#third_party_type').prop('disabled', true).show();
@@ -187,6 +194,7 @@ $(document).on("click","#btnegg",function(){
     var chicken_egg_production_type = $('#chicken_egg_production_type').val();
     var chicken_egg_production_price = $('#chicken_egg_production_price').val();
     var chicken_egg_production_quantity = $('#chicken_egg_production_quantity').val();
+    var chicken_egg_production_stock = $('#chicken_egg_production_stock').val();
     var chicken_egg_production_date = $('#chicken_egg_production_date').val();
     var chicken_egg_status = $('#chicken_egg_status').val();
     
@@ -201,19 +209,30 @@ $(document).on("click","#btnegg",function(){
 			chicken_egg_production_type : chicken_egg_production_type,
 			chicken_egg_production_price : chicken_egg_production_price,
 			chicken_egg_production_quantity : chicken_egg_production_quantity,
+			chicken_egg_production_stock : chicken_egg_production_stock,
 			chicken_egg_production_date : chicken_egg_production_date,
 			chicken_egg_status : chicken_egg_status,
 			user_id : user_id,
 			farm_id : farm_id
 		},function(data){
-			
+			data = JSON.parse(data);
+			if(data.status == false){
+				swal.fire({
+		            title:'Produccion',
+		            text: data.msg,
+		            icon: 'error'
+		        });
+			}
         });
         
         $('#chicken_egg_production_type').val('0').trigger('change'); 
         $('#chicken_egg_production_price').val('');
     	$('#chicken_egg_production_quantity').val('');
+    	$('#chicken_egg_production_stock').val('');
         $('#chicken_egg_status').val('');
         $('#chicken_egg_production_date').val('');
+        
+        listar(farm_id);
 	}
 });
 
@@ -283,3 +302,50 @@ $(document).on("click","#btnthirdparty",function(){
         $('#third_party_stock').val('');
 	}
 });
+
+function listar(farm_id){
+    $('#table_data').DataTable({
+        "aProcessing": true,
+        "aServerSide": true,
+        dom: 'Bfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+        ],
+        "ajax":{
+            url:"../../controllers/FarmProductionController.php?op=listDetail",
+            type:"post",
+            data:{farm_id : farm_id}
+        },
+        "bDestroy": true,
+        "responsive": true,
+        "bInfo":true,
+        "iDisplayLength": 10,
+        "order": [[ 0, "desc" ]],
+        "language": {
+            "sProcessing":     "Procesando...",
+            "sLengthMenu":     "Mostrar MENU registros",
+            "sZeroRecords":    "No se encontraron resultados",
+            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+            "sInfo":           "Mostrando registros del START al END de un total de TOTAL registros",
+            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered":   "(filtrado de un total de MAX registros)",
+            "sInfoPostFix":    "",
+            "sSearch":         "Buscar:",
+            "sUrl":            "",
+            "sInfoThousands":  ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst":    "Primero",
+                "sLast":     "Último",
+                "sNext":     "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+    });
+}
