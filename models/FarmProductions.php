@@ -5,7 +5,6 @@ class FarmProductions extends Connect{
     {
         $conectar = parent::connection();
         
-        
         // Consultar el stock total disponible
         $sqlStockProduction = '
             SELECT
@@ -75,62 +74,144 @@ class FarmProductions extends Connect{
         echo json_encode($answer, JSON_UNESCAPED_UNICODE);
     }
     /* TODO Insertar un detalle de la produccion por el usuario para la granja del sistema */
-    public function insertFarmProductionDetailByChickens($chicken_type, $chicken_price, $chicken_stock, $chicken_birthdate, $chicken_weight, $chicken_condition, $user_id, $farm_id)
+    public function insertFarmProductionDetailByChickens($chicken_type, $chicken_price, $chicken_quantity, $chicken_stock, $chicken_birthdate, $chicken_weight, $chicken_condition, $user_id, $farm_id)
     {
         $conectar = parent::connection();
         
-        $total = $chicken_price * $chicken_stock;
-        
-        $sql = '
-            INSERT INTO
-                farm_productions (chicken_birthdate , chicken_condition, production_id, price, stock, chicken_weight, total, user_id, farm_id, created)
-            VALUES
-                (?, ?, ?, ?, ?, ?, ?, ?, ?, now())
+        // Consultar el stock total disponible
+        $sqlStockProduction = '
+            SELECT
+                stock
+            FROM
+                productions
+            WHERE
+                id = ? AND is_active = 1
         ';
         
-        $query = $conectar->prepare($sql);
-        $query->bindValue(1, $chicken_birthdate);
-        $query->bindValue(2, $chicken_condition);
-        $query->bindValue(3, $chicken_type);
-        $query->bindValue(4, $chicken_price);
-        $query->bindValue(5, $chicken_stock);
-        $query->bindValue(6, $chicken_weight);
-        $query->bindValue(7, $total);
-        $query->bindValue(8, $user_id);
-        $query->bindValue(9, $farm_id);
+        $queryStockProduction = $conectar->prepare($sqlStockProduction);
+        $queryStockProduction->bindValue(1, $chicken_type);
+        $queryStockProduction->execute();
+        $sumStockProduction= $queryStockProduction->fetchColumn();
         
-        if($query->execute()){
+        // Calcular el stock total disponible
+        $sqlStockFarmProduction = '
+            SELECT
+                COALESCE(SUM(stock), 0) as sumStock
+            FROM
+                farm_productions
+            WHERE
+                farm_id = ? AND is_active = 1 AND status_production = 2 AND production_id = ?
+        ';
+        
+        $queryStockFarmproduction = $conectar->prepare($sqlStockFarmProduction);
+        $queryStockFarmproduction->bindValue(1, $farm_id);
+        $queryStockFarmproduction->bindValue(2, $chicken_type);
+        $queryStockFarmproduction->execute();
+        $sumStockFarmProduction = $queryStockFarmproduction->fetchColumn();
+        
+        // Calcular el stock total disponible
+        $available_stock = $sumStockProduction - $sumStockFarmProduction;
+        
+        if ($chicken_stock > 0 && $chicken_stock <= $available_stock) {
+            $total = $chicken_price * $chicken_stock;
+            
+            $sql   = '
+                INSERT INTO
+                    farm_productions (chicken_birthdate , chicken_condition, production_id, price, stock, chicken_weight, total, user_id, farm_id, created)
+                VALUES
+                    (?, ?, ?, ?, ?, ?, ?, ?, ?, now())
+            ';
+            
+            $query = $conectar->prepare($sql);
+            $query->bindValue(1, $chicken_birthdate);
+            $query->bindValue(2, $chicken_condition);
+            $query->bindValue(3, $chicken_type);
+            $query->bindValue(4, $chicken_price);
+            $query->bindValue(5, $chicken_stock);
+            $query->bindValue(6, $chicken_weight);
+            $query->bindValue(7, $total);
+            $query->bindValue(8, $user_id);
+            $query->bindValue(9, $farm_id);
+            
+            if($query->execute()){
+                $answer = [
+                    'status' => true
+                ];
+            }
+        }else{
             $answer = [
-                'status' => true
+                'status' => false,
+                'msg' => 'Ha superado el stock maximo disponible'
             ];
         }
         echo json_encode($answer, JSON_UNESCAPED_UNICODE);
     }
     /* TODO Insertar un detalle de la produccion por el usuario para la granja del sistema */
-    public function insertFarmProductionDetailByThirdParties($third_party_type, $third_party_price, $third_party_stock, $user_id, $farm_id)
+    public function insertFarmProductionDetailByThirdParties($third_party_type, $third_party_price, $third_party_quantity, $third_party_stock, $user_id, $farm_id)
     {
         $conectar = parent::connection();
         
-        $total = $third_party_price * $third_party_stock;
-        
-        $sql = '
-            INSERT INTO
-                farm_productions (production_id, price, stock, total, user_id, farm_id, created)
-            VALUES
-                (?, ?, ?, ?, ?, ?, now())
+        // Consultar el stock total disponible
+        $sqlStockProduction = '
+            SELECT
+                stock
+            FROM
+                productions
+            WHERE
+                id = ? AND is_active = 1
         ';
         
-        $query = $conectar->prepare($sql);
-        $query->bindValue(1, $third_party_type);
-        $query->bindValue(2, $third_party_price);
-        $query->bindValue(3, $third_party_stock);
-        $query->bindValue(4, $total);
-        $query->bindValue(5, $user_id);
-        $query->bindValue(6, $farm_id);
+        $queryStockProduction = $conectar->prepare($sqlStockProduction);
+        $queryStockProduction->bindValue(1, $third_party_type);
+        $queryStockProduction->execute();
+        $sumStockProduction= $queryStockProduction->fetchColumn();
         
-        if($query->execute()){
+        // Calcular el stock total disponible
+        $sqlStockFarmProduction = '
+            SELECT
+                COALESCE(SUM(stock), 0) as sumStock
+            FROM
+                farm_productions
+            WHERE
+                farm_id = ? AND is_active = 1 AND status_production = 2 AND production_id = ?
+        ';
+        
+        $queryStockFarmproduction = $conectar->prepare($sqlStockFarmProduction);
+        $queryStockFarmproduction->bindValue(1, $farm_id);
+        $queryStockFarmproduction->bindValue(2, $third_party_type);
+        $queryStockFarmproduction->execute();
+        $sumStockFarmProduction = $queryStockFarmproduction->fetchColumn();
+        
+        // Calcular el stock total disponible
+        $available_stock = $sumStockProduction - $sumStockFarmProduction;
+        
+        if ($third_party_stock > 0 && $third_party_stock <= $available_stock) {
+            $total = $third_party_price * $third_party_stock;
+            
+            $sql = '
+                INSERT INTO
+                    farm_productions (production_id, price, stock, total, user_id, farm_id, created)
+                VALUES
+                    (?, ?, ?, ?, ?, ?, now())
+            ';
+            
+            $query = $conectar->prepare($sql);
+            $query->bindValue(1, $third_party_type);
+            $query->bindValue(2, $third_party_price);
+            $query->bindValue(3, $third_party_stock);
+            $query->bindValue(4, $total);
+            $query->bindValue(5, $user_id);
+            $query->bindValue(6, $farm_id);
+            
+            if($query->execute()){
+                $answer = [
+                    'status' => true
+                ];
+            }
+        }else{
             $answer = [
-                'status' => true
+                'status' => false,
+                'msg' => 'Ha superado el stock maximo disponible'
             ];
         }
         echo json_encode($answer, JSON_UNESCAPED_UNICODE);

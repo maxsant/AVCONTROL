@@ -193,7 +193,12 @@ if($_SESSION['id']){
                                             
 
                                             <div class="col-lg-2">
-                                                <label for="third_party_stock" class="form-label">Cant.</label>
+                                                <label for="third_party_quantity" class="form-label">Cant.</label>
+                                                <input type="number" class="form-control" id="third_party_quantity" name="third_party_quantity" placeholder="Cant." min="0" disabled/>
+                                            </div>
+                                            
+                                            <div class="col-lg-2">
+                                                <label for="third_party_stock" class="form-label">Stock</label>
                                                 <input type="number" class="form-control" id="third_party_stock" name="third_party_stock" placeholder="Cant." min="0" disabled/>
                                             </div>
 
@@ -235,7 +240,12 @@ if($_SESSION['id']){
                                             
 
                                             <div class="col-lg-2">
-                                                <label for="chicken_stock" class="form-label">Cant.</label>
+                                                <label for="chicken_quantity" class="form-label">Cant.</label>
+                                                <input type="number" class="form-control" id="chicken_quantity" name="chicken_quantity" placeholder="Cant." min="0" disabled/>
+                                            </div>
+                                            
+                                            <div class="col-lg-2">
+                                                <label for="chicken_stock" class="form-label">Stock</label>
                                                 <input type="number" class="form-control" id="chicken_stock" name="chicken_stock" placeholder="Cant." min="0" disabled/>
                                             </div>
                                             
