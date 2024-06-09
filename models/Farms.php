@@ -21,33 +21,28 @@ class Farms extends Connect
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     /* TODO insertar granjas */
-    public function insertFarm($name, $location, $size, $eggs_a, $eggs_b, $eggs_c, $chicken_meet, $third_party_products, $chiecken_farm_capacity)
+    public function insertFarm($name, $location, $size, $chicken_farm_capacity)
     {
         $conectar = parent::connection();
         
         $sql = '
             INSERT INTO
-                farms (name, location, `size`, eggs_a, eggs_b, eggs_c, chicken_meet, third_party_products, chiecken_farm_capacity, created)
+                farms (name, location, `size`, chicken_farm_capacity, created)
             VALUES
-                (?, ?, ?, ?, ?, ?, ?, ?, ?, now())
+                (?, ?, ?, ?, now())
         ';
         
         $query = $conectar->prepare($sql);
         $query->bindValue(1,$name);
         $query->bindValue(2,$location);
         $query->bindValue(3,$size);
-        $query->bindValue(4,$eggs_a);
-        $query->bindValue(5,$eggs_b);
-        $query->bindValue(6,$eggs_c);
-        $query->bindValue(7,$chicken_meet);
-        $query->bindValue(8,$third_party_products);
-        $query->bindValue(9,$chiecken_farm_capacity);
+        $query->bindValue(4,$chicken_farm_capacity);
         $query->execute();
         
         return $query->fetch(PDO::FETCH_ASSOC);
     }
     /* TODO actualizar granjas por ID */
-    public function updateFarmById($id, $name, $location, $size, $eggs_a, $eggs_b, $eggs_c, $chicken_meet, $third_party_products, $chiecken_farm_capacity)
+    public function updateFarmById($id, $name, $location, $size, $chicken_farm_capacity)
     {
         $conectar = parent::connection();
         
@@ -58,12 +53,7 @@ class Farms extends Connect
                 name = ?,
                 location = ?,
                 `size` = ?,
-                eggs_a = ?,
-                eggs_b = ?,
-                eggs_c = ?,
-                chicken_meet = ?,
-                third_party_products = ?,
-                chiecken_farm_capacity = ?
+                chicken_farm_capacity = ?
             WHERE
                 id=?
         ';
@@ -72,13 +62,8 @@ class Farms extends Connect
         $query->bindValue(1,$name);
         $query->bindValue(2,$location);
         $query->bindValue(3,$size);
-        $query->bindValue(4,$eggs_a);
-        $query->bindValue(5,$eggs_b);
-        $query->bindValue(6,$eggs_c);
-        $query->bindValue(7,$chicken_meet);
-        $query->bindValue(8,$third_party_products);
-        $query->bindValue(9,$chiecken_farm_capacity);
-        $query->bindValue(10,$id);
+        $query->bindValue(4,$chicken_farm_capacity);
+        $query->bindValue(5,$id);
         $query->execute();
         
         return $query->fetch(PDO::FETCH_ASSOC);

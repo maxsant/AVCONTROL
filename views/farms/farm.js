@@ -104,19 +104,7 @@ function editar(id)
 		$("#name").val(data.name);
 		$("#location").val(data.location);
 		$("#size").val(data.size);
-		$("#eggs_a").val(data.eggs_a);
-		$("#eggs_b").val(data.eggs_b);
-		$("#eggs_c").val(data.eggs_c);
-		$("#chicken_meet").val(data.chicken_meet);
-		$("#third_party_products").val(data.third_party_products);
-		$("#chiecken_farm_capacity").val(data.chiecken_farm_capacity);
-		
-		// Habilitar campos específicos al editar un registro
-        $("#eggs_a").prop("readonly", false);
-        $("#eggs_b").prop("readonly", false);
-        $("#eggs_c").prop("readonly", false);
-        $("#chicken_meet").prop("readonly", false);
-        $("#third_party_products").prop("readonly", false);
+		$("#chicken_farm_capacity").val(data.size);
 	});
 	$('#lbltitulo').html('Editar Registro');
     $('#modalmantenimiento').modal('show');
@@ -152,12 +140,6 @@ $(document).on("click", "#btnnuevo", function(){
 	$('#id').val('');
     $('#lbltitulo').html('Nuevo Registro');
     $("#mantenimiento_form")[0].reset();
-    // Deshabilitar campos específicos al editar un registro
-    $("#eggs_a").prop("readonly", true);
-    $("#eggs_b").prop("readonly", true);
-    $("#eggs_c").prop("readonly", true);
-    $("#chicken_meet").prop("readonly", true);
-    $("#third_party_products").prop("readonly", true);
     $('#modalmantenimiento').modal('show');
 })
 

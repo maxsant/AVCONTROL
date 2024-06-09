@@ -57,9 +57,8 @@ if($_SESSION['id']){
                                                 <th>Nombre</th>
                                                 <th>Locacion</th>
                                                 <th>Dimension</th>
-                                                <th>Clase A</th>
-                                                <th>Clase B</th>
-                                                <th>Clase C</th>
+                                                <th>Cantidad Produccion</th>
+                                                <th>Cantidad Suministros</th>
                                                 <th>Capacidad</th>
                                                 <th>Creado</th>
                                                 <th>Estado</th>

@@ -9,9 +9,9 @@ switch($_GET['op'])
 {
     case "createAndUpdate":
         if(empty($_POST['id'])){
-            $farm->insertFarm($_POST['name'], $_POST['location'], $_POST['size'], $_POST['eggs_a'],  $_POST['eggs_b'],  $_POST['eggs_c'], $_POST['chicken_meet'], $_POST['third_party_products'], $_POST['chiecken_farm_capacity']);
+            $farm->insertFarm($_POST['name'], $_POST['location'], $_POST['size'], $_POST['chicken_farm_capacity']);
         }else{
-            $farm->updateFarmById($_POST['id'], $_POST['name'], $_POST['location'], $_POST['size'], $_POST['eggs_a'],  $_POST['eggs_b'],  $_POST['eggs_c'], $_POST['chicken_meet'], $_POST['third_party_products'], $_POST['chiecken_farm_capacity']);
+            $farm->updateFarmById($_POST['id'], $_POST['name'], $_POST['location'], $_POST['size'],  $_POST['chicken_farm_capacity']);
         }
         break;
     case "listFarm":
@@ -23,10 +23,9 @@ switch($_GET['op'])
             $sub_array[] = $row['name'];
             $sub_array[] = $row['location'];
             $sub_array[] = $row['size'];
-            $sub_array[] = $row['eggs_a'];
-            $sub_array[] = $row['eggs_b'];
-            $sub_array[] = $row['eggs_c'];
-            $sub_array[] = $row['chiecken_farm_capacity'];
+            $sub_array[] = $row['stock_production'];
+            $sub_array[] = $row['stock'];
+            $sub_array[] = $row['chicken_farm_capacity'];
             $sub_array[] = $row['created'];
             $sub_array[] = '<span class="">Activo</span>';
             

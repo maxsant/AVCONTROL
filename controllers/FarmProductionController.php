@@ -15,7 +15,9 @@ switch($_GET["op"]){
     case 'saveFarmProductionDetailThirdParties':
         $farmProduction->insertFarmProductionDetailByThirdParties($_POST['third_party_type'], $_POST['third_party_price'], $_POST['third_party_quantity'], $_POST['third_party_stock'], $_POST['user_id'], $_POST['farm_id']);
         break;
-        
+    case 'updateFarmProduction':
+        $farmProduction->updateFarmProduction($_POST['farm_id']);
+        break;
     case 'listDetail':
         $datos = $farmProduction->getFarmProductionDetail($_POST['farm_id']);
         $data  = [];

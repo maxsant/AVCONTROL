@@ -387,3 +387,31 @@ function listar(farm_id){
         },
     });
 }
+
+$(document).on("click","#btnguardar",function(){
+    var farm_id = $("#farm_id").val();
+    
+    if($("#production_id").val() == '0' || $("#farm_id").val() == '0'){
+        swal.fire({
+            title:'Produccion',
+            text: 'Error Campos Vacios',
+            icon: 'error'
+        });
+
+    }else{
+        $.post("../../controllers/FarmProductionController.php?op=updateFarmProduction", {farm_id : farm_id}, function(data){
+            /* TODO:Mensaje de Sweetalert */
+            swal.fire({
+                title: 'Produccion',
+                text: 'Produccion registrada Correctamente',
+                icon: 'success',
+            }).then(function() {
+                location.reload();
+            });
+        });
+    }
+});
+
+$(document).on("click","#btnlimpiar",function(){
+    location.reload();
+});

@@ -4,7 +4,7 @@ require_once('../../models/Roles.php');
 
 $role = new Roles();
 
-$data = $role->getAccessByRol($_SESSION['role_id'], 'listpurchases');
+$data = $role->getAccessByRol($_SESSION['role_id'], 'listfarmdeliveries');
 
 if($_SESSION['id']){
     if(is_array($data) AND count($data) > 0){

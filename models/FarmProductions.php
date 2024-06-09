@@ -244,5 +244,83 @@ class FarmProductions extends Connect{
         
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+    /* TODO Actualizar compra de suministro ppor granja del sistema */
+    public function updateFarmProduction($farm_id)
+    {
+        $conectar = parent::connection();
+        
+        // Obtener el stock total agrupado por production_id
+        $sqlSelectStock = '
+            SELECT
+                production_id,
+                SUM(stock) AS total_stock
+            FROM
+                farm_productions
+            WHERE
+                farm_id = ? AND status_production = 2
+            GROUP BY
+                production_id
+        ';
+        
+        $querySelectStock = $conectar->prepare($sqlSelectStock);
+        $querySelectStock->bindValue(1, $farm_id);
+        $querySelectStock->execute();
+        
+        $productionStocks = $querySelectStock->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Actualizar el status_production en farm_productions
+        $sqlUpdateStatus = '
+            UPDATE
+                farm_productions
+            SET
+                status_production = 1
+            WHERE
+                farm_id = ? AND status_production = 2
+        ';
+        
+        $queryUpdateStatus = $conectar->prepare($sqlUpdateStatus);
+        $queryUpdateStatus->bindValue(1, $farm_id);
+        $success = $queryUpdateStatus->execute();
+        
+        if($success){
+            foreach ($productionStocks as $productionStock) {
+                $prod_id = $productionStock['production_id'];
+                $totalStock = $productionStock['total_stock'];
+                
+                // Actualizar stock de la tabla productions
+                $sqlUpdateStockDelivery = '
+                    UPDATE
+                        productions
+                    SET
+                        stock = stock - ?
+                    WHERE
+                        id = ?
+                ';
+                
+                $queryUpdateStockDelivery = $conectar->prepare($sqlUpdateStockDelivery);
+                $queryUpdateStockDelivery->bindValue(1, $totalStock);
+                $queryUpdateStockDelivery->bindValue(2, $prod_id);
+                $queryUpdateStockDelivery->execute();
+            }
+            
+            // Calcular el stock total para actualizar la tabla farms
+            $totalStockAllProductions = array_sum(array_column($productionStocks, 'total_stock'));
+            
+            // Actualizar stock de la tabla farms
+            $sqlUpdateStock = '
+                UPDATE
+                    farms
+                SET
+                    stock_production = stock_production + ?
+                WHERE
+                    id = ?
+            ';
+            
+            $queryUpdateStock = $conectar->prepare($sqlUpdateStock);
+            $queryUpdateStock->bindValue(1, $totalStockAllProductions);
+            $queryUpdateStock->bindValue(2, $farm_id);
+            $queryUpdateStock->execute();
+        }
+    }
 }
 ?>

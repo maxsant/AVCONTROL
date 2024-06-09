@@ -42,7 +42,6 @@ if($_SESSION['id']){
                                         <li class="breadcrumb-item active">Produccion Granja</li>
                                     </ol>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -297,24 +296,6 @@ if($_SESSION['id']){
                                         </thead>
                                         <tbody>
 
-                                        </tbody>
-                                    </table>
-
-                                    <!-- TODO:Calculo Detalle -->
-                                    <table class="table table-borderless table-nowrap align-middle mb-0 ms-auto" style="width:250px">
-                                        <tbody>
-                                            <tr>
-                                                <td>Sub Total</td>
-                                                <td class="text-end" id="txtsubtotal">0</td>
-                                            </tr>
-                                            <tr>
-                                                <td>IVA (19%)</td>
-                                                <td class="text-end" id="txtiva">0</td>
-                                            </tr>
-                                            <tr class="border-top border-top-dashed fs-15">
-                                                <th scope="row">Total</th>
-                                                <th class="text-end" id="txttotal">0</th>
-                                            </tr>
                                         </tbody>
                                     </table>
 
