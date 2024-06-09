@@ -89,7 +89,7 @@
                     <div class="dropdown-menu dropdown-menu-end">
 
                         <h6 class="dropdown-header">Bienvenido <?php echo $_SESSION["name"].' '.$_SESSION['lastname'] ?>!</h6>
-                        <a class="dropdown-item" href="../MntPerfil/"><i
+                        <a class="dropdown-item" href="../perfil/"><i
                                 class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Perfil</span></a>
                         <a class="dropdown-item" href="../help/"><i

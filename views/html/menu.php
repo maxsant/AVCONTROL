@@ -1,22 +1,32 @@
+<?php
+
+require_once("../../config/connection.php");
+require_once("../../models/Menus.php");
+
+$menu  = new Menus();
+$menus = $menu->getMenusByRole($_SESSION['role_id']);
+
+?>
+
 <div class="app-menu navbar-menu">
 
     <div class="navbar-brand-box">
 
         <a href="index.html" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="../../assets/images/logo-sm.png" alt="" height="22">
+                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="150">
             </span>
             <span class="logo-lg">
-                <img src="../../assets/images/logo-dark.png" alt="" height="17">
+                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="70">
             </span>
         </a>
 
         <a href="index.html" class="logo logo-light">
             <span class="logo-sm">
-                <img src="../../assets/images/logo-sm.png" alt="" height="22">
+                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="150">
             </span>
             <span class="logo-lg">
-                <img src="../../assets/images/logo-light.png" alt="" height="17">
+                <img src="https://firebasestorage.googleapis.com/v0/b/avcontrol-3dbb7.appspot.com/o/avcontrol_logo.png?alt=media&token=820276d1-4bb4-446e-9862-a8996156021c" alt="" height="70">
             </span>
         </a>
 
@@ -34,24 +44,64 @@
             </div>
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
-                	<li class="nav-item">
-                        <a class="nav-link menu-link" href="../home/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Dashboard</span>
-                        </a>
-                    </li>
+                <?php foreach($menus as $row){
+                    if($row['group'] == 'Dashboard' AND $row['permission'] == "Si"){
+                    ?>
+             		   	<li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["route"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row['name']; ?></span>
+                            </a>
+                        </li>
+                    <?php
+                    }
+                }?>
                 <li class="menu-title"><span data-key="t-menu">Mantenimiento</span></li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="../users/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Usuarios</span>
-                        </a>
-                    </li>
-         			<li class="nav-item">
-                        <a class="nav-link menu-link" href="../identifications/">
-                            <i class="ri-honour-line"></i> <span data-key="t-widgets">Identificaciones</span>
-                        </a>
-                    </li>
-                <li class="menu-title"><span data-key="t-menu">Compra</span></li>
-                <li class="menu-title"><span data-key="t-menu">Venta</span></li>
+                <?php foreach($menus as $row){
+                    if($row['group'] == 'Mantenimiento' AND $row['permission'] == "Si"){
+                    ?>
+             		   	<li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["route"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row['name']; ?></span>
+                            </a>
+                        </li>
+                    <?php
+                    }
+                }?>
+                <li class="menu-title"><span data-key="t-menu">Suministros</span></li>
+                <?php foreach($menus as $row){
+                    if($row['group'] == 'Compra' AND $row['permission'] == "Si"){
+                    ?>
+             		   	<li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["route"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row['name']; ?></span>
+                            </a>
+                        </li>
+                    <?php
+                    }
+                }?>
+                <li class="menu-title"><span data-key="t-menu">Granjas</span></li>
+                <?php foreach($menus as $row){
+                    if($row['group'] == 'Inventario' AND $row['permission'] == "Si"){
+                    ?>
+             		   	<li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["route"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row['name']; ?></span>
+                            </a>
+                        </li>
+                    <?php
+                    }
+                }?>
+                <?php foreach($menus as $row){
+                    if($row['group'] == 'Granja' AND $row['permission'] == "Si"){
+                    ?>
+             		   	<li class="nav-item">
+                            <a class="nav-link menu-link" href="<?php echo $row["route"]; ?>">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets"><?php echo $row['name']; ?></span>
+                            </a>
+                        </li>
+                    <?php
+                    }
+                }?>
             </ul>
         </div>
     </div>

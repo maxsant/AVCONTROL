@@ -19,7 +19,7 @@ if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
 	<title>AVCONTROL</title>
 	
 	<!-- import CSS -->
-	<link rel="shortcut icon" href="../../assets/images/favicon.ico">
+	<link rel="shortcut icon" href="assets/images/favicon.ico">
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" >
 	<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" >
@@ -109,6 +109,15 @@ if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
 												        	 La clave de seguridad es incorrecta
                                                         </div>
                                                         <?php
+                                                        break;
+                                                        case "4":
+                                                            ?>
+                                                        <div class="alert alert-warning alert-icon alert-close" role="alert">
+                                                     	     <button type="button" class="close" data-dismiss="alert" aria-label="Close">X</button>
+                                                     	     <i class="font-icon font-icon-warning"></i>
+												        	 El usuario no se encuentra validado. Por favor verifique su cuenta en <a href="views/site/submitted-email.php">Validar Cuenta</a>
+                                                        </div>
+                                                        <?php
 												    }
 												}
 												?>
@@ -121,7 +130,7 @@ if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
                                                     <div class="float-end">
                                                         <a href="auth-pass-reset-cover.html" class="text-muted">Olvido su clave?</a>
                                                     </div>
-                                                    <label class="form-label" for="usu_pass">CLave Seguridad</label>
+                                                    <label class="form-label" for="usu_pass">Clave Seguridad</label>
                                                     <div class="position-relative auth-pass-inputgroup mb-3">
                                                         <input type="password_hash" class="form-control pe-5" placeholder="Ingrese Clave Seguridad" name="password_hash" id="password_hash">
                                                         <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
@@ -136,6 +145,10 @@ if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
                                                 <div class="mt-4">
                                                     <input type="hidden" name="enviar" value="si">
                                                     <button class="btn btn-success w-100" type="submit">Acceder</button>
+                                                </div>
+                                                
+                                                <div class="mt-4">
+                                                    <a href="views/register/" id="btnregister">Registrarse</a>
                                                 </div>
                                             </form>
                                         </div>
@@ -153,7 +166,7 @@ if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
                     <div class="col-lg-12">
                         <div class="text-center">
                             <p class="mb-0">&copy;
-                                <script>document.write(new Date().getFullYear())</script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand
+                                <script>document.write(new Date().getFullYear())</script> AVCONTROL. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand
                             </p>
                         </div>
                     </div>
