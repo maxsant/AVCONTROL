@@ -393,7 +393,9 @@ INSERT INTO menus (name,route,identification,`group`,created,modified,is_active,
 	 ('Lista Compras','../listPurchases/','listpurchases','Compra','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Descargue Inventario','../farmDeliveries/','farmdeliveries','Inventario','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 ('Lista de Descargues','../listFarmDeliveries/','listfarmdeliveries','Inventario','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 ('Produccion por Granja','../farmProductions/','farmproductions','Granja','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
+	 ('Produccion por Granja','../farmProductions/','farmproductions','Granja','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Nueva Venta','../sales/','sales','Venta','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 ('Lista Ventas','../listSales/','listsales','Venta','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
 
 INSERT INTO menu_roles (menu_id,role_id,permission,created,modified,is_active,custom_fields) VALUES
 	 (1,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
@@ -410,4 +412,7 @@ INSERT INTO menu_roles (menu_id,role_id,permission,created,modified,is_active,cu
 	 (12,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 (13,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
 	 (14,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
-	 (15,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
+	 (15,1,'No','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (16,2,'Si','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (17,2,'Si','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL),
+	 (17,1,'Si','2024-04-16 00:00:00','2024-04-16 11:26:45',1,NULL);
