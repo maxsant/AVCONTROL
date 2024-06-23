@@ -38,5 +38,20 @@ switch($_GET["op"]){
             "aaData"=>$data);
         echo json_encode($results);
         break;
+    case "viewFarmProduction":
+        $data = $farmProduction->getViewFarmProduction($_POST['production_id']);
+        echo json_encode($data);
+        break;
+    case "combo":
+        $farmProductions = $farmProduction->getFarmProductionsBySales($_POST['farm_id']);
+        if(is_array($farmProductions) == true AND count($farmProductions) > 0){
+            $html = '';
+            $html.= "<option value='0' selected>Seleccionar</option>";
+            foreach($farmProductions as $data){
+                $html.= "<option value='".$data['production_id']."'>".$data['name']."</option>";
+            }
+            echo $html;
+        }
+        break;
 }
 ?>

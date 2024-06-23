@@ -134,9 +134,8 @@ if($_SESSION['id']){
 
                                             <div class="col-lg-3">
                                                 <label for="product_id" class="form-label">Producto</label>
-                                                <select id="product_id" name="product_id" class="form-control form-select" aria-label="Seleccionar">
-                                                    <option selected>Seleccione</option>
-
+                                                <select id="product_id" name="product_id" class="form-control form-select" disabled aria-label="Seleccionar">
+                                                    <option value="0" selected>Seleccionar</option>
                                                 </select>
                                             </div>
 
@@ -147,7 +146,7 @@ if($_SESSION['id']){
                                             
                                             <div class="col-lg-2">
                                                 <label for="sale_detail_price" class="form-label">Precio</label>
-                                                <input type="number" class="form-control" id="sale_detail_price" name="sale_detail_price" placeholder="Precio" min="0" />
+                                                <input type="number" class="form-control" id="sale_detail_price" name="sale_detail_price" placeholder="Precio" min="0" readonly />
                                             </div>
 
                                             <div class="col-lg-1">
@@ -158,7 +157,7 @@ if($_SESSION['id']){
 
                                             <div class="col-lg-2">
                                                 <label for="sale_detail_stock" class="form-label">Cant.</label>
-                                                <input type="number" class="form-control" id="sale_detail_stock" name="sale_detail_stock" placeholder="Cant." min="0"/>
+                                                <input type="number" class="form-control" id="sale_detail_stock" name="sale_detail_stock" disabled placeholder="Cant." min="0"/>
                                             </div>
 
                                             <div class="col-lg-1 d-grid gap-1">

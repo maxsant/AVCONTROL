@@ -322,5 +322,49 @@ class FarmProductions extends Connect{
             $queryUpdateStock->execute();
         }
     }
+    public function getFarmProductionsBySales($farm_id)
+    {
+        $conectar = parent::connection();
+        
+        $sql = "
+            SELECT
+                fp.production_id,
+                p.name,
+                SUM(fp.stock) as total
+            FROM
+                farm_productions fp
+            INNER JOIN productions p ON fp.production_id = p.id
+            WHERE
+                fp.farm_id = ? AND fp.status_production = 1
+            GROUP BY
+                fp.production_id, p.name
+        ";
+        
+        $stmt = $conectar->prepare($sql);
+        $stmt->bindValue(1, $farm_id);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getViewFarmProduction($production_id)
+    {
+        $conectar = parent::connection();
+        
+        $sql = "
+            SELECT
+                SUM(fp.price) as price,
+                SUM(fp.stock) as stock,
+                p.type
+            FROM
+                farm_productions as fp
+            INNER JOIN productions p ON fp.production_id = p.id
+            WHERE
+                fp.production_id = ? AND fp.status_production = 1
+        ";
+        
+        $stmt = $conectar->prepare($sql);
+        $stmt->bindValue(1, $production_id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
 ?>

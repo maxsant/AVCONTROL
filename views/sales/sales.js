@@ -25,11 +25,30 @@ $(document).ready(function(){
     $("#farm_id").change(function(){
         $("#farm_id").each(function(){
             farm_id = $(this).val();
-            $.post("../../controllers/FarmController.php?op=viewFarm",{id : farm_id},function(data){
-                data = JSON.parse(data);
-                $('#farm_name').val(data.name);
-                $('#farm_location').val(data.location);
-            });
+            if(farm_id != 0){
+	            $.post("../../controllers/FarmController.php?op=viewFarm",{id : farm_id},function(data){
+	                data = JSON.parse(data);
+	                $('#farm_name').val(data.name);
+	                $('#farm_location').val(data.location);
+	            });
+	            
+	            $('#product_id').prop('disabled', false).show();
+	            $('#sale_detail_stock').prop('disabled', false).show();
+	            $('#product_id').val('0').trigger('change');
+	            $('#sale_detail_price').val('');
+	            $('#sale_detail_stock').val('');
+	            
+	            $.post("../../controllers/FarmProductionController.php?op=combo", {farm_id : farm_id}, function(data){
+			        $("#product_id").html(data);
+			    });
+		    }else{
+				$('#product_id').prop('disabled', true).show();
+	            $('#sale_detail_price').prop('disabled', true).show();
+	            $('#sale_detail_stock').prop('disabled', true).show();
+	            $('#product_id').val('0').trigger('change');
+	            $('#sale_detail_price').val('');
+	            $('#sale_detail_stock').val('');
+			}
         });
     });
     
@@ -42,6 +61,25 @@ $(document).ready(function(){
                 $('#customer_email').val(data.email);
                 $('#customer_phone').val(data.phone);
             });
+        });
+    });
+    
+    $("#product_id").change(function(){
+        $("#product_id").each(function(){
+            product_id = $(this).val();
+            if(product_id != 0){
+	            
+	            $.post("../../controllers/FarmProductionController.php?op=viewFarmProduction",{production_id : product_id},function(data){
+	                data = JSON.parse(data);
+	                $('#product_stock').val(data.stock);
+	                $('#sale_detail_price').val(data.price);
+	            });
+	            
+				$('#product_type').prop('disabled', false).show();
+	            
+            }else{
+				$('#product_type').prop('disabled', true).show();
+			}
         });
     });
 });
