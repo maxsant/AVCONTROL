@@ -63,7 +63,7 @@ if($_SESSION['id']){
                                         <div class="row align-items-center g-3">
                                             <div class="col-lg-4">
                                                 <label for="customer_id" class="form-label">Cliente</label>
-                                                <select id="customer_id" name="customer_id" class="form-control form-select" aria-label="Seleccione">
+                                                <select id="customer_id" name="customer_id" class="form-control form-select" disabled aria-label="Seleccione">
                                                     <option value='0' selected>Seleccione</option>
 
                                                 </select>

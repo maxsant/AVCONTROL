@@ -55,6 +55,17 @@ switch($_GET['op'])
     case "updatePerfil":
         $user->updatePerfilById($_POST['id'], $_POST['password_hash'], $_POST['name'], $_POST['lastname'], $_POST['phone']);
         break;
+    case "combo":
+        $users = $user->getUsers();
+        if(is_array($users) == true AND count($users) > 0){
+            $html = '';
+            $html.= "<option value='0' selected>Seleccionar</option>";
+            foreach($users as $data){
+                $html.= "<option value='".$data['id']."'>".$data['name']."</option>";
+            }
+            echo $html;
+        }
+        break;
 }
 
 ?>

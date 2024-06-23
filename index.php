@@ -61,7 +61,7 @@ if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
                                                         <div class="carousel-item">
                                                             <p class="fs-15 fst-italic">" The theme is really great with an amazing customer support."</p>
                                                         </div>
-                                                        <div class="carousel-item">
+                                                        <div class="carggousel-item">
                                                             <p class="fs-15 fst-italic">" Great! Clean code, clean design, easy for customization. Thanks very much! "</p>
                                                         </div>
                                                     </div>
@@ -74,7 +74,7 @@ if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
                                 <div class="col-lg-6">
                                     <div class="p-lg-5 p-4">
                                         <div>
-                                            <h5 class="text-primary">Bienvenido !</h5>
+                                            <h5 class="text-primary">Bienvenido !</h7>
                                             <p class="text-muted">Acceder a AVCONTROL</p>
                                         </div>
 
@@ -172,7 +172,7 @@ if(isset($_POST['enviar']) AND $_POST['enviar'] === 'si'){
                     </div>
                 </div>
             </div>
-        </footer>	
+        </footer>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

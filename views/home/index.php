@@ -7,7 +7,7 @@ if(!empty($_SESSION['id'])){
 <!DOCTYPE html>
 <html lang="es" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none">
 <head>
-	<title>inicio</title>
+	<title>AV-CONTROL</title>
 	<?php
 	require_once('../html/head.php');
 	?>
