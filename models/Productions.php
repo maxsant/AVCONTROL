@@ -76,7 +76,7 @@ class Productions extends Connect
             FROM
                 productions
             WHERE
-                is_active = 1 AND id=?
+                is_active = 1 AND id = ?
         ';
         
         $query = $conectar->prepare($sql);

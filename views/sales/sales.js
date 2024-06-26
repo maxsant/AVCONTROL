@@ -37,6 +37,7 @@ $(document).ready(function(){
 	            $('#product_id').val('0').trigger('change');
 	            $('#sale_detail_price').val('');
 	            $('#sale_detail_stock').val('');
+	            $('#product_stock').val('');
 	            
 	            $.post("../../controllers/FarmProductionController.php?op=combo", {farm_id : farm_id}, function(data){
 			        $("#product_id").html(data);
@@ -48,6 +49,7 @@ $(document).ready(function(){
 	            $('#product_id').val('0').trigger('change');
 	            $('#sale_detail_price').val('');
 	            $('#sale_detail_stock').val('');
+	            $('#product_stock').val('');
 			}
         });
     });
@@ -73,12 +75,33 @@ $(document).ready(function(){
 	                data = JSON.parse(data);
 	                $('#product_stock').val(data.stock);
 	                $('#sale_detail_price').val(data.price);
-	            });
-	            
-				$('#product_type').prop('disabled', false).show();
-	            
+	                
+	                $.post("../../controllers/ProductionController.php?op=viewProduction",{id : product_id},function(data){
+						data = JSON.parse(data);
+						var product_type = parseInt(data.type);
+						switch(product_type)
+						{
+							case 1:
+			                    $('#product_type').val('Huevos');
+			                    break;
+			                case 2:
+			                    $('#product_type').val('Insumos');
+			                    break;
+			                case 3:
+			                    $('#product_type').val('Gallina por peso');
+			                    break;
+			                default:
+			                    $('#product_type').val('');
+			                    break;
+						}
+					});
+	            });  
             }else{
-				$('#product_type').prop('disabled', true).show();
+	            $('#sale_detail_price').prop('disabled', true).show();
+	            $('#sale_detail_price').val('');
+	            $('#sale_detail_stock').val('');
+	            $('#product_stock').val('');
+	            $('#product_type').val('');
 			}
         });
     });
